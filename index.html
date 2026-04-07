@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Santoshi Matha Consultancy</title>
+
+<style>
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  overflow-x: hidden;
+  background: #111;
+}
+
+/* 🌌 BACKGROUND */
+#bgVideo, #dashBg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -3;
+}
+
+#bgVideo {
+  filter: brightness(1.2);
+}
+
+#dashBg {
+  background: url('gempic.png') no-repeat center/cover;
+  display: none;
+  filter: brightness(1);
+  
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(24, 23, 23, 0.3);
+  backdrop-filter: blur(0.5px);
+  z-index: -1;
+}
+
+/* 🎬 SPLASH */
+#splash {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#splash img {
+  width: 140px;
+  animation: fade 2s ease;
+}
+
+@keyframes fade {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+
+#splash h1 {
+  margin-top: 15px;
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+/* 💎 LIQUID GLASSMORPHISM */
+.glass {
+  background: rgba(255,255,255,0.05);
+  padding: 25px;
+  border-radius: 25px;
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  width: 320px;
+  margin: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  backdrop-filter: blur(5px);
+}
+
+input::placeholder {
+  color: rgba(255,255,255,0.7);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  margin-top: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button.primary {
+  background: #1E90FF;
+  color: white;
+}
+
+button.primary:hover {
+  background: #63B3ED;
+}
+
+button.secondary {
+  background: #FF6B6B;
+  color: white;
+}
+
+button.secondary:hover {
+  background: #FF8787;
+}
+
+#register, #menu, #jobForm, #collegeForm, #dashboard {
+  display: none;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Sections in dashboard */
+.section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section .glass {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease;
+}
+
+.section.active .glass {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h2, h3 {
+  margin-bottom: 10px;
+}
+
+p {
+  color: #ddd;
+}
+
+/* Menu buttons */
+.menu-btn {
+  margin: 10px 0;
+  background: #6C63FF;
+}
+
+.menu-btn:hover {
+  background: #908CFF;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .glass { width: 90%; padding: 20px; }
+  h1 { font-size: 1.5rem; }
+  h2, h3 { font-size: 1.2rem; }
+  input, button { padding: 10px; }
+}
+
+</style>
+</head>
+
+<body>
+
+<video autoplay muted loop playsinline id="bgVideo">
+  <source src="splashvideo.mp4" type="video/mp4">
+</video>
+
+<div id="dashBg"></div>
+<div class="overlay"></div>
+
+<!-- 🎬 SPLASH -->
+<div id="splash"> 
+  <img src="nikhillogo.jpeg">
+  <h1>Santoshi Matha Consultancy</h1>
+</div>
+
+<!-- 🔐 REGISTER -->
+<div id="register">
+  <div class="glass">
+    <h3>Register</h3>
+    <input id="name" placeholder="Full Name">
+    <input id="mobile" placeholder="Mobile Number">
+    <input id="password" type="password" placeholder="Password">
+    <button class="primary" onclick="register()">Register</button>
+  </div>
+</div>
+
+<!-- 📋 MENU -->
+<div id="menu">
+  <div class="glass">
+    <h3>Select Application</h3>
+    <button class="menu-btn" onclick="openForm('job')">Job Application</button>
+    <button class="menu-btn" onclick="openForm('college')">College Application</button>
+    <button class="menu-btn" disabled>Payroll (Coming Soon)</button>
+    <button class="secondary" onclick="skip()">Skip</button>
+  </div>
+</div>
+
+<!-- 🧾 JOB FORM -->
+<div id="jobForm">
+  <div class="glass">
+    <h3>Job Application</h3>
+    <input id="job_name" placeholder="Full Name">
+    <input id="job_mobile" placeholder="Mobile Number">
+    <input id="job_email" placeholder="Email">
+    <input id="job_qualification" placeholder="Qualification">
+    <input id="job_year" placeholder="Year of Passing">
+    <input id="job_exp" placeholder="Experience">
+    <input id="job_company" placeholder="Preferred Company">
+    <input id="job_location" placeholder="Current Location">
+    <input id="job_required" placeholder="Required Location">
+    <button class="primary" onclick="submitJob()">Submit</button>
+    <button class="secondary" onclick="backMenu()">Back</button>
+  </div>
+</div>
+
+<!-- 🎓 COLLEGE FORM -->
+<div id="collegeForm">
+  <div class="glass">
+    <h3>College Application</h3>
+    <input id="col_name" placeholder="Full Name">
+    <input id="col_mobile" placeholder="Mobile Number">
+    <input id="col_marks" placeholder="Inter Marks">
+    <input id="col_course" placeholder="Preferred Course">
+    <input id="col_location" placeholder="Preferred Location">
+    <button class="primary" onclick="submitCollege()">Submit</button>
+    <button class="secondary" onclick="backMenu()">Back</button>
+  </div>
+</div>
+
+<!-- 📊 DASHBOARD -->
+<div id="dashboard">
+  <div class="section">
+    <div class="glass">
+      <h2 id="welcomeText">Welcome</h2>
+      <p>Entering Santoshi Consultancy</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="glass">
+      <h3>Our Impact</h3>
+      <p>120+ Users | 80+ Jobs | 50+ Colleges</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="glass">
+      <h3>About Us</h3>
+      <p>We guide students and professionals</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="glass">
+      <h3>Contact</h3>
+      <p>Visit our office</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// 🎬 SPLASH → REGISTER
+setTimeout(() => {
+  document.getElementById("splash").style.display = "none";
+  document.getElementById("register").style.display = "flex";
+}, 3000);
+
+// REGISTER
+function register() {
+  let nameVal = document.getElementById("name").value;
+  let mobileVal = document.getElementById("mobile").value;
+  let passwordVal = document.getElementById("password").value;
+
+  if(nameVal && mobileVal && passwordVal){
+    localStorage.setItem("user", JSON.stringify({name:nameVal, mobile:mobileVal}));
+    showMenu();
+  } else { alert("Fill all fields"); }
+}
+
+// MENU
+function showMenu() {
+  document.getElementById("register").style.display = "none";
+  document.getElementById("menu").style.display = "flex";
+}
+
+// OPEN FORMS
+function openForm(type) {
+  document.getElementById("menu").style.display = "none";
+  if(type==="job") document.getElementById("jobForm").style.display="flex";
+  else document.getElementById("collegeForm").style.display="flex";
+}
+
+function backMenu() {
+  document.getElementById("jobForm").style.display="none";
+  document.getElementById("collegeForm").style.display="none";
+  document.getElementById("menu").style.display="flex";
+}
+
+// DASHBOARD
+function showDashboard() {
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("jobForm").style.display = "none";
+  document.getElementById("collegeForm").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+  document.getElementById("bgVideo").style.display = "none";
+  document.getElementById("dashBg").style.display = "block";
+
+  let user = JSON.parse(localStorage.getItem("user"));
+  if(user) document.getElementById("welcomeText").innerText = "Welcome " + user.name;
+
+  // ✅ Animate sections immediately
+  animateSections();
+}
+
+function skip() { showDashboard(); }
+
+function submitJob() {
+  localStorage.setItem("jobForm", JSON.stringify({
+    name: document.getElementById("job_name").value,
+    mobile: document.getElementById("job_mobile").value
+  }));
+  alert("Saved!");
+  showDashboard();
+}
+
+function submitCollege() {
+  localStorage.setItem("collegeForm", JSON.stringify({
+    name: document.getElementById("col_name").value,
+    mobile: document.getElementById("col_mobile").value
+  }));
+  alert("Saved!");
+  showDashboard();
+}
+
+// SCROLL EFFECT — NO ZOOM
+window.addEventListener("scroll",()=>{
+  let scroll=window.scrollY;
+  let bg=document.getElementById("dashBg");
+  bg.style.backgroundPosition=`center ${-scroll*0.74}px`;
+
+  let sections=document.querySelectorAll("#dashboard .section");
+  sections.forEach((sec)=>{
+    let top=sec.getBoundingClientRect().top;
+    let trigger=window.innerHeight*0.85;
+    if(top<trigger){
+      sec.classList.add("active");
+    } else {
+      sec.classList.remove("active");
+    }
+  });
+});
+
+function animateSections() {
+  let sections = document.querySelectorAll("#dashboard .section");
+  sections.forEach(sec => {
+    let top = sec.getBoundingClientRect().top;
+    let trigger = window.innerHeight * 0.85;
+    if (top < trigger) {
+      sec.classList.add("active");
+    } else {
+      sec.classList.remove("active");
+    }
+  });
+}
+</script>
+
+</body>
+</html>
