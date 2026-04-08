@@ -3,86 +3,916 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coming Soon</title>
-
-<!-- Unique Font -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<title>Santoshi Matha Consultancy</title>
 
 <style>
-  html, body {
-    height: 100%;
-    margin: 0;
-    font-family: 'Orbitron', sans-serif; /* changed font */
-    overflow: auto;
-  }
+html {
+  scroll-behavior: smooth;
+}
 
-  body {
-    background: url('gempic.png') no-repeat center center;
-    background-size: cover;
-    background-attachment: fixed;
-  }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  overflow-x: hidden;
+  background: #111;
+}
 
-  .overlay {
-    position: relative;
-    min-height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: white;
-    padding: 20px;
-  }
+/* 🌌 BACKGROUND */
+#bgVideo, #dashBg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -3;
+}
 
-  .overlay img {
-    width: 220px; /* increased size */
-    height: 220px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid white;
-    margin-bottom: 20px;
+#bgVideo {
+  filter: brightness(1.2);
+}
 
-    opacity: 0.85; /* slight transparency */
-  }
+#dashBg {
+  background: url('gempic.png') no-repeat center/cover;
+  display: none;
+  filter: brightness(1);
+  
+}
 
-  h1 {
-    font-size: 50px;
-    margin: 0;
-    letter-spacing: 3px;
-  }
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(24, 23, 23, 0.3);
+  backdrop-filter: blur(0.5px);
+  z-index: -1;
+}
 
-  p {
-    font-size: 20px;
-    margin-top: 15px;
-    letter-spacing: 1px;
-  }
+/* 🎬 SPLASH */
+/* 🎬 SPLASH */
+#splash {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: rgba(0,0,0,0); /* soft transparent overlay */
+}
 
-  .overlay h1, .overlay p, .overlay img {
-    animation: fadeIn 1.5s ease forwards;
-    opacity: 0;
-  }
+/* Splash Logo */
+#splash img {
+  width: 200px; 
+  height: 200px;
+  border-radius: 50%; 
+  border: 3px solid rgba(255,255,255,0.3); 
+  object-fit: cover;
+  animation: splashLogoAnim 2s ease forwards;
+  box-shadow: 0 0 35px rgba(30,144,255,0.6); /* glow */
+}
 
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
+/* Splash Text - Professional */
+/* 🔹 Splash Screen Text Styling */
+#splash h1 {
+  font-family: 'Vintage Charm', cursive; /* Splash-only font */
+  color: #FFD700; /* Bright gold */
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
 
-  @media (max-width: 768px) {
-    h1 { font-size: 32px; }
-    p { font-size: 16px; }
-    .overlay img { width: 150px; height: 150px; } /* responsive size */
-  }
+#splash h1 span {
+  font-family: 'Vintage Charm', cursive;
+  color: #1E90FF; /* Soft blue */
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+}
+
+/* Logo animation */
+@keyframes splashLogoAnim {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+
+.title {
+  text-align: center;
+}
+
+.title span {
+  display: block;
+}
+
+
+/* 💎 LIQUID GLASSMORPHISM */
+.glass {
+  background: rgba(255,255,255,0.05);
+  padding: 25px;
+  border-radius: 25px;
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  width: 320px;
+  margin: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  backdrop-filter: blur(5px);
+}
+
+input::placeholder {
+  color: rgba(255,255,255,0.7);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  margin-top: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button.primary {
+  background: #1E90FF;
+  color: white;
+}
+
+button.primary:hover {
+  background: #63B3ED;
+}
+
+button.secondary {
+  background: #FF6B6B;
+  color: white;
+}
+
+button.secondary:hover {
+  background: #FF8787;
+}
+
+#register, #menu, #jobForm, #collegeForm, #dashboard {
+  display: none;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h2, h3 {
+  margin-bottom: 10px;
+}
+
+p {
+  color: #ddd;
+}
+
+/* Menu buttons */
+.menu-btn {
+  margin: 10px 0;
+  background: #6C63FF;
+}
+
+.menu-btn:hover {
+  background: #908CFF;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .glass { width: 90%; padding: 20px; }
+  h1 { font-size: 1.5rem; }
+  h2, h3 { font-size: 1.2rem; }
+  input, button { padding: 10px; }
+}
+
+.skip-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+#dashboard .section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;            /* above video */
+}
+
+/* Dashboard video scroll + overlay sections */
+#dashVideoContainer {
+  width: 100%;
+  height: 400vh; /* 4x viewport height to allow scroll */
+  position: relative;
+}
+
+#dashVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute; /* scrolls with container */
+  top: 0;
+  left: 0;
+  z-index: -1;        /* behind sections */
+}
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;   /* above video */
+  margin: 0;
+}
+
+.section .glass {
+  background: rgba(255,255,255,0.05);
+  padding: 25px;
+  border-radius: 25px;
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease;
+}
+
+.section.active .glass {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Dashboard Top Bar */
+.top-bar {
+  position: fixed;
+  top: 20px;
+  left: 2.5%;       /* instead of 50% + translate */
+  width: 95%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  z-index: 100;  
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+/* Logo style */
+.top-bar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  color: white;
+}
+
+.top-bar .logo-img {
+  width: 40px;
+  border-radius: 50%;
+}
+
+/* Profile button */
+.top-bar .profile button {
+  padding: 8px 15px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  backdrop-filter: blur(5px);
+  transition: 0.3s;
+}
+
+.top-bar .profile button:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* Update these specific IDs in your <style> tag */
+#authSection {
+  display: none; 
+  opacity: 0;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1s ease;
+}
+
+#authSection.show {
+  display: flex !important;
+  opacity: 1 !important;
+}
+
+/* Glass effect ni video lo unnattu inka pencha */
+.auth-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(25px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  padding: 35px;
+  width: 340px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+#authSection h2 {
+  color: #1E90FF;
+  margin-top: 25px;
+  font-size: 1.5rem;
+}
+
+hr {
+  width: 100%;
+  border: 0.5px solid rgba(255,255,255,0.1);
+  margin: 30px 0;
+}
+
+.fade {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.fade.show {
+  opacity: 1;
+}
+
+
+.spinner {
+  border: 4px solid rgba(255,255,255,0.2);
+  border-top: 4px solid #1E90FF;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+#profilePage {
+  position: fixed;      /* already fixed */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;        /* correct */
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.85); /* slightly darker for clarity */
+  z-index: 999;         /* increase to above all */
+}
+
+#dashboard {
+  display: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 </style>
 </head>
 
 <body>
 
-<div class="overlay">
-  <img src="nikhillogo.jpeg" alt="Your Image">
+<video autoplay muted loop playsinline id="bgVideo">
+  <source src="splashvideo.mp4" type="video/mp4">
+</video>
 
-  <h1>Coming Soon ..🔥🚀</h1>
-  <p>Get Ready for Something Amazing .... ✨</p>
+<div id="dashBg"></div>
+<div class="overlay"></div>
+
+<!-- 🎬 SPLASH -->
+<div id="splash" class="fade show">
+  <img src="nikhillogo.jpeg">
+  <h1 class="title">
+  Santhoshi Matha <br>
+  <span>Man Power Consultancy</span>
+</h1>
+
 </div>
+
+<div id="authSection" class="fade">
+  <div class="glass auth-container">
+    <div id="regView">
+      <h2 style="color: #1E90FF;">Register</h2>
+      <input type="text" id="regName" placeholder="Full Name" />
+      <input type="text" id="regPhone" placeholder="Phone Number" />
+      <input type="email" id="regEmail" placeholder="Email Address" />
+      <input type="password" id="regPassword" placeholder="Password" />
+      <button class="primary" onclick="registerUser()">Register</button>
+      <p style="font-size: 14px; margin-top: 15px;">Already have an account? <a href="javascript:void(0)" onclick="toggleAuth(false)" style="color: #1E90FF;">Login</a></p>
+    </div>
+
+    <div id="loginView" style="display: none;">
+      <h2 style="color: #1E90FF;">Login</h2>
+      <input type="text" id="loginName" placeholder="Full Name" />
+      <input type="email" id="loginEmail" placeholder="Email Address" />
+      <input type="password" id="loginPassword" placeholder="Password" />
+      <button class="primary" onclick="loginUser()">Login</button>
+      <p style="font-size: 14px; margin-top: 15px;">New User? <a href="javascript:void(0)" onclick="toggleAuth(true)" style="color: #1E90FF;">Register</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- 📋 MENU -->
+<div id="menu" class="fade">
+  <div class="glass">
+    <h3>Select Application</h3>
+    <button class="menu-btn" onclick="openForm('job')">Job Application</button>
+    <button class="menu-btn" onclick="openForm('college')">College Application</button>
+    <button class="menu-btn" disabled>Payroll (Coming Soon)</button>
+    <button class="skip-btn" onclick="skip()">Skip</button>
+  </div>
+</div>
+
+<!-- 🧾 JOB FORM -->
+<div id="jobForm">
+  <div class="glass">
+    <h3>Job Application</h3>
+    <input id="job_name" placeholder="Full Name">
+    <input id="job_mobile" placeholder="Mobile Number">
+    <input id="job_email" placeholder="Email">
+    <input id="job_qualification" placeholder="Qualification">
+    <input id="job_year" placeholder="Year of Passing">
+    <input id="job_exp" placeholder="Experience">
+    <input id="job_company" placeholder="Preferred Company">
+    <input id="job_location" placeholder="Current Location">
+    <input id="job_required" placeholder="Required Location">
+    <button class="primary" onclick="submitJob()">Submit</button>
+    <button class="secondary" onclick="backMenu()">Back</button>
+  </div>
+</div>
+
+<!-- 🎓 COLLEGE FORM -->
+<div id="collegeForm">
+  <div class="glass">
+    <h3>College Application</h3>
+    <input id="col_name" placeholder="Full Name">
+    <input id="col_mobile" placeholder="Mobile Number">
+    <input id="col_marks" placeholder="Inter Marks">
+    <input id="col_course" placeholder="Preferred Course">
+    <input id="col_location" placeholder="Preferred Location">
+    <button class="primary" onclick="submitCollege()">Submit</button>
+    <button class="secondary" onclick="backMenu()">Back</button>
+  </div>
+</div>
+
+
+<!-- 📊 DASHBOARD -->
+<div id="dashboard" class="fade">
+
+  <!-- Top Bar: move here, directly under #dashboard -->
+<div id="dashboardTopBar" class="glass top-bar">
+  <div class="logo">
+    <img src="nikhillogo.jpeg" alt="Logo" class="logo-img">
+    <span>Santoshi Matha Consultancy</span>
+  </div>
+  <div class="profile">
+    <button id="profileBtn">Profile</button>
+  </div>
+</div>
+
+  <!-- Video container -->
+  <div id="dashVideoContainer">
+    <video autoplay muted loop playsinline id="dashVideo">
+      <source src="video15.mp4" type="video/mp4">
+    </video>
+
+
+<!-- Sections remain below -->
+
+    <!-- Sections overlay -->
+    <div class="section dashContent">
+      <div class="glass">
+        <h2 id="welcomeText">Welcome</h2>
+        <p>Entering Santoshi Consultancy</p>
+      </div>
+    </div>
+
+    <div class="section dashContent">
+      <div class="glass">
+        <h3>Our Impact</h3>
+        <p>120+ Users | 80+ Jobs | 50+ Colleges</p>
+      </div>
+    </div>
+
+    <div class="section dashContent">
+      <div class="glass">
+        <h3>About Us</h3>
+        <p>We guide students and professionals</p>
+      </div>
+    </div>
+
+    <div class="section dashContent">
+      <div class="glass">
+        <h3>Contact</h3>
+        <p>Visit our office</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="profilePage" class="fade" style="display:none;">
+  <div class="glass" style="text-align:center;">
+    <h2>Profile</h2>
+
+    <!-- User Info -->
+    <img id="profilePic" src="nikhillogo.jpeg" style="width:100px; border-radius:50%; margin-bottom:10px;">
+    <p id="profileName"></p>
+    <p id="profileEmail"></p>
+    <p id="profilePhone"></p>
+
+    <button class="primary" onclick="openApplications()">Applications</button>
+    <button class="secondary" onclick="logout()">Logout</button>
+
+    <br><br>
+    <button onclick="backToDashboard()">⬅ Back</button>
+  </div>
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+import { addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import { 
+  getFirestore, 
+  doc, 
+  setDoc, 
+  getDoc 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// 🔥 YOUR FIREBASE CONFIG (copy from console)
+const firebaseConfig = {
+  apiKey: "AIzaSyCgJZ2tWWo195pL_XUmQmu9hMKEgpE-uWQ",
+  authDomain: "santhoshi-matha-consultancy.firebaseapp.com",
+  projectId: "santhoshi-matha-consultancy",
+};
+
+// 🔥 INITIALIZE
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
+
+window.registerUser = async function () {
+  const name = document.getElementById("regName").value;
+  const phone = document.getElementById("regPhone").value;
+  const email = document.getElementById("regEmail").value;
+  const password = document.getElementById("regPassword").value;
+
+  if(!name || !email || !password) return alert("Please fill all fields");
+
+  try {
+    const userCred = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCred.user;
+
+    const userData = { name, phone, email, createdAt: new Date() };
+    await setDoc(doc(db, "users", user.uid), userData);
+
+    alert("✅ Registered Successfully");
+    
+    // Auto-save session
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("loginTime", Date.now());
+
+    // Redirect to MENU directly
+    document.getElementById("authSection").style.display = "none";
+    document.getElementById("menu").style.display = "flex";
+    document.getElementById("menu").classList.add("show");
+  } catch (error) {
+    alert("❌ Error: " + error.message);
+  }
+};
+
+
+
+window.loginUser = async function () {
+  const name = document.getElementById("loginName").value;
+  const password = document.getElementById("loginPassword").value;
+  const email = document.getElementById("loginEmail").value;
+
+  try {
+    const userCred = await signInWithEmailAndPassword(auth, email, password);
+    const docSnap = await getDoc(doc(db, "users", userCred.user.uid));
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      if (data.name === name) {
+        alert("✅ Login Success");
+        localStorage.setItem("user", JSON.stringify(data));
+        localStorage.setItem("loginTime", Date.now());
+
+        // Redirect to MENU directly
+        document.getElementById("authSection").style.display = "none";
+        document.getElementById("menu").style.display = "flex";
+        document.getElementById("menu").classList.add("show");
+      } else {
+        alert("❌ Name mismatch");
+      }
+    }
+  } catch (error) {
+    alert("❌ Login Error: " + error.message);
+  }
+};
+
+
+
+// Toggle between Login and Register
+window.toggleAuth = function(isReg) {
+  document.getElementById("regView").style.display = isReg ? "block" : "none";
+  document.getElementById("loginView").style.display = isReg ? "none" : "block";
+};
+
+// Exact Splash to Auth Flow
+// Splash -> Next Step
+setTimeout(() => {
+  const splash = document.getElementById("splash");
+  splash.style.opacity = "0"; 
+  
+  setTimeout(() => {
+    splash.style.display = "none";
+
+    const showAuth = localStorage.getItem("showAuth");
+
+    if(showAuth) {
+      // Show login/register + menu after logout
+      const auth = document.getElementById("authSection");
+      auth.style.display = "flex"; 
+      setTimeout(() => { auth.classList.add("show"); }, 10);
+      
+      // Reset flag
+      localStorage.removeItem("showAuth");
+
+      document.getElementById("bgVideo").style.display = "block";
+
+    } else {
+      // Normal dashboard flow
+      const dash = document.getElementById("dashboard");
+      dash.style.display = "block";
+      window.scrollTo(0, 0);
+      setTimeout(() => { dash.classList.add("show"); }, 50);
+
+      const bgVid = document.getElementById("bgVideo");
+      if(bgVid) bgVid.style.display = "none";
+
+      const dashVid = document.getElementById("dashVideo");
+      if(dashVid) { dashVid.style.display = "block"; dashVid.play(); }
+
+      let user = JSON.parse(localStorage.getItem("user"));
+      if(user){
+        document.getElementById("welcomeText").innerText = "Welcome " + user.name;
+      }
+    }
+
+  }, 800);
+}, 4000);
+
+// MENU
+function showMenu() {
+  document.getElementById("register").style.display = "none";
+  document.getElementById("menu").style.display = "flex";
+}
+
+// OPEN FORMS
+window.openForm = function(type) {
+  document.getElementById("menu").style.display = "none";
+  if(type==="job") document.getElementById("jobForm").style.display="flex";
+  else document.getElementById("collegeForm").style.display="flex";
+}
+
+window.backMenu = function() {
+  document.getElementById("jobForm").style.display="none";
+  document.getElementById("collegeForm").style.display="none";
+  document.getElementById("menu").style.display="flex";
+}
+
+window.showDashboard = function() {
+  // 1. Splash, Register, Login annitini motham ga tharimey (Display: None)
+  const elementsToKill = ["splash", "authSection", "menu", "jobForm", "collegeForm"];
+  elementsToKill.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) {
+      el.style.display = "none";
+      el.style.visibility = "hidden"; // Extra protection
+      el.style.opacity = "0";
+    }
+  });
+
+  // 2. Dashboard ni chupించు
+  const dash = document.getElementById("dashboard");
+  dash.style.display = "block";
+  // Dashboard raagane top ki scroll chey (Just in case)
+  window.scrollTo(0, 0);
+
+  setTimeout(() => {
+    dash.classList.add("show");
+  }, 50);
+
+  // 3. Background Videos handle chey
+  const bgVid = document.getElementById("bgVideo");
+  if(bgVid) bgVid.style.display = "none";
+
+  const dashVid = document.getElementById("dashVideo");
+  if(dashVid) {
+    dashVid.style.display = "block";
+    dashVid.play();
+  }
+
+  // 4. Welcome Text set chey
+  let user = JSON.parse(localStorage.getItem("user"));
+  if(user) {
+    document.getElementById("welcomeText").innerText = "Welcome " + user.name;
+  }
+}
+
+window.skip = function() { window.showDashboard(); }
+
+async function submitJob() {
+  const data = {
+    name: document.getElementById("job_name").value,
+    mobile: document.getElementById("job_mobile").value,
+    email: document.getElementById("job_email").value,
+    qualification: document.getElementById("job_qualification").value,
+    year: document.getElementById("job_year").value,
+    exp: document.getElementById("job_exp").value,
+    company: document.getElementById("job_company").value,
+    location: document.getElementById("job_location").value,
+    requiredLocation: document.getElementById("job_required").value
+  };
+
+  try {
+    await addDoc(collection(db, "jobApplications"), data);
+    alert("✅ Job Application Saved!");
+    
+    // Form close chesi dashboard ki vellu
+    document.getElementById("jobForm").style.display = "none";
+    window.showDashboard(); 
+  } catch(e) { alert("Error: " + e.message); }
+}
+function submitCollege() {
+  localStorage.setItem("collegeForm", JSON.stringify({
+    name: document.getElementById("col_name").value,
+    mobile: document.getElementById("col_mobile").value
+  }));
+  alert("Saved!");
+  showDashboard();
+}
+
+// SCROLL EFFECT — NO ZOOM
+window.addEventListener("scroll",()=>{
+  let scroll=window.scrollY;
+  let bg=document.getElementById("dashBg");
+  bg.style.backgroundPosition=`center ${-scroll*0.74}px`;
+
+  let sections=document.querySelectorAll("#dashboard .section");
+  sections.forEach((sec)=>{
+    let top=sec.getBoundingClientRect().top;
+    let trigger=window.innerHeight*0.85;
+    if(top<trigger){
+      sec.classList.add("active");
+    } else {
+      sec.classList.remove("active");
+    }
+  });
+});
+
+function animateSections() {
+  let sections = document.querySelectorAll("#dashboard .section");
+  sections.forEach(sec => {
+    let top = sec.getBoundingClientRect().top;
+    let trigger = window.innerHeight * 0.85;
+    if (top < trigger) {
+      sec.classList.add("active");
+    } else {
+      sec.classList.remove("active");
+    }
+  });
+}
+
+// Smooth scroll animation for sections
+window.addEventListener("scroll", () => {
+  const sections = document.querySelectorAll("#dashboard .section");
+  const triggerBottom = window.innerHeight * 0.85;
+
+  sections.forEach(section => {
+    const sectionTop = section.getBoundingClientRect().top;
+    if(section.style.display === "none") return; // ignore hidden
+    section.classList.toggle("active", sectionTop < triggerBottom);
+  });
+
+  // Parallax for dashboard bg
+  let scroll = window.scrollY;
+  document.getElementById("dashBg").style.backgroundPosition = `center ${-scroll*0.74}px`;
+});
+
+// Optional: animate on page load
+document.addEventListener("DOMContentLoaded", () => {
+  const sections = document.querySelectorAll("#dashboard .section");
+  sections.forEach(section => {
+    const sectionTop = section.getBoundingClientRect().top;
+    const triggerBottom = window.innerHeight * 0.85;
+
+    if (sectionTop < triggerBottom) {
+      section.classList.add("active");
+    }
+  });
+});
+
+
+// Profile logic ni globally access ayyeలా cheyali
+window.showProfile = function() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user) return alert("No user data found!");
+
+  // Hide dashboard content but NOT the dashboard container itself
+  document.querySelectorAll(".dashContent").forEach(sec => sec.style.display = "none");
+  document.getElementById("dashboardTopBar").style.display = "none";
+
+  // Show profile page
+  const profile = document.getElementById("profilePage");
+  profile.style.display = "flex";
+  profile.style.opacity = "1"; // fade in
+
+  // Populate user info
+  document.getElementById("profileName").innerText = "Name: " + (user.name || "N/A");
+  document.getElementById("profileEmail").innerText = "Email: " + (user.email || "N/A");
+  document.getElementById("profilePhone").innerText = "Phone: " + (user.phone || "N/A");
+};
+
+// Back button
+window.backToDashboard = function() {
+  document.getElementById("profilePage").style.display = "none";
+  document.querySelectorAll(".dashContent").forEach(sec => sec.style.display = "flex");
+  document.getElementById("dashboardTopBar").style.display = "flex";
+};
+
+// Button ki listener attach chey
+document.getElementById("profileBtn").onclick = window.showProfile;
+
+
+
+
+window.backToDashboard = function() {
+  document.getElementById("profilePage").style.display = "none";
+
+  document.querySelectorAll(".dashContent").forEach(sec => sec.style.display = "flex");
+  document.getElementById("dashboardTopBar").style.display = "flex";
+}
+
+window.logout = function() {
+  localStorage.clear();
+  // Set flag to show auth flow next
+  localStorage.setItem("showAuth", "true");
+  location.reload(); // Refresh to restart splash
+}
+
+function openApplications() {
+  alert("Here you can show user applications (job/college)");
+}
+
+
+
+</script>
 
 </body>
 </html>
