@@ -1,7 +1,7 @@
 {
   "name": "SMC Admin Panel",
   "short_name": "SMC Admin",
-  "start_url": "./adminindex.html",
+  "start_url": "./admin.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#000000",
