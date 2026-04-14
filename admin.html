@@ -334,7 +334,6 @@ function showDashboard() {
 
 /* AUTO LOGIN CHECK */
 
-
 onAuthStateChanged(auth, async (user) => {
 
   hideSplashOnce();
@@ -526,8 +525,6 @@ window.loadApps = async ()=>{
   document.getElementById("mainContent").innerHTML = html;
 };
 
-
-
 /* 🔥 LIVE USERS */
 onSnapshot(collection(db,"users"), (snapshot)=>{
 
@@ -547,7 +544,6 @@ onSnapshot(collection(db,"users"), (snapshot)=>{
       }
     }
   });
-
 });
 
 /* 🔥 LIVE APPLICATIONS */
