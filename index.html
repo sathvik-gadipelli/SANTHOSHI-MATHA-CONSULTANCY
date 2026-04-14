@@ -3596,16 +3596,12 @@ document.getElementById("authTitle").innerText = "Login";
 
 
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js")
-      .then(reg => {
-        console.log("SW registered ✅", reg);
-      })
-      .catch(err => {
-        console.log("SW failed ❌", err);
-      });
-  });
+  navigator.serviceWorker.register("./sw.js")
+    .then(() => console.log("Service Worker Registered"))
+    .catch(err => console.log("SW Error:", err));
 }
+
+
 </script>
 
 
