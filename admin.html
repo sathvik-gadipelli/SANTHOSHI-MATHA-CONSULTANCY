@@ -334,6 +334,7 @@ function showDashboard() {
 
 /* AUTO LOGIN CHECK */
 
+
 onAuthStateChanged(auth, async (user) => {
 
   hideSplashOnce();
@@ -525,6 +526,8 @@ window.loadApps = async ()=>{
   document.getElementById("mainContent").innerHTML = html;
 };
 
+
+
 /* 🔥 LIVE USERS */
 onSnapshot(collection(db,"users"), (snapshot)=>{
 
@@ -544,6 +547,7 @@ onSnapshot(collection(db,"users"), (snapshot)=>{
       }
     }
   });
+
 });
 
 /* 🔥 LIVE APPLICATIONS */
@@ -630,7 +634,7 @@ window.logout = async () => {
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw-admin.js")
-    .then(() => console.log("Admin SW Registered"))
+    .then(() => console.log("Admin SW Registered ✅"))
     .catch(err => console.log(err));
 }
 </script>
