@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Panel</title>
+
+<link rel="manifest" href="manifest-admin.json">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg,#0f172a,#020617);
+  color:#fff;
+}
+
+/* SPLASH */
+#splash{
+  position:fixed;
+  width:100%;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#000;
+  z-index:9999;
+  font-size:32px;
+  letter-spacing:2px;
+  opacity:1;
+  transition:0.5s ease;
+}
+@keyframes fade{
+  from{opacity:0.6}
+  to{opacity:1}
+}
+
+/* LOGIN */
+#login{
+  display:none;
+  height:100vh;
+  justify-content:center;
+  align-items:center;
+}
+
+.glass{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(25px);
+  padding:40px;
+  border-radius:20px;
+  box-shadow:0 0 30px rgba(0,0,0,0.5);
+  text-align:center;
+}
+
+/* DASHBOARD */
+#dashboard{
+  display:none;
+}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  width:240px;
+  height:100%;
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(20px);
+  border-right:1px solid rgba(255,255,255,0.1);
+  padding:20px;
+}
+
+.sidebar h3{
+  margin-bottom:20px;
+}
+
+.sidebar button{
+  width:100%;
+  margin:10px 0;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.sidebar button:hover{
+  background:#2563eb;
+}
+
+/* MAIN */
+.main{
+  margin-left:260px;
+  padding:25px;
+}
+
+/* CARDS */
+.card{
+  background:rgba(255,255,255,0.08);
+  padding:20px;
+  margin:10px;
+  border-radius:18px;
+  cursor:pointer;
+  backdrop-filter:blur(15px);
+  transition:0.3s;
+  box-shadow:0 10px 20px rgba(0,0,0,0.3);
+}
+
+.card:hover{
+  transform:translateY(-5px) scale(1.02);
+}
+
+/* MODAL */
+#userModal{
+  display:none;
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  background:rgba(0,0,0,0.8);
+  justify-content:center;
+  align-items:center;
+}
+
+#userDetails{
+  max-width:400px;
+  width:90%;
+}
+
+/* NOTIFICATION PANEL */
+#notiPanel{
+  position:fixed;
+  top:0;
+  right:-350px;
+  width:320px;
+  height:100vh;
+  background:rgba(15,23,42,0.95);
+  backdrop-filter:blur(20px);
+  padding:20px;
+  transition:0.35s ease;
+  z-index:999;
+  overflow:auto;
+  box-shadow:-5px 0 20px rgba(0,0,0,0.5);
+}
+
+#notiPanel.active{
+  right:0;
+}
+
+/* overlay */
+#overlay{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  z-index:998;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div id="splash">🔥 Admin Panel</div>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="glass">
+    <h2>Admin Login</h2>
+    <button onclick="login()" style="
+  background:#2563eb;
+  border:none;
+  padding:12px 20px;
+  border-radius:10px;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+">
+  🚀 Continue with Google
+</button>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+
+<div class="sidebar">
+  <h3>Menu</h3>
+  <button onclick="openNotifications()">🔔 Notifications (<span id="notiCount">0</span>)</button>
+  <button onclick="loadStats()">Dashboard</button>
+  <button onclick="loadUsers()">Users</button>
+  <button onclick="loadApps()">Applications</button>
+  <button onclick="logout()">Logout</button>
+</div>
+
+<div class="main" id="mainContent"></div>
+
+</div>
+
+<div id="notiPanel">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+    <h3 style="margin:0;">🔔 Notifications</h3>
+
+    <!-- BACK BUTTON -->
+    <button onclick="openNotifications()"
+      style="
+        background:#ef4444;
+        border:none;
+        color:white;
+        padding:6px 10px;
+        border-radius:8px;
+        cursor:pointer;
+      ">
+      ✖ Back
+    </button>
+  </div>
+
+  <div id="notiList"></div>
+  <br>
+  <button onclick="clearNotifications()">Clear All</button>
+</div>
+
+<!-- USER MODAL -->
+<div id="userModal">
+  <div class="glass" id="userDetails"></div>
+</div>
+
+<div id="overlay" onclick="closeNotifications()"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  updateDoc,
+  onSnapshot,
+  getDoc,   // 🔥 ADD HERE ONLY
+  query,        // ✅ ADD THIS
+  where         // ✅ ADD THIS
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* 🔥 CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyC8Gm9YHSl1biyUTAhz0h5NRF_9oTLEE0c",
+  authDomain: "santhoshi-matha-consulta-594da.firebaseapp.com",
+  projectId: "santhoshi-matha-consulta-594da",
+  storageBucket: "santhoshi-matha-consulta-594da.firebasestorage.app",
+  messagingSenderId: "1046832274742",
+  appId: "1:1046832274742:web:2b6aad013799564420e797",
+  measurementId: "G-PSCZPPBB5C"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const provider = new GoogleAuthProvider();
+
+/* ✅ IMPORTANT: ADMIN EMAIL */
+const ADMIN_EMAIL = "roshangadipelli@gmail.com";
+
+let isFirstLoadUsers = true;
+let isFirstLoadApps = true;
+
+let notifications = [];
+let notiOpen = false;
+
+let splashDone = false;
+
+function hideSplashOnce(){
+  if(splashDone) return;
+
+  const splash = document.getElementById("splash");
+  if(!splash) return;
+
+  splashDone = true;
+
+  splash.style.opacity = "0";
+  splash.style.transition = "0.5s ease";
+
+  setTimeout(()=>{
+    splash.remove();
+  }, 500);
+}
+
+/* 🔥 GOOGLE LOGIN */
+window.login = async () => {
+  try {
+    provider.setCustomParameters({ prompt: "select_account" });
+
+    await signInWithPopup(auth, provider);
+
+    // ❌ DON'T CHECK ADMIN HERE
+    // Auth listener will handle everything
+
+  } catch (e) {
+    alert(e.message);
+  }
+};
+
+function showLogin() {
+  document.getElementById("login").style.display = "flex";
+  document.getElementById("dashboard").style.display = "none";
+}
+
+function showDashboard() {
+  document.getElementById("login").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+
+  loadStats();
+}
+
+/* AUTO LOGIN CHECK */
+
+let authHandled = false;
+
+onAuthStateChanged(auth, async (user) => {
+
+  hideSplashOnce();
+
+  if(authHandled) return;   // 🔥 prevent loop
+  authHandled = true;
+
+  if (!user) {
+    showLogin();
+    return;
+  }
+
+  try {
+    const snap = await getDoc(doc(db, "users", user.uid));
+
+    if (!snap.exists()) {
+      await signOut(auth);
+      showLogin();
+      return;
+    }
+
+    const data = snap.data();
+
+    if (data.role !== "admin") {
+      alert("Access Denied ❌ (Admin only)");
+      await signOut(auth);
+      showLogin();
+      return;
+    }
+
+    showDashboard();
+
+  } catch (err) {
+    console.error(err);
+    showLogin();
+  }
+});
+
+/* DASHBOARD */
+window.loadStats = async ()=>{
+  let users = await getDocs(collection(db,"users"));
+  let apps = await getDocs(collection(db,"applications"));
+
+  document.getElementById("mainContent").innerHTML = `
+  <h2>Dashboard</h2>
+  <div class="card">👥 Users: ${users.size}</div>
+  <div class="card">📄 Applications: ${apps.size}</div>
+
+  <canvas id="chart" height="100"></canvas>
+`;
+
+const ctx = document.getElementById('chart');
+
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Users', 'Applications'],
+    datasets: [{
+      label: 'Stats',
+      data: [users.size, apps.size]
+    }]
+  }
+});
+
+};
+
+/* USERS */
+window.loadUsers = ()=>{
+  let html = "<h2>Users (Live)</h2>";
+
+  onSnapshot(collection(db,"users"), (snapshot)=>{
+    html = "<h2>Users (Live)</h2>";
+
+    snapshot.forEach(docu=>{
+      let d = docu.data();
+
+      html += `
+      <div class="card" onclick='openUser(${JSON.stringify(d)})'>
+        ${d.name} - ${d.email}
+      </div>`;
+    });
+
+    document.getElementById("mainContent").innerHTML = html;
+  });
+};
+
+/* USER DETAILS */
+window.openUser = (data)=>{
+  let modal = document.getElementById("userModal");
+  let box = document.getElementById("userDetails");
+
+  box.innerHTML = `
+    <h3>${data.name}</h3>
+    <p>Email: ${data.email}</p>
+    <p>Mobile: ${data.mobile}</p>
+
+    <button onclick='downloadUser("${data.email}")'>Download</button>
+    <button onclick='blockUser("${data.uid}")'>Block</button>
+    <button onclick='deleteUser("${data.uid}")'>Delete</button>
+    <button onclick='closeModal()'>Close</button>
+  `;
+
+  modal.style.display="flex";
+};
+
+window.closeModal = ()=>{
+  document.getElementById("userModal").style.display="none";
+};
+
+/* DOWNLOAD */
+window.downloadUser = async (email)=>{
+
+  let snap = await getDocs(collection(db,"applications"));
+
+  let content = `
+==============================
+   USER APPLICATION REPORT
+==============================
+
+User Email: ${email}
+Generated On: ${new Date().toLocaleString()}
+
+----------------------------------------
+`;
+
+  snap.forEach(docu=>{
+    let d = docu.data();
+
+    // ✅ FIX: correct field matching
+    if(d.userEmail === email || d.email === email){
+
+      content += `
+📌 Application Type: ${d.type || "N/A"}
+👤 Name: ${d.name || "N/A"}
+📧 Email: ${d.email || d.userEmail || "N/A"}
+📱 Mobile: ${d.mobile || "N/A"}
+
+🎓 Qualification: ${d.qualification || "N/A"}
+📅 Year of Passing: ${d.yop || "N/A"}
+💼 Experience: ${d.experience || "N/A"}
+🏢 Preferred Company: ${d.company || "N/A"}
+📍 Current Location: ${d.location || "N/A"}
+📌 Job Location: ${d.jobLocation || "N/A"}
+
+🏫 College: ${d.college || "N/A"}
+📊 Percentage: ${d.percentage || "N/A"}
+🎂 DOB: ${d.dob || "N/A"}
+
+📝 Message: ${d.message || "N/A"}
+
+----------------------------------------
+`;
+    }
+  });
+
+  let blob = new Blob([content],{type:"text/plain"});
+  let a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `${email}_applications.txt`;
+  a.click();
+};
+
+/* BLOCK */
+window.blockUser = async (uid)=>{
+  await updateDoc(doc(db,"users",uid),{
+    blocked:true
+  });
+  alert("Blocked ✅");
+};
+
+/* DELETE */
+window.deleteUser = async (uid)=>{
+  await deleteDoc(doc(db,"users",uid));
+  alert("Deleted ✅");
+  loadUsers();
+};
+
+/* APPLICATIONS */
+window.loadApps = async ()=>{
+  let snap = await getDocs(collection(db,"applications"));
+
+  let html = "<h2>Applications</h2>";
+
+  snap.forEach(doc=>{
+    let d = doc.data();
+
+    html += `
+<div class="card">
+  ${d.type} - ${d.user}
+  <br><br>
+  <button onclick="downloadUser('${d.email || d.userEmail}')">⬇ Download</button>
+</div>`;
+  });
+
+  document.getElementById("mainContent").innerHTML = html;
+};
+
+
+
+/* 🔥 LIVE USERS */
+onSnapshot(collection(db,"users"), (snapshot)=>{
+
+  snapshot.docChanges().forEach(change=>{
+    if(change.type === "added"){
+
+      const d = change.doc.data();
+
+      const msg = `🆕 New User: ${d.name || "Unknown"} (${d.mobile || "No Mobile"})`;
+
+      notifications.unshift(msg);
+      updateNotiUI();
+
+      // auto open only if panel is closed
+      if(!notiOpen){
+        openNotifications();
+      }
+    }
+  });
+
+});
+
+/* 🔥 LIVE APPLICATIONS */
+onSnapshot(collection(db,"applications"), (snapshot)=>{
+
+  snapshot.docChanges().forEach(change=>{
+    if(change.type === "added"){
+
+      const d = change.doc.data();
+
+      const msg = `📄 New Application: ${d.email || d.userEmail || "Unknown"}`;
+
+      notifications.unshift(msg);
+      updateNotiUI();
+
+      if(!notiOpen){
+        openNotifications();
+      }
+    }
+  });
+
+});
+
+
+window.openNotifications = function(){
+  notiOpen = !notiOpen;
+
+  const panel = document.getElementById("notiPanel");
+  const overlay = document.getElementById("overlay");
+
+  if(notiOpen){
+    panel.classList.add("active");
+    overlay.style.display = "block";
+  } else {
+    panel.classList.remove("active");
+    overlay.style.display = "none";
+  }
+};
+
+function closeNotifications(){
+  notiOpen = false;
+  document.getElementById("notiPanel").classList.remove("active");
+  document.getElementById("overlay").style.display = "none";
+}
+
+function updateNotiUI(){
+  const countEl = document.getElementById("notiCount");
+  const listEl = document.getElementById("notiList");
+
+  if(!countEl || !listEl) return;
+
+  countEl.innerText = notifications.length;
+
+  listEl.innerHTML = notifications
+    .slice(0, 20)
+    .map(n => `<div class="card">${n}</div>`)
+    .join("");
+}
+
+window.clearNotifications = () => {
+  notifications = [];
+  updateNotiUI();
+};
+
+
+</script>
+
+</body>
+</html>

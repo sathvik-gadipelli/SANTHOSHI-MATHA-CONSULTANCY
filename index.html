@@ -1,0 +1,3609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Santhoshi Matha Consultancy</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1E90FF">
+
+<style>
+body{
+  margin:0;
+  background:#0b0f1a; /* 🔥 deep dark */
+  font-family:'Segoe UI';
+  color:#e6e6e6; /* soft white */
+  
+}
+
+/* SECTION CLEAN */
+.section{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:60px 20px;
+  text-align:center;
+  background:linear-gradient(135deg,#0b0f1a,#111827,#020617);
+  
+  opacity:0;
+  transform:translateY(80px) scale(0.95);
+  transition:all 0.9s ease;
+}
+
+.section.show{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+
+
+.section .glass,
+.about-info,
+.about-slider{
+  opacity:0;
+  transform:translateY(40px);
+  transition:0.8s;
+}
+
+.section.show .glass,
+.section.show .about-info,
+.section.show .about-slider{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* delay for smooth feel */
+.section.show .about-slider{
+  transition-delay:0.2s;
+}
+
+.section.show .about-info{
+  transition-delay:0.4s;
+}
+
+/* 🌆 SPLASH IMAGE BACKGROUND */
+#splash{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  overflow:hidden;
+
+  /* ✅ fallback image */
+  background:url('https://images.unsplash.com/photo-1492724441997-5dc865305da7') center/cover no-repeat;
+}
+
+#splashVideo{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-2;
+  opacity:1;
+}
+
+/* DARK OVERLAY */
+#splash::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6); /* little dark for pro look */
+  z-index:-1;
+}
+
+/* LOGO TEXT */
+#logo{
+  font-size:50px;
+  font-weight:bold;
+  z-index:2;
+  animation:zoom 2s infinite alternate;
+  text-align:center;
+}
+
+#logoImg{
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  object-fit:cover;
+  z-index:2;
+  animation:zoom 2s infinite alternate;
+  box-shadow:0 0 25px rgba(255,255,255,0.4);
+  margin-bottom:15px;
+}
+
+#logoText{
+  font-size:38px;
+  font-weight:bold;
+  z-index:2;
+  text-align:center;
+  letter-spacing:1px;
+  text-shadow:0 0 15px rgba(255,255,255,0.6);
+}
+
+#subtitle{
+  font-size:16px;
+  opacity:0.8;
+  z-index:2;
+  text-align:center;
+}
+
+/* ANIMATIONS */
+@keyframes zoom{
+  from{transform:scale(1)}
+  to{transform:scale(1.1)}
+}
+
+/* 💎 GLASS STYLE */
+.glass{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:20px;
+
+  box-shadow:
+    0 8px 40px rgba(0,0,0,0.6),
+    inset 0 0 10px rgba(255,255,255,0.05);
+}
+
+/* 📊 DASHBOARD */
+#dashboard{
+  display:none;
+  height:100vh;
+  background:url('futurebg.webp') no-repeat center/cover;
+  position:relative;
+}
+
+.topbar.scrolled{
+  background:rgba(0,0,0,0.5);
+  backdrop-filter:blur(25px);
+  transform:translateX(-50%) scale(0.96);
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.4),
+    inset 0 0 15px rgba(255,255,255,0.1);
+}
+
+
+/* TOP BAR */
+/* 🔥 PREMIUM GLASSMORPHISM TOPBAR */
+.topbar{
+  position:fixed; /* 🔥 stick on scroll */
+  top:15px;
+  left:50%;
+  transform:translateX(-50%);
+  width:92%;
+  padding:14px 28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:1000;
+  /* 💎 GLASS EFFECT */
+   background:rgba(10,15,25,0.7);
+  backdrop-filter:blur(25px);
+  border:1px solid rgba(255,255,255,0.08);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-radius:20px;
+  /* ✨ BORDER GLOW */
+  
+  /* 🌟 SOFT SHADOW */
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.2),
+    inset 0 0 10px rgba(255,255,255,0.2);
+  transition:all 0.4s ease;
+}
+
+/* LOGIN POPUP */
+#authBox{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.8);
+  width:320px;
+  padding:25px;
+  z-index:10;
+  display:none;
+  opacity:0;
+  transition:0.5s;
+  pointer-events:none;
+}
+#authBox.show{
+  display:block;
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+  pointer-events:auto;
+}
+
+/* INPUT */
+input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:10px;
+  border:none;
+}
+
+input, textarea{
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+}
+
+input::placeholder{
+  color:#aaa;
+}
+
+/* BUTTON */
+button{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  background:#1E90FF;
+  color:white;
+  cursor:pointer;
+}
+
+
+.section .glass{
+  padding:30px;
+}
+
+
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+#navLogo{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  object-fit:cover;
+  box-shadow:0 0 10px rgba(255,255,255,0.5);
+}
+
+.about-info ul{
+  padding-left:0;
+  list-style:none;
+}
+
+/* 🔥 ABOUT FULL UPGRADE */
+
+
+
+/* 🔥 HOVER EFFECT */
+.about-slider:hover{
+  transform:scale(1.05);
+  box-shadow:
+    0 0 50px rgba(30,144,255,1),
+    0 0 100px rgba(0,191,255,0.7);
+}
+
+/* 🎬 TRACK */
+/* FIX TRACK WIDTH */
+.about-track{
+  display:flex;
+  width:100%;
+  height:100%;
+  transition: transform 0.8s ease-in-out;
+}
+
+/* EACH IMAGE FULL WIDTH */
+.about-track img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  flex:0 0 100%;
+}
+
+/* DOTS STYLE */
+.dots{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-top:12px;
+}
+
+.dot{
+  width:12px;
+  height:12px;
+  border-radius:40%;
+  background:rgba(250, 249, 249, 0.5);
+  transition:0.3s;
+}
+
+.dot.active{
+  background:#1E90FF;
+  box-shadow:0 0 10px #1E90FF;
+}
+
+/* 🌑 OVERLAY */
+
+
+/* ✨ AUTO GLOW */
+@keyframes glowPulse{
+  0%{box-shadow:0 0 25px rgba(30,144,255,0.5);}
+  50%{box-shadow:0 0 50px rgb(255, 255, 255);}
+  100%{box-shadow:0 0 25px rgba(30,144,255,0.5);}
+}
+
+.about-container{
+  display:flex;
+  gap:60px;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+/* REMOVE GLASS LOOK */
+.about-slider{
+  width:520px;
+  height:380px;
+  overflow:hidden;
+  border-radius:12px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* REMOVE GLOW + OVERLAY ❌ */
+.about-slider::after{
+  display:none;
+}
+
+/* TEXT SIDE */
+.about-info{
+  width:450px;
+  height: 440px;
+  text-align:left;
+}
+
+.about-info h2{
+  font-size:42px;
+  margin-bottom:15px;
+}
+
+
+
+.about-info li:hover{
+  transform:translateX(8px);
+  color:#63B3ED;
+}
+
+/* 🌟 FORM OVERLAY */
+#formOverlay{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  backdrop-filter:blur(15px);
+}
+
+/* 💎 FORM BOX */
+#formBox{
+  width:420px;
+  padding:25px;
+  animation: popUp 0.4s ease;
+  transform:scale(0.8);
+}
+
+/* ✨ POP ANIMATION */
+@keyframes popUp{
+  from{
+    opacity:0;
+    transform:scale(0.6);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+/* INPUT ANIMATION */
+#formFields input{
+  transition:0.3s;
+}
+
+#formFields input:focus{
+  transform:scale(1.05);
+  box-shadow:0 0 10px #1E90FF;
+}
+
+
+.section.show .about-info li{
+  opacity:1;
+  transform:translateX(0);
+}
+
+/* stagger effect */
+.section.show .about-info li:nth-child(1){transition-delay:0.2s;}
+.section.show .about-info li:nth-child(2){transition-delay:0.3s;}
+.section.show .about-info li:nth-child(3){transition-delay:0.4s;}
+.section.show .about-info li:nth-child(4){transition-delay:0.5s;}
+
+#formBox{
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(25px);
+  border:1px solid rgba(255,255,255,0.2);
+  box-shadow:0 0 40px rgba(30,144,255,0.5);
+}
+
+#formTitle{
+  text-align:center;
+  margin-bottom:15px;
+  font-size:22px;
+}
+
+#formFields input{
+  background:rgba(255,255,255,0.2);
+  color:#fff;
+}
+
+.track-grid{
+  display:flex;
+  gap:25px;
+  justify-content:center;
+  flex-wrap:nowrap; /* ❌ NO WRAP */
+}
+
+/* MAKE EXACT 3 IN ONE ROW */
+.track-card{
+  position:relative;
+  width:32%;   /* 🔥 3 cards fit */
+  height:300px;
+  overflow:hidden;
+  border-radius:15px;
+  cursor:pointer;
+  transition:0.4s;
+}
+
+.track-card:hover{
+  transform:translateY(-10px) scale(1.03);
+  box-shadow:0 0 25px rgba(30,144,255,0.6);
+}
+
+/* BOTTOM CARDS */
+.job-style{
+  width:32%;
+  height:260px;
+}
+
+/* IMAGE */
+.track-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:0.5s;
+}
+
+/* TOP OVERLAY */
+.track-overlay{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  transition:0.5s;
+  text-align:center;
+  padding:10px;
+}
+
+.track-card:hover{
+  transform:translateY(-10px) scale(1.03);
+}
+
+/* HOVER EFFECT */
+.track-card:hover img{
+  filter:blur(4px) brightness(0.6);
+  transform:scale(1.1);
+}
+
+.track-card:hover .track-overlay{
+  opacity:1;
+}
+
+/* 🔻 BOTTOM JOB STYLE */
+.job-style img{
+  filter:brightness(0.7);
+}
+
+.job-overlay{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  padding:15px;
+  background:linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color:#fff;
+  text-align:center;
+  transition:0.4s;
+}
+
+/* HOVER LIFT */
+.job-style:hover{
+  transform:translateY(-10px);
+  transition:0.4s;
+}
+
+/* TEXT ANIMATION */
+.job-style:hover .job-overlay{
+  background:rgba(0,0,0,0.9);
+}
+
+
+.section h2{
+  font-size:38px;
+  font-weight:bold;
+}
+
+#payroll,
+#why,
+#contact{
+  background:#0b0f1a !important; /* same as main theme */
+}
+
+/* 🚀 PROMO SECTION */
+.promo-sec{
+  
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+}
+
+/* 🌈 BG ANIMATION */
+@keyframes gradientMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* ✨ BOX */
+.promo-box{
+  text-align:center;
+  animation:fadeUp 1s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(50px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* 🔥 TITLE GLOW */
+.promo-title{
+  font-size:50px;
+  text-shadow:0 0 20px #fff, 0 0 40px #1E90FF;
+  animation:pulseGlow 2s infinite alternate;
+}
+
+@keyframes pulseGlow{
+  from{ text-shadow:0 0 10px #fff; }
+  to{ text-shadow:0 0 40px #1E90FF; }
+}
+
+.promo-sub{
+  margin:20px 0;
+  font-size:18px;
+  opacity:0.9;
+}
+
+/* 📊 STATS */
+.promo-stats{
+  display:flex;
+  justify-content:center;
+  gap:50px;
+  margin:30px 0;
+}
+
+.stat h2{
+  font-size:40px;
+  color:#00eaff;
+}
+
+.stat p{
+  font-size:14px;
+  opacity:0.8;
+}
+
+/* 🚀 BUTTON */
+.promo-btn{
+  padding:15px 40px;
+  font-size:18px;
+  border-radius:50px;
+  border:none;
+  background:#00eaff;
+  color:#000;
+  cursor:pointer;
+  transition:0.4s;
+}
+
+.promo-btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 20px #00eaff;
+}
+
+.hero-box{
+  text-align:center;
+  width: 800px;
+  height: 400px;
+}
+
+.hero-stats{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  margin:25px 0;
+}
+
+.hstat{
+  text-align:center;
+}
+
+/* 🔥 SMALL NUMBER */
+.hstat h2{
+  font-size:20px;
+  font-weight:600;
+  color:#1E90FF; /* simple black */
+  margin:0;
+}
+
+/* 🔥 SMALL LABEL */
+.hstat p{
+  font-size:11px;
+  opacity:0.6;
+  margin:2px 0 0;
+}
+
+.hstat:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 20px #1E90FF;
+}
+
+.exbut {
+  width: 160px;
+  height: 60px;
+}
+
+.exbut:hover{
+  width: 168px;
+  height: 64px;
+  border: #ffffff;
+}
+
+/* 🌟 UNIQUE SECTION */
+.unique-sec{
+  background:#0f2027;
+  color:#fff;
+  overflow:hidden;
+  position:relative;
+}
+
+.unique-title{
+  font-size:40px;
+  margin-bottom:30px;
+}
+
+/* 🔥 AUTO SCROLL */
+.auto-scroll{
+  width:100%;
+  overflow:hidden;
+}
+
+.scroll-track{
+  display:flex;
+  gap:30px;
+  width:max-content;
+  animation:scrollMove 20s linear infinite;
+}
+
+@keyframes scrollMove{
+  from{ transform:translateX(0); }
+  to{ transform:translateX(-50%); }
+}
+
+.u-card{
+  min-width:200px;
+  padding:20px;
+  background:rgba(255,255,255,0.1);
+  border-radius:15px;
+  backdrop-filter:blur(10px);
+  transition:0.4s;
+}
+
+.u-card:hover{
+  transform:scale(1.1);
+  background:#1E90FF;
+}
+
+/* 🖱️ CURSOR GLOW */
+#cursorGlow{
+  position:absolute;
+  width:120px;
+  height:120px;
+  background:radial-gradient(circle, #1E90FF, transparent);
+  border-radius:50%;
+  pointer-events:none;
+  transform:translate(-50%, -50%);
+  opacity:0.6;
+}
+
+.cursor-text{
+  margin-top:30px;
+  opacity:0.7;
+}
+
+/* ✨ PARTICLES */
+.particles{
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  overflow:hidden;
+  z-index:0;
+}
+
+.particles span{
+  position:absolute;
+  display:block;
+  width:10px;
+  height:10px;
+  background:#00eaff;
+  opacity:0.6;
+  border-radius:50%;
+  animation:floatUp 10s linear infinite;
+}
+
+@keyframes floatUp{
+  from{
+    transform:translateY(100vh) scale(0);
+  }
+  to{
+    transform:translateY(-10vh) scale(1);
+  }
+}
+
+
+.testimonials{
+  width:100%;
+  overflow:hidden;
+  margin-top:30px;
+}
+
+.t-track{
+  display:flex;
+  width:300%;
+  animation:slideTest 12s infinite;
+}
+
+.t-card{
+  width:100%;
+  padding:20px;
+  text-align:center;
+  font-size:18px;
+}
+
+@keyframes slideTest{
+  0%{transform:translateX(0);}
+  33%{transform:translateX(-100%);}
+  66%{transform:translateX(-200%);}
+  100%{transform:translateX(0);}
+}
+
+/* 📞 CONTACT SECTION */
+.contact-container{
+  display:flex;
+  gap:40px;
+  flex-wrap:wrap;
+  justify-content:center;
+  width:100%;
+  max-width:1000px;
+}
+
+.contact-info, .contact-form{
+  width:420px;
+  padding:25px;
+  text-align:left;
+}
+
+.contact-info p{
+  margin:8px 0;
+  opacity:0.9;
+}
+
+.contact-form input,
+.contact-form textarea{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:10px;
+  border:none;
+  background:rgba(255,255,255,0.2);
+  color:#fff;
+}
+
+.contact-form textarea{
+  height:100px;
+  resize:none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+  outline:none;
+  box-shadow:0 0 10px #1E90FF;
+}
+
+.socials a{
+  color:#00eaff;
+  text-decoration:none;
+  margin-right:10px;
+}
+
+.socials a:hover{
+  text-decoration:underline;
+}
+
+/* 🔻 FOOTER */
+.footer-bottom{
+  margin-top:40px;
+  font-size:14px;
+  opacity:0.7;
+  border-top:1px solid rgba(255,255,255,0.2);
+  padding-top:15px;
+  text-align:center;
+}
+
+#formFields textarea{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:10px;
+  border:none;
+  background:rgba(255,255,255,0.2);
+  color:#fff;
+  height:90px;
+}
+
+.section.active{
+  border-left:5px solid #1E90FF;
+}
+
+
+.auth-card input{
+  background:rgba(255,255,255,0.2);
+  color:#fff;
+}
+
+
+
+.about-info li{
+  margin:10px 0;
+  border-left:3px solid #1E90FF;
+  padding-left:10px;
+  font-size:20px;
+
+  opacity:0;
+  transform:translateX(-30px);
+  transition:0.5s;
+}
+
+.brand b{
+  font-size:16px;
+  letter-spacing:0.5px;
+}
+
+.brand span{
+  font-size:11px;
+  opacity:0.7;
+}
+
+#navLogo{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+
+  border:2px solid rgba(255,255,255,0.4);
+
+  box-shadow:
+    0 0 12px rgba(30,144,255,0.6),
+    inset 0 0 8px rgba(255,255,255,0.5);
+}
+
+.nav-menu{
+  display:flex;
+  gap:18px;
+  align-items:center;
+}
+
+.nav-menu span{
+  cursor:pointer;
+  font-size:14px;
+  font-weight:500;
+  transition:0.3s;
+  position:relative;
+}
+
+.nav-menu span:hover{
+  color:#1E90FF;
+}
+
+/* underline animation */
+.nav-menu span::after{
+  content:"";
+  position:absolute;
+  bottom:-5px;
+  left:0;
+  width:0%;
+  height:2px;
+  background:#1E90FF;
+  transition:0.3s;
+}
+
+.nav-menu span:hover::after{
+  width:100%;
+}
+
+/* 👤 PROFILE BUTTON */
+.profile-btn{
+  padding:6px 14px;
+  border-radius:20px;
+  background:#1E90FF;
+  border:none;
+  color:#fff;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.profile-btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 10px #1E90FF;
+}
+
+.nav-menu span.active{
+  color:#1E90FF;
+}
+
+.nav-menu span.active::after{
+  width:100%;
+}
+
+/* HAMBURGER HIDE DESKTOP */
+.hamburger{
+  display:none;
+  font-size:26px;
+  cursor:pointer;
+}
+
+/* MOBILE MODE */
+@media(max-width:900px){
+
+  .nav-menu{
+    position:absolute;
+    top:70px;
+    right:0;
+    background:rgba(0,0,0,0.9);
+    flex-direction:column;
+    width:220px;
+    padding:20px;
+    border-radius:10px;
+    display:none;
+  }
+
+  .nav-menu.show{
+    display:flex;
+  }
+
+  .hamburger{
+    display:block;
+  }
+}
+
+.profile{
+  position:relative;
+}
+
+.profile-menu{
+  position:absolute;
+  top:40px;
+  right:0;
+  background:rgba(0,0,0,0.9);
+  padding:10px;
+  border-radius:10px;
+  display:none;
+  width:120px;
+}
+
+.profile-menu p{
+  margin:8px 0;
+  cursor:pointer;
+  color:#fff;
+  transition:0.3s;
+}
+
+.profile-menu p:hover{
+  color:#1E90FF;
+}
+
+.profile-menu.show{
+  display:block;
+}
+
+.topbar.scrolled{
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(30px);
+
+  transform:translateX(-50%) scale(0.95);
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.6),
+    0 0 20px rgba(30,144,255,0.8),
+    inset 0 0 10px rgba(255,255,255,0.2);
+}
+
+#progressBar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:0%;
+  height:4px;
+  background:#1E90FF;
+  z-index:99999;
+  transition:width 0.2s;
+}
+
+#authScreen{
+  display:none;
+  position:fixed;
+  width:100%;
+  height:100vh;
+  top:0;
+  left:0;
+  justify-content:center;
+  align-items:center;
+  z-index:5;
+
+  /* 🔥 SAME BG FEEL */
+  background:url('https://images.unsplash.com/photo-1492724441997-5dc865305da7') center/cover no-repeat;
+  
+  opacity:0;
+  transition:1s;
+}
+
+/* DARK OVERLAY */
+#authScreen::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  z-index:-1;
+}
+
+#authScreen.show{
+  display:flex;
+  opacity:1;
+}
+
+.auth-card{
+  opacity:0;
+  transform:translateY(40px) scale(0.9);
+  transition:0.6s;
+}
+
+#authScreen.show .auth-card{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+
+/* FADE OUT LOGO */
+.fade-out{
+  opacity:0;
+  transform:scale(0.9);
+  transition:1s;
+}
+
+/* AUTH FADE IN */
+
+
+/* 📱 MOBILE SUPER RESPONSIVE FIX */
+@media(max-width:768px){
+
+  body{
+    font-size:14px;
+  }
+
+  /* TOPBAR */
+  .topbar{
+    width:95%;
+    padding:10px 15px;
+  }
+
+  .brand b{
+    font-size:14px;
+  }
+
+  .brand span{
+    font-size:10px;
+  }
+
+  /* NAV MENU */
+  .nav-menu{
+    position:absolute;
+    top:65px;
+    right:10px;
+    width:200px;
+    padding:15px;
+    display:none;
+    flex-direction:column;
+    gap:12px;
+    border-radius:12px;
+  }
+
+  .nav-menu span{
+    font-size:13px;
+  }
+
+  /* HERO */
+  .hero-box{
+    width:100%;
+    height:auto;
+    padding:20px;
+  }
+
+  .hero-box h1{
+    font-size:20px;
+  }
+
+  .hero-box p{
+    font-size:13px;
+  }
+
+  /* HERO STATS */
+  .hero-stats{
+    gap:15px;
+  }
+
+  .hstat h2{
+    font-size:16px;
+  }
+
+  .hstat p{
+    font-size:10px;
+  }
+
+  /* ABOUT + ALL SECTIONS STACK */
+  .about-container{
+    flex-direction:column;
+    gap:25px;
+  }
+
+  .about-slider{
+    width:100%;
+    height:220px;
+  }
+
+  .about-info{
+    max-width:100%;
+    text-align:center;
+  }
+
+  .about-info h2{
+    font-size:24px;
+  }
+
+  .about-info li{
+    font-size:14px;
+  }
+
+  /* TRACK GRID (CARDS FIX 🔥) */
+  .track-grid{
+    flex-direction:column;
+    gap:20px;
+  }
+
+  .track-card{
+    width:100% !important;
+    height:220px;
+  }
+
+  .job-style{
+    width:100% !important;
+    height:200px;
+  }
+
+  /* PROMO */
+  .promo-title{
+    font-size:26px;
+  }
+
+  .promo-stats{
+    flex-direction:column;
+    gap:15px;
+  }
+
+  /* CONTACT */
+  .contact-container{
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .contact-info,
+  .contact-form{
+    width:100%;
+  }
+
+  /* BUTTONS TOUCH FRIENDLY */
+  button{
+    padding:12px;
+    font-size:14px;
+  }
+
+  /* FORM */
+  #formBox{
+    width:90%;
+  }
+
+}
+
+/* SPLASH CONTENT GROUP */
+#splashContent{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:2;
+  transition:1s ease;
+}
+
+/* FADE OUT FULL GROUP */
+#splash.fadeOut #splashContent{
+  opacity:0;
+  transform:scale(0.9);
+}
+
+/* DARK FADE EFFECT */
+#splash.fadeOut::before{
+  background:rgba(0,0,0,0.8);
+  transition:1s;
+}
+
+.hero-sec{
+  position:relative;
+  background:url('futurebg.webp') center/cover no-repeat;
+}
+
+.hero-sec::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.75);
+}
+
+h1,h2,h3{
+  color:#ffffff;
+}
+
+p{
+  color:#b0b7c3;
+}
+
+button{
+  background:linear-gradient(135deg,#1E90FF,#00eaff);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 15px #1E90FF, 0 0 30px #00eaff;
+}
+
+.unique-sec{
+  background:#0b0f1a;
+}
+
+#why{
+  background:linear-gradient(135deg,#0b0f1a,#111827);
+}
+
+#aiOrb{
+  position:fixed;
+  width:0px;
+  height:0px;
+  border-radius:50%;
+  background:radial-gradient(circle, #00eaff, #1E90FF);
+  pointer-events:none;
+  transform:translate(-50%, -50%);
+  z-index:9999;
+  box-shadow:0 0 20px #00eaff, 0 0 40px #1E90FF;
+  transition:transform 0.1s ease;
+}
+
+/* hover reaction */
+button:hover ~ #aiOrb{
+  transform:scale(1.5);
+}
+
+#robot{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  width:80px;
+  height:80px;
+  background:#111;
+  border-radius:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  z-index:999;
+}
+
+.eye{
+  width:15px;
+  height:15px;
+  background:#00eaff;
+  border-radius:50%;
+  position:relative;
+}
+
+/* ✨ CLICK SPARKLE */
+.sparkle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  pointer-events:none;
+
+  background:radial-gradient(circle,#00eaff,#1E90FF);
+
+  box-shadow:
+    0 0 10px #00eaff,
+    0 0 20px #1E90FF,
+    0 0 30px rgba(0,234,255,0.5);
+
+  animation: sparklePro 1s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+
+/* 🔥 PARTICLE TRAIL EFFECT */
+.sparkle::after{
+  content:"";
+  position:absolute;
+  width:2px;
+  height:20px;
+  background:linear-gradient(to bottom,#00eaff,transparent);
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) rotate(45deg);
+  opacity:0.6;
+}
+
+/* ✨ SMOOTH EXPLOSION */
+@keyframes sparklePro{
+  0%{
+    transform:scale(1) translate(0,0);
+    opacity:1;
+  }
+  100%{
+    transform:scale(0.3) translate(var(--x), var(--y));
+    opacity:0;
+  }
+}
+
+/* ✨ RANDOM COLORS */
+.sparkle:nth-child(odd){
+  background:#1E90FF;
+}
+
+/* 🎬 ANIMATION */
+@keyframes sparkleAnim{
+  0%{
+    transform:scale(1) translate(0,0);
+    opacity:1;
+  }
+  100%{
+    transform:scale(0.5) translate(var(--x), var(--y));
+    opacity:0;
+  }
+}
+
+
+.parallax{
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* 🔥 PROFILE MODAL FIXED */
+.profile-modal{
+  display:none;
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.7);
+  z-index:9999;
+}
+
+/* CARD */
+.profile-card{
+  width:360px;
+  padding:25px;
+  border-radius:15px;
+  background:#111827;
+  color:#fff;
+  text-align:center;
+  animation:fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(0.8);}
+  to{opacity:1; transform:scale(1);}
+}
+
+.profile-box{
+  text-align:left;
+  margin:15px 0;
+}
+
+.profile-box p{
+  margin:6px 0;
+}
+
+.profile-actions button{
+  margin:6px 0;
+}
+
+/* INFO */
+.profile-info p{
+  text-align:left;
+  margin:8px 0;
+  font-size:14px;
+}
+
+.auth-msg{
+  position:absolute;
+  top:15px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:10px 18px;
+  border-radius:12px;
+  font-size:13px;
+  color:#fff;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(15px);
+  border:1px solid rgba(255,255,255,0.15);
+  box-shadow:0 0 20px rgba(0,0,0,0.4);
+  opacity:0;
+  transition:0.4s;
+}
+
+.auth-msg.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(5px);
+}
+
+.auth-msg.success{
+  border-color:#00eaff;
+  box-shadow:0 0 20px #00eaff;
+}
+
+.auth-msg.error{
+  border-color:#ff4d4d;
+  box-shadow:0 0 20px #ff4d4d;
+}
+
+input:focus{
+  outline:none;
+  transform:scale(1.03);
+  box-shadow:0 0 15px #1E90FF;
+  border:1px solid #1E90FF;
+  transition:0.3s;
+}
+
+
+
+#robot{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  width:90px;
+  height:90px;
+  z-index:9999;
+  cursor:grab;
+  user-select:none;
+}
+
+#robot:active{
+  cursor:grabbing;
+}
+
+/* glowing ring */
+.robot-ring{
+  position:absolute;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  background:radial-gradient(circle,#1E90FF55,#00eaff00);
+  animation:pulseRing 2s infinite;
+  filter:blur(2px);
+}
+
+@keyframes pulseRing{
+  0%{transform:scale(0.9); opacity:0.5;}
+  50%{transform:scale(1.2); opacity:1;}
+  100%{transform:scale(0.9); opacity:0.5;}
+}
+
+/* robot face */
+.robot-face{
+  position:absolute;
+  width:70px;
+  height:70px;
+  top:10px;
+  left:10px;
+  background:linear-gradient(145deg,#0f172a,#111827);
+  border-radius:18px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 0 20px #1E90FF;
+}
+
+/* eyes */
+.eye{
+  width:10px;
+  height:10px;
+  background:#00eaff;
+  border-radius:50%;
+  margin:0 6px;
+  box-shadow:0 0 10px #00eaff;
+  animation:blink 3s infinite;
+}
+
+@keyframes blink{
+  0%,100%{opacity:1;}
+  50%{opacity:0.3;}
+}
+
+/* mouth */
+.mouth{
+  position:absolute;
+  bottom:12px;
+  width:20px;
+  height:3px;
+  background:#1E90FF;
+  border-radius:10px;
+  opacity:0.7;
+}
+
+/* AI tag */
+.robot-tag{
+  position:absolute;
+  top:-8px;
+  right:-8px;
+  background:#1E90FF;
+  color:#fff;
+  font-size:10px;
+  padding:3px 6px;
+  border-radius:10px;
+  box-shadow:0 0 10px #1E90FF;
+  animation:floatTag 2s infinite;
+}
+
+@keyframes floatTag{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-4px);}
+}
+
+/* AI PANEL upgrade (glass premium) */
+#aiPanel{
+  position:absolute;
+  bottom:110px;
+  right:0;
+  width:200px;
+  background:rgba(10,15,25,0.8);
+  backdrop-filter:blur(25px);
+  border:1px solid rgba(30,144,255,0.4);
+  border-radius:14px;
+  padding:12px;
+  display:none;
+  flex-direction:column;
+  gap:8px;
+  color:#fff;
+  box-shadow:0 0 25px rgba(0,234,255,0.3);
+  transform:translateY(10px);
+  transition:0.3s;
+}
+
+#aiPanel.show{
+  display:flex;
+  transform:translateY(0);
+}
+
+#aiPanel h4{
+  margin:0;
+  text-align:center;
+  color:#00eaff;
+  font-size:14px;
+}
+
+#aiPanel p{
+  margin:0;
+  padding:7px;
+  font-size:13px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+#aiPanel p:hover{
+  background:linear-gradient(90deg,#1E90FF,#00eaff);
+  transform:translateX(5px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ======= FINAL MOBILE PATCH (SAFE ADD ON) ======= */
+
+@media (max-width: 768px) {
+
+  /* prevent horizontal scroll */
+  body, html {
+    overflow-x: hidden;
+  }
+
+  /* TOPBAR FIX */
+  .topbar {
+    width: 95%;
+    padding: 10px 12px;
+    flex-wrap: wrap;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 70px;
+    right: 10px;
+    width: 220px;
+    background: rgba(0,0,0,0.95);
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 12px;
+    display: none;
+    z-index: 9999;
+  }
+
+  .nav-menu.show {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  /* HERO FIX */
+  .hero-box {
+    width: 95%;
+    height: auto;
+    padding: 20px;
+  }
+
+  .hero-box h1 {
+    font-size: 18px;
+  }
+
+  /* ABOUT STACK */
+  .about-container {
+    flex-direction: column;
+  }
+
+  .about-slider {
+    width: 100%;
+    height: 200px;
+  }
+
+  .about-info {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* TRACK CARDS FIX */
+  .track-grid {
+    flex-direction: column;
+  }
+
+  .track-card,
+  .job-style {
+    width: 100% !important;
+    height: 200px;
+  }
+
+  /* CONTACT FIX */
+  .contact-container {
+    flex-direction: column;
+  }
+
+  .contact-info,
+  .contact-form {
+    width: 100% !important;
+  }
+
+  /* FORM FIX */
+  #formBox {
+    width: 90%;
+  }
+
+  /* TEXT SCALE DOWN */
+  h1 { font-size: 22px; }
+  h2 { font-size: 20px; }
+  p  { font-size: 13px; }
+
+}
+
+/* ================================
+   🚀 PRO UI SYSTEM UPGRADE PACK
+   (SAFE ADD-ON - NO BREAKS)
+================================ */
+
+/* smoother everything */
+*{
+  scroll-behavior:smooth;
+}
+
+/* better selection */
+::selection{
+  background:#1E90FF;
+  color:#fff;
+}
+
+/* smoother body feel */
+body{
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* 💎 PRO GLASS IMPROVEMENT */
+.glass{
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+  transition:0.4s ease;
+}
+
+.glass:hover{
+  transform: translateY(-3px);
+}
+
+/* 🔥 BUTTON UPGRADE */
+button{
+  position:relative;
+  overflow:hidden;
+  letter-spacing:0.5px;
+  font-weight:500;
+}
+
+button::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.3),transparent);
+  transition:0.6s;
+}
+
+button:hover::after{
+  left:100%;
+}
+
+/* 🌈 HERO PREMIUM LOOK */
+.hero-sec{
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* soft floating animation */
+@keyframes floatUpDown{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+  100%{transform:translateY(0);}
+}
+
+.hero-box{
+  animation: floatUpDown 6s ease-in-out infinite;
+}
+
+/* 📱 MOBILE IMPROVED TAP EXPERIENCE */
+button, .nav-menu span, .profile-btn{
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* 🧠 NAV ACTIVE STATE PRO */
+.nav-menu span.active{
+  color:#00eaff;
+  text-shadow:0 0 10px #1E90FF;
+}
+
+/* 💡 CARD LIFT UPGRADE */
+.track-card{
+  transition:0.4s ease;
+}
+
+.track-card:hover{
+  transform:translateY(-12px) scale(1.03);
+  box-shadow:0 15px 40px rgba(0,0,0,0.6);
+}
+
+/* 🧊 IMAGE SMOOTH ZOOM */
+.track-card img{
+  transition:0.5s ease;
+}
+
+.track-card:hover img{
+  transform:scale(1.08);
+}
+
+/* 🎯 SECTION REVEAL POLISH */
+.section{
+  transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 🌙 DARK PREMIUM BORDER GLOW */
+.topbar{
+  border:1px solid rgba(30,144,255,0.2);
+}
+
+/* 📊 HERO NUMBERS STYLE */
+.hstat h2{
+  text-shadow:0 0 10px rgba(0,234,255,0.4);
+}
+
+/* 🔥 ABOUT LIST PREMIUM */
+.about-info li{
+  border-left:3px solid #00eaff;
+  transition:0.3s;
+}
+
+.about-info li:hover{
+  transform:translateX(10px);
+  background:rgba(255,255,255,0.05);
+  padding-left:15px;
+}
+
+/* 💬 CONTACT CARD PREMIUM */
+.contact-info, .contact-form{
+  border-radius:16px;
+  transition:0.4s;
+}
+
+.contact-info:hover, .contact-form:hover{
+  transform:translateY(-5px);
+}
+
+/* ⚡ SCROLLBAR PREMIUM */
+::-webkit-scrollbar{
+  width:6px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(#1E90FF,#00eaff);
+  border-radius:10px;
+}
+
+::-webkit-scrollbar-track{
+  background:#0b0f1a;
+}
+
+@media (max-width:768px){
+
+  /* better spacing */
+  .section{
+    padding:40px 15px;
+  }
+
+  /* hero text upgrade */
+  .hero-box h1{
+    font-size:20px;
+    line-height:1.4;
+  }
+
+  /* buttons full touch */
+  button{
+    width:100%;
+  }
+
+  /* nav animation feel */
+  .nav-menu{
+    animation: slideIn 0.3s ease;
+  }
+
+  @keyframes slideIn{
+    from{transform:translateX(50px); opacity:0;}
+    to{transform:translateX(0); opacity:1;}
+  }
+
+  /* cards smoother */
+  .track-card{
+    border-radius:14px;
+  }
+}
+
+.topbar{
+  transform: translateX(-50%) !important;
+}
+</style>
+</head>
+
+<body>
+
+<div id="splash">
+
+  <video autoplay muted loop playsinline id="splashVideo">
+    <source src="splvideo.mp4" type="video/mp4">
+  </video>
+
+  <div id="splashContent">
+    <img src="nikhillogo.jpeg" id="logoImg">
+
+    <div id="logoText">Santhoshi Matha</div>
+    <div id="subtitle">Man Power Consultancy</div>
+  </div>
+
+</div>
+
+<!-- 🔐 AUTH SCREEN -->
+<div id="authScreen">
+
+<div id="authMsg" class="auth-msg"></div>
+  
+<div class="glass auth-card" style="width:350px; padding:25px; text-align:center;">
+
+    <h2 id="authTitle">Register</h2>
+
+    <h2>Login / Register</h2>
+
+<button onclick="googleLogin()" 
+style="background:#4285F4;color:white;padding:12px;border:none;border-radius:8px;width:100%;">
+  🔵 Continue with Google
+</button>
+
+  </div>
+</div>
+
+<div id="progressBar"></div>
+
+
+<!-- 📊 DASHBOARD -->
+<div id="dashboard">
+
+  <!-- TOP BAR -->
+ <div class="topbar glass">
+  
+  <!-- LEFT LOGO -->
+  <div class="brand">
+    <img src="nikhillogo.jpeg" id="navLogo">
+    <div>
+      <b>Santhoshi Matha</b><br>
+      <span style="font-size:12px; opacity:0.8;">Man Power Consultancy</span>
+    </div>
+  </div>
+
+  <!-- 🔥 NAV OPTIONS -->
+  <div class="nav-menu">
+    <span onclick="goToSection('hero')">Home</span>
+    <span onclick="goToSection('about')">About</span>
+    <span onclick="goToSection('jobs')">Jobs</span>
+    <span onclick="goToSection('colleges')">Colleges</span>
+    <span onclick="goToSection('payroll')">Payroll</span>
+    <span onclick="goToSection('companies')">Companies</span>
+    <span onclick="goToSection('why')">Why Us</span>
+    <span onclick="goToSection('contact')">Contact</span>
+
+    <!-- 👤 PROFILE -->
+    <div class="profile">
+  <button class="profile-btn" onclick="openProfile()">👤 Profile</button>
+
+  <div class="profile-menu" id="profileMenu">
+    <p onclick="alert('Login Clicked')">Login</p>
+    <p onclick="alert('Register Clicked')">Register</p>
+    <p onclick="alert('Logout Clicked')">Logout</p> 
+  </div>
+
+</div>
+  </div>
+<div class="hamburger" onclick="toggleMenu()">☰</div>
+</div>
+
+
+<!-- 🌟 HERO / WELCOME -->
+<div class="section hero-sec" id="hero" data-speed="0.05">
+
+  <div class="glass hero-box" data-speed="0.2">
+
+    <h1>Welcome to Santhoshi Matha Man Power Consultancy</h1>
+    <hr style="color: #000;" >
+    <br>
+    <p>Your trusted partner for jobs, careers & education growth 🚀</p>
+
+    <!-- 🔥 CENTER COUNTERS -->
+    <div class="hero-stats">
+      <div class="hstat">
+        <h2 id="hcount1">200</h2>
+        <p>Placements</p>
+      </div>
+
+      <div class="hstat">
+        <h2 id="hcount2">60+</h2>
+        <p>Companies</p>
+      </div>
+
+      <div class="hstat">
+        <h2 id="hcount3">120</h2>
+        <p>Colleges</p>
+      </div>
+    </div>
+
+    <button class="exbut" onclick="scrollToSection()">Explore Our Services</button>
+
+  </div>
+
+</div>
+
+<!-- 🏢 ABOUT -->
+<div class="section" id="about">
+
+  <div class="about-container">
+
+    <!-- LEFT SLIDER -->
+    <div>
+      <div class="about-slider" data-speed="0.15">
+        <div class="about-track">
+          <img src="abtbg.png">
+          <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d">
+          <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
+        </div>
+      </div>
+
+      <div class="dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <!-- RIGHT INFO -->
+    <div class="about-info" data-speed="0.25">
+      <h2>About Us
+        <hr>
+      </h2>
+      <h3>Welcome to Santhoshi Matha Manpower Consultancy. </h3>
+      <p>We are a dedicated recruitment firm focused on delivering high-quality manpower services across various industries. We believe that the right person in the right role can transform a business. Whether you are looking for top-tier talent or your next big career move, we are here to make the process seamless, transparent, and successful.</p>
+
+      <ul>
+        <li>✔ Trusted manpower consultancy</li>
+        <li>✔ Jobs in IT & Non-IT sectors</li>
+        <li>✔ College admission support</li>
+        <li>✔ Payroll & HR services</li>
+      </ul>
+
+    </div>
+  <h3>
+        We connect talent with opportunities and help companies grow with the right workforce.
+      </h3>
+  </div>
+
+</div>
+
+<!-- 💻 JOBS SEC-3 --> 
+<div class="section" id="jobs">
+
+  <div class="about-container">
+
+    <!-- LEFT SLIDER (COMPANY LOGOS) -->
+    <div>
+      <div class="about-slider" id="jobSlider">
+        <div class="about-track">
+          <img src="Nikhil-Companies/accenture.png">
+          <img src="Nikhil-Companies/acess health care.png">
+          <img src="Nikhil-Companies/acn healthcare.png">
+          <img src="Nikhil-Companies/amazon.png">
+          <img src="Nikhil-Companies/asbl.png">
+          <img src="Nikhil-Companies/ascent.png">
+          <img src="Nikhil-Companies/capgemini.png">
+          <img src="Nikhil-Companies/cisco.png">
+          <img src="Nikhil-Companies/cognizant.png">
+          <img src="Nikhil-Companies/deloitte.png">
+          <img src="Nikhil-Companies/genpact.png">
+          <img src="Nikhil-Companies/hcl.png">
+          <img src="Nikhil-Companies/hsbc.png">
+          <img src="Nikhil-Companies/ibm.png">
+          <img src="Nikhil-Companies/infosys.png">
+          <img src="Nikhil-Companies/kpmg.png">
+          <img src="Nikhil-Companies/Lti mindtree.png">
+          <img src="Nikhil-Companies/nniit.png">
+          <img src="Nikhil-Companies/omega.png">
+          <img src="Nikhil-Companies/optum.png">
+          <img src="Nikhil-Companies/pwc.png">
+          <img src="Nikhil-Companies/rinex.png">
+          <img src="Nikhil-Companies/sutherland.png">
+          <img src="Nikhil-Companies/tcs.png">
+          <img src="Nikhil-Companies/tech mahindra.png">
+          <img src="Nikhil-Companies/teleperformance.png">
+          <img src="Nikhil-Companies/uber.png">
+          <img src="Nikhil-Companies/virtusa.png">
+          <img src="Nikhil-Companies/wipro.png">
+          <img src="Nikhil-Companies/zentree labs.png">
+          <img src="Nikhil-Companies/zepto.png">
+          <img src="Nikhil-Companies/gemcontact.png">
+        </div>
+      </div>
+
+      <div class="dots" id="jobDots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <!-- RIGHT INFO -->
+    <div class="about-info">
+      <h2>Jobs</h2>
+
+      <ul>
+        <li>✔ Top MNC Hiring</li>
+        <li>✔ IT & Non-IT Jobs</li>
+        <li>✔ Freshers & Experienced</li>
+      </ul>
+
+      <p>Apply for top companies and kickstart your career.</p>
+
+      <button onclick="openForm('job')">Apply Now</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- 🎓 COLLEGE SEC 4-->
+<div class="section" id="colleges">
+
+  <div class="about-container">
+
+    <!-- LEFT SLIDER -->
+    <div>
+      <div class="about-slider" id="clgSlider">
+        <div class="about-track">
+          <img src="Nikhil-Colleges/bharath university.png">
+          <img src="Nikhil-Colleges/dhanalakshmi.png">
+          <img src="Nikhil-Colleges/dr-.mgr.png">
+          <img src="Nikhil-Colleges/hindhustan.png">
+          <img src="Nikhil-Colleges/kalasalingam.png">
+          <img src="Nikhil-Colleges/satyabhama.png">
+          <img src="Nikhil-Colleges/saveetha.png">
+          <img src="Nikhil-Colleges/srm college.png">
+          <img src="Nikhil-Colleges/veltech.png">
+          <img src="Nikhil-Colleges/vit.png">
+        </div>
+      </div>
+
+      <div class="dots">
+  <span class="dot active"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
+
+    </div>
+
+    <!-- RIGHT INFO -->
+    <div class="about-info">
+      <h2>Colleges</h2>
+
+      <ul>
+        <li>✔ Top Universities</li>
+        <li>✔ Direct Admissions</li>
+        <li>✔ Scholarships Available</li>
+      </ul>
+
+      <p>Get admission in best colleges with full support.</p>
+
+      
+    <button onclick="openForm('college')">Apply Now</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- 💰 PAYROLL SEC-5 -->
+<div class="section" id="payroll">
+
+  <div class="about-container">
+
+    <!-- LEFT SLIDER -->
+    <div>
+      <div class="about-slider">
+        <div class="about-track">
+          <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f">
+          <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df">
+        </div>
+      </div>
+
+      <div class="dots">
+  <span class="dot active"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="about-info">
+      <h2>Payroll</h2>
+
+      <p>Coming soon advanced payroll services.</p>
+
+      <button>Apply Now</button> <!-- NO FORM -->
+    </div>
+
+  </div>
+
+</div>
+
+<!-- 🎯 TRACK RECORDS SEC-6 -->
+<div class="section" id="companies">
+
+  <div style="width:100%; max-width:1200px;">
+
+    <!-- 🔝 TOP PART -->
+    <h2 style="margin-bottom:20px;">Our Companies</h2>
+
+    <div class="track-grid">
+
+      <div class="track-card">
+        <img src="Nikhil-Companies/amazon.png">
+        <div class="track-overlay">
+          <h3> AMAZON 📦</h3>
+          <p>✔ We Connect, Amazon Hires<br>✔ Your Tech Journey Starts Here</p>
+        </div>
+      </div>
+
+      <div class="track-card">
+        <img src="Nikhil-Companies/infosys.png">
+        <div class="track-overlay">
+          <h3>INFOSYS</h3>
+          <p>✔ Next-Gen Ready.<br>✔ Bridging Dreams to Infosys. 🔗</p>
+        </div>
+      </div>
+
+      <div class="track-card">
+        <img src="Nikhil-Companies/acess health care.png">
+        <div class="track-overlay">
+          <h3>acess health care</h3>
+          <p>✔ Healthcare Bound<br>✔ Healthcare Career Hub</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 🔻 BOTTOM PART -->
+    <h2 style="margin:60px 0 20px;">Our College Partners</h2>
+
+    <p style="margin-bottom:30px;">
+      We are ready to provide direct admissions and permissions with top colleges.
+    </p>
+
+    <div class="track-grid bottom">
+
+      <div class="track-card job-style">
+        <img src="Nikhil-Colleges/srm college.png">
+        <div class="job-overlay">
+          <h3>Direct Admissions</h3>
+        </div>
+      </div>
+
+      <div class="track-card job-style">
+        <img src="Nikhil-Colleges/veltech.png">
+        <div class="job-overlay">
+          <h3>Management Quota</h3>
+        </div>
+      </div>
+
+      <div class="track-card job-style">
+        <img src="Nikhil-Colleges/vit.png">
+        <div class="job-overlay">
+          <h3>Instant Approvals</h3>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- 🤝 CLIENTS sec-7 -->
+<!-- 🌟 UNIQUE INTERACTIVE SECTION (SEC-7 UPGRADE) -->
+<div class="section unique-sec" id="why">
+
+  <div class="unique-container">
+
+    <h1 class="unique-title">Why Choose Us</h1>
+
+    <!-- AUTO MOVING CARDS -->
+    <div class="auto-scroll">
+
+      <div class="scroll-track">
+
+        <div class="u-card">🚀 Fast Placements</div>
+        <div class="u-card">🏢 Top Companies</div>
+        <div class="u-card">🎓 College Support</div>
+        <div class="u-card">💼 HR Services</div>
+        <div class="u-card">🌍 Trusted Network</div>
+
+        <!-- duplicate for smooth loop -->
+        <div class="u-card">🚀 Fast Placements</div>
+        <div class="u-card">🏢 Top Companies</div>
+        <div class="u-card">🎓 College Support</div>
+        <div class="u-card">💼 HR Services</div>
+        <div class="u-card">🌍 Trusted Network</div>
+
+      </div>
+
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      
+      <div class="scroll-track">
+
+        <div class="u-card">⚡ Priority Hiring</div>
+<div class="u-card">🏢 Fortune 500 Ties</div>
+<div class="u-card">🎓 Skill Bridging</div>
+<div class="u-card">💼 Managed Staffing</div>
+<div class="u-card">🌍 Verified Credentials</div>
+
+<div class="u-card">⚡ Priority Hiring</div>
+<div class="u-card">🏢 Fortune 500 Ties</div>
+<div class="u-card">🎓 Skill Bridging</div>
+<div class="u-card">💼 Managed Staffing</div>
+<div class="u-card">🌍 Verified Credentials</div>
+
+      </div>
+
+
+      <div class="testimonials">
+  <div class="t-track">
+    <div class="t-card">⭐ "Got placed in 15 days!" – Ramesh</div>
+    <div class="t-card">⭐ "Best consultancy support" – Sneha</div>
+    <div class="t-card">⭐ "Direct admission success" – Rahul</div>
+  </div>
+</div>
+
+      <div class="particles"></div>
+
+    </div>
+
+    <!-- CURSOR FOLLOW EFFECT TEXT -->
+    <p class="cursor-text">Move your cursor 👇</p>
+
+    <div id="cursorGlow"></div>
+
+  </div>
+
+</div>
+
+<!-- 📞 CONTACT -->
+<!-- 📞 CONTACT + FOOTER -->
+<div class="section" id="contact" style="background:#0f2027; color:#fff; flex-direction:column;">
+
+  <h2>Contact Us</h2>
+  <p style="margin-bottom:30px;">Reach out to us for jobs, admissions & support.</p>
+
+  <div class="contact-container">
+
+    <!-- LEFT INFO -->
+    <div class="contact-info glass">
+      <h3>📍 Office Details</h3>
+
+      <p>🏢 Santhoshi Matha Consultancy</p>
+      <p>📍 Hyderabad, India</p>
+      <p>📞 +91 98765 43210</p>
+      <p>📧 support@santhoshimatha.com</p>
+
+      <div class="socials">
+        <span>🌐 Follow Us:</span><br>
+        <a href="https://www.instagram.com/santoshi_matha_consultancy?igsh=dmJyMXR1NHpoNXFz">Instagram</a> |
+        <a href="#">+919100480977</a> |
+        <a href="https://chat.whatsapp.com/KvkNXpSkvjgGuvmdraiQMt">join our whatsapp community</a>
+      </div>
+<br>
+       <div>
+      <span> 🏢 Address : </span><br>
+      <a style="color: #50b2e8;" href="">SANTHOSHI MATHA MAN POWER CONSULTANCY <br>
+        H-NO : 8-40/1/1 ANNAPURNA COLONY, MEDIPALLY,NAGOLE,UPPAL,MEDCHAL(MALKAJGIRI)</a>
+    </div>
+
+    <h3>💬 Contact Us</h3>
+  <p>Click below to send your details</p>
+
+  <button onclick="openForm('contact')">Send Message</button>
+</div>
+
+  </div>
+
+  <!-- FOOTER BOTTOM -->
+  <div class="footer-bottom">
+    © 2026 Santhoshi Matha Consultancy | All Rights Reserved 🚀
+  </div>
+
+    </div>
+
+
+  </div>
+
+<!-- 🌟 FORM OVERLAY -->
+<div id="formOverlay">
+  <div id="formBox">
+    <h2 id="formTitle">Form</h2>
+
+    <div id="formFields"></div>
+
+    <button onclick="submitForm()">Submit</button>
+    <button onclick="closeForm()">Cancel</button>
+  </div>
+</div>
+
+</div>
+
+<!-- 👤 PROFILE MODAL -->
+<div id="profileModal" class="profile-modal">
+
+  <div class="profile-card">
+
+    <h2>👤 Profile Dashboard</h2>
+
+    <!-- USER INFO -->
+    <div class="profile-box">
+      <p><b>Name:</b> <span id="profileName"></span></p>
+      <p><b>Email:</b> <span id="profileEmail"></span></p>
+      <p><b>Mobile:</b> <span id="profileMobile"></span></p>
+      <p><b>Status:</b> <span id="profileStatus"></span></p>
+      <p><b>Role:</b> <span id="profileRole"></span></p>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="profile-actions">
+      <button onclick="editProfile()">✏️ Edit</button>
+      <button onclick="openForm('job')">📄 Apply Job</button>
+      <button onclick="logout()" style="background:red;">Logout</button>
+      <button onclick="closeProfile()">Close</button>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="aiOrb"></div>
+
+<div id="robot" onclick="toggleAI()">
+
+  <!-- glow ring -->
+  <div class="robot-ring"></div>
+
+  <!-- face -->
+  <div class="robot-face">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="mouth"></div>
+  </div>
+
+  <!-- floating label -->
+  <div class="robot-tag">AI</div>
+
+  <!-- panel unchanged -->
+  <div id="aiPanel">
+    <h4>🤖 AI Assistant</h4>
+    <p onclick="goToSection('jobs')">💼 Find Jobs</p>
+    <p onclick="goToSection('colleges')">🎓 Colleges</p>
+    <p onclick="openForm('job')">⚡ Quick Apply</p>
+    <p onclick="startVoice()">🎤 Talk to AI</p>
+    <p onclick="aiSuggest()">🧠 Suggest Me</p>
+  </div>
+
+</div>
+
+
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+// 🔥 CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyC8Gm9YHSl1biyUTAhz0h5NRF_9oTLEE0c",
+  authDomain: "santhoshi-matha-consulta-594da.firebaseapp.com",
+  projectId: "santhoshi-matha-consulta-594da",
+  storageBucket: "santhoshi-matha-consulta-594da.firebasestorage.app",
+  messagingSenderId: "1046832274742",
+  appId: "1:1046832274742:web:2b6aad013799564420e797",
+  measurementId: "G-PSCZPPBB5C"
+};
+
+
+// INIT
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+
+const ADMIN_EMAIL = "youradmin@gmail.com";
+
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  // ALL INIT CODE HERE SAFE
+});
+
+
+window.auth = auth;
+window.db = db;
+window.storage = storage;
+
+let splashDone = false;
+let isRegister = false;
+
+// ===============================
+// 🔐 CLEAN AUTH SYSTEM (FIXED)
+// ===============================
+
+let currentUser = null;
+
+
+const provider = new GoogleAuthProvider();
+
+async function googleLogin(){
+  try{
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    const userRef = doc(db, "users", user.uid);
+    const snap = await getDoc(userRef);
+
+    // 🆕 NEW USER
+    if(!snap.exists()){
+      let mobile = prompt("Enter Mobile Number 📱");
+
+      if(!mobile){
+        alert("Mobile is required ❌");
+        return;
+      }
+
+      await setDoc(userRef, {
+        displayName: user.displayName || "User",
+        email: user.email,
+        mobile: mobile,
+        photoURL: user.photoURL,
+        role: user.email === ADMIN_EMAIL ? "admin" : "user",
+        createdAt: Date.now()
+      });
+    }
+
+  }catch(err){
+    alert(err.message);
+  }
+}
+
+
+
+// ===============================
+// 🔄 AUTO LOGIN (24H SESSION)
+// ===============================
+
+// ===============================
+// 🚪 LOGOUT FIXED
+// ===============================
+function logout() {
+  signOut(auth);
+  localStorage.removeItem("session");
+  location.reload();
+}
+
+/* 🔥 AUTH STATE & PROFILE SYNC */
+onAuthStateChanged(auth, async (user) => {
+
+  const splash = document.getElementById("splash");
+  if (splash) splash.style.display = "none";
+
+  if (!user) {
+    showAuth();
+    return;
+  }
+
+  try {
+    const snap = await getDoc(doc(db, "users", user.uid));
+
+    if (!snap.exists()) {
+      showAuth();
+      return;
+    }
+
+    currentUser = snap.data();
+
+    // 🔴 ONLY redirect if admin
+    if (currentUser.role === "admin") {
+      window.location.href = "admin.html";
+      return;
+    }
+
+    // ✅ USER FLOW
+    document.getElementById("authScreen").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+
+    updateProfileUI();
+
+  } catch (err) {
+    console.error(err);
+    showAuth();
+  }
+
+});
+
+
+
+function updateAuthUI(){
+  const authScreen = document.getElementById("authScreen");
+
+  if(currentUser){
+    authScreen.style.display = "none";
+  } else {
+    authScreen.style.display = "flex";
+  }
+}
+
+
+
+
+
+/* 👀 SHOW AUTH & DASHBOARD TRANSITIONS */
+function showAuth(){
+    const authEl = document.getElementById("authScreen");
+    authEl.style.display = "flex"; 
+    setTimeout(() => authEl.classList.add("show"), 50);
+}
+
+function enterDashboard(){
+    document.getElementById("splash").style.display = "none";
+    document.getElementById("authScreen").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    document.getElementById("authScreen").reset?.();
+    document.body.style.background = "#fff";
+
+    updateProfileUI();
+    updateAuthUI();
+}
+
+/* 🚀 SPLASH FLOW (STRICT SYNC) */
+window.addEventListener("load", () => {
+  const splash = document.getElementById("splash");
+
+  setTimeout(() => {
+    splash.classList.add("fadeOut");
+
+    setTimeout(() => {
+      splash.style.display = "none";
+    }, 800);
+
+  }, 3000);
+});
+
+
+
+/* 🔥 AUTH STATE */
+/* 🔥 AUTH STATE & PROFILE SYNC */
+
+/* 👤 GUEST */
+function enterGuest(){
+  window.isGuest = true;
+  currentUser = {displayName:"Guest"};
+  enterDashboard();
+}
+
+
+
+window.addEventListener("beforeunload", ()=>{
+  let session = JSON.parse(localStorage.getItem("session"));
+  if(session){
+    session.time = Date.now(); // update last active
+    
+  }
+});
+
+
+
+
+const sections = document.querySelectorAll(".section");
+
+function revealSections(){
+  const trigger = window.innerHeight * 0.85;
+
+  sections.forEach((sec)=>{
+    const rect = sec.getBoundingClientRect();
+
+    if(rect.top < trigger){
+      sec.style.transition = "all 1s cubic-bezier(0.22,1,0.36,1)";
+      sec.classList.add("show");
+    }
+  });
+}
+
+
+let scrollTimeout;
+
+window.addEventListener("scroll", ()=>{
+  if(scrollTimeout) return;
+
+  scrollTimeout = setTimeout(()=>{
+    revealSections();
+    scrollTimeout = null;
+  },100);
+});
+
+// run once on load
+revealSections();
+
+
+async function editProfile(){
+  let newName = prompt("Enter Name", currentUser?.displayName);
+  let newMobile = prompt("Enter Mobile", currentUser?.mobile);
+
+  if(!newName || !newMobile) return;
+
+  try {
+    const uid = auth.currentUser.uid;
+    const userRef = doc(db, "users", uid);
+
+    await updateDoc(userRef, {
+      displayName: newName,
+      mobile: newMobile,
+      updatedAt: Date.now()
+    });
+
+    alert("Profile Updated ✅");
+    location.reload(); // Data refresh kosam
+  } catch(err) {
+    alert("Update failed: " + err.message);
+  }
+}
+
+
+function openForm(type){
+
+  if(!currentUser){
+    alert("Please login to apply ❌");
+    showAuth();
+    return;
+  }
+
+  const overlay = document.getElementById("formOverlay");
+  const box = document.getElementById("formBox");
+
+  overlay.style.display = "flex";
+  box.style.transform = "scale(0.8)";
+
+  setTimeout(()=>{
+    box.style.transform = "scale(1)";
+  },50);
+
+  let html = "";
+
+  if(type === "job"){
+    document.getElementById("formTitle").innerText = "Job Application";
+
+    html = `
+    <input placeholder="Full Name">
+    <input placeholder="Mobile Number">
+    <input placeholder="Email">
+    <input placeholder="Qualification">
+    <input placeholder="Year of Passing">
+    <input placeholder="Experience (Fresher/Exp)">
+    <input placeholder="Preferred Company">
+    <input placeholder="Current Location">
+    <input placeholder="Required Job Location">
+    `;
+  }
+
+  else if(type === "college"){
+    document.getElementById("formTitle").innerText = "College Application";
+
+    html = `
+    <input placeholder="Name">
+    <input placeholder="Father Name">
+    <input placeholder="Mobile">
+    <input placeholder="Email">
+    <input placeholder="Inter/School Name">
+    <input placeholder="Percentage">
+    <input placeholder="Year of Passing">
+    <input placeholder="Preferred College">
+    <input placeholder="Address">
+    <input placeholder="DOB">
+    `;
+  }
+
+  else if(type === "contact"){
+    document.getElementById("formTitle").innerText = "Contact Form";
+
+    html = `
+    <input placeholder="Full Name">
+    <input placeholder="Mobile Number">
+    <input placeholder="Email Address">
+    <input placeholder="Subject">
+    <textarea placeholder="Explain your requirement"></textarea>
+    <input placeholder="Preferred Contact Time">
+    <input placeholder="City / Location">
+    `;
+  }
+
+  document.getElementById("formFields").innerHTML = html;
+}
+
+function closeForm(){
+  document.getElementById("formOverlay").style.display = "none";
+}
+
+async function submitForm(){
+
+  let inputs = document.querySelectorAll("#formFields input, #formFields textarea");
+
+  let data = {
+    type: document.getElementById("formTitle").innerText,
+    createdAt: Date.now(),
+    status: "new",
+    userEmail: currentUser?.email || "guest"
+  };
+
+  // 🔥 MAP BASED ON FORM TYPE
+  if(data.type === "Job Application"){
+    data.name = inputs[0].value;
+    data.mobile = inputs[1].value;
+    data.email = inputs[2].value;
+    data.qualification = inputs[3].value;
+    data.yop = inputs[4].value;
+    data.experience = inputs[5].value;
+    data.company = inputs[6].value;
+    data.location = inputs[7].value;
+    data.jobLocation = inputs[8].value;
+  }
+
+  else if(data.type === "College Application"){
+    data.name = inputs[0].value;
+    data.fatherName = inputs[1].value;
+    data.mobile = inputs[2].value;
+    data.email = inputs[3].value;
+    data.school = inputs[4].value;
+    data.percentage = inputs[5].value;
+    data.yop = inputs[6].value;
+    data.college = inputs[7].value;
+    data.address = inputs[8].value;
+    data.dob = inputs[9].value;
+  }
+
+  else if(data.type === "Contact Form"){
+    data.name = inputs[0].value;
+    data.mobile = inputs[1].value;
+    data.email = inputs[2].value;
+    data.subject = inputs[3].value;
+    data.message = inputs[4].value;
+    data.time = inputs[5].value;
+    data.city = inputs[6].value;
+  }
+
+  try{
+    await setDoc(doc(collection(db, "applications")), data);
+    alert("Application Submitted ✅");
+    closeForm();
+  }catch(err){
+    alert(err.message);
+  }
+}
+
+function autoSlider(container){
+
+  let index = 0;
+
+  const track = container.querySelector(".about-track");
+  const slides = track.children;
+  const dots = container.querySelectorAll(".dot");
+
+  setInterval(()=>{
+
+    index++;
+
+    if(index >= slides.length){
+      index = 0;
+    }
+
+    track.style.transform = `translateX(-${index * 100}%)`;
+
+    // dots update
+    if(dots.length && dots[index]){
+  dots.forEach(d=>d.classList.remove("active"));
+  dots[index].classList.add("active");
+}
+
+  },3000);
+}
+
+
+document.querySelectorAll(".about-slider").forEach(slider=>{
+  autoSlider(slider.parentElement);
+});
+
+
+
+// 🔥 MAKE FUNCTIONS GLOBAL
+window.openForm = openForm;
+window.closeForm = closeForm;
+window.submitForm = submitForm;
+
+
+
+
+function animateCount(id, target){
+  let el = document.getElementById(id);
+  let count = 0;
+
+  let interval = setInterval(()=>{
+    count += Math.ceil(target / 50);
+
+    if(count >= target){
+      count = target;
+      clearInterval(interval);
+    }
+
+    el.innerText = count + "+";
+  },40);
+}
+
+// 🖱️ CURSOR TRACKER
+const glow = document.getElementById("cursorGlow");
+
+document.addEventListener("mousemove", (e)=>{
+  if(glow){
+    glow.style.left = e.pageX + "px";
+    glow.style.top = e.pageY + "px";
+  }
+});
+
+
+const cursor = document.querySelector(".cursor-light");
+
+if (cursor) {
+  document.addEventListener("mousemove", (e) => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+  });
+}
+
+
+
+function scrollToSection(){
+  document.querySelectorAll(".section")[1].scrollIntoView({
+    behavior:"smooth"
+  });
+}
+
+window.addEventListener("scroll", ()=>{
+
+  document.querySelectorAll(".section").forEach(sec=>{
+    let rect = sec.getBoundingClientRect();
+
+    if(rect.top < window.innerHeight/2 && rect.bottom > 0){
+      sec.classList.add("active");
+    }else{
+      sec.classList.remove("active");
+    }
+  });
+
+});
+
+const topbar = document.querySelector(".topbar");
+
+window.addEventListener("scroll", ()=>{
+  if(window.scrollY > 50){
+    topbar.classList.add("scrolled");
+  }else{
+    topbar.classList.remove("scrolled");
+  }
+});
+
+const navItems = document.querySelectorAll(".nav-menu span");
+
+window.addEventListener("scroll", ()=>{
+
+  let current = "";
+
+  document.querySelectorAll(".section").forEach(sec=>{
+    const top = window.scrollY;
+    const offset = sec.offsetTop - 150;
+    const height = sec.offsetHeight;
+
+    if(top >= offset && top < offset + height){
+      current = sec.getAttribute("id");
+    }
+  });
+
+  navItems.forEach(item=>{
+    item.classList.remove("active");
+
+    if(item.getAttribute("onclick").includes(current)){
+      item.classList.add("active");
+    }
+  });
+
+});
+
+function goToSection(id){
+  const section = document.getElementById(id);
+
+  if(section){
+    section.scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+}
+
+function toggleMenu(){
+  document.querySelector('.nav-menu').classList.toggle('show');
+}
+
+window.toggleMenu = toggleMenu;
+
+function toggleProfile(){
+  document.getElementById("profileMenu").classList.toggle("show");
+}
+
+window.toggleProfile = toggleProfile;
+
+window.addEventListener("scroll", ()=>{
+  let scrollTop = window.scrollY;
+  let height = document.body.scrollHeight - window.innerHeight;
+  let progress = (scrollTop / height) * 100;
+
+  document.getElementById("progressBar").style.width = progress + "%";
+});
+
+function updateProfileUI(){
+document.getElementById("profileName").innerText =
+  currentUser?.displayName || "User";
+
+document.getElementById("profileEmail").innerText =
+  currentUser?.email || "-";
+
+document.getElementById("profileMobile").innerText =
+  currentUser?.mobile || "-";
+
+document.getElementById("profileRole").innerText =
+  currentUser?.role || "user";
+
+
+  document.getElementById("profileStatus").innerText =
+    window.isGuest ? "Guest Mode" : "Logged In";
+}
+
+
+
+function closeProfile(){
+  document.getElementById("profileModal").style.display = "none";
+}
+
+
+document.querySelectorAll(".nav-menu span").forEach(item=>{
+  item.addEventListener("click", ()=>{
+    document.querySelector(".nav-menu").classList.remove("show");
+  });
+});
+
+function loadProfile(){
+  if(!currentUser) return;
+
+  document.getElementById("profileName").innerText = currentUser.displayName || "User";
+
+  // 🔥 THIS IS THE FIX (LOAD DP FROM FIRESTORE DATA)
+  if(currentUser.photoURL){
+    document.getElementById("profileDP").src = currentUser.photoURL;
+  } else {
+    document.getElementById("profileDP").src = "https://i.pravatar.cc/100";
+  }
+}
+
+
+const orb = document.getElementById("aiOrb");
+
+if (orb) {
+  document.addEventListener("mousemove", (e)=>{
+    orb.style.left = e.clientX + "px";
+    orb.style.top = e.clientY + "px";
+  });
+}
+
+document.addEventListener("mousemove", (e)=>{
+  document.querySelectorAll(".eye").forEach(eye=>{
+    const rect = eye.getBoundingClientRect();
+
+    const x = rect.left + rect.width/2;
+    const y = rect.top + rect.height/2;
+
+    const angle = Math.atan2(e.clientY - y, e.clientX - x);
+
+    const moveX = Math.cos(angle) * 5;
+    const moveY = Math.sin(angle) * 5;
+
+    eye.style.transform = `translate(${moveX}px, ${moveY}px)`;
+  });
+});
+
+document.querySelectorAll("button, .track-card").forEach(el=>{
+  el.addEventListener("mousemove", (e)=>{
+    const rect = el.getBoundingClientRect();
+
+    const x = e.clientX - rect.left - rect.width/2;
+    const y = e.clientY - rect.top - rect.height/2;
+
+    el.style.transform = `translate(${x*0.2}px, ${y*0.2}px) scale(1.05)`;
+  });
+
+  el.addEventListener("mouseleave", ()=>{
+    el.style.transform = "translate(0,0) scale(1)";
+  });
+});
+
+// ✨ CLICK SPARKLE EFFECT (HOLLYWOOD LEVEL)
+// ✨ PREMIUM SPARKLE BURST
+document.addEventListener("click", (e)=>{
+
+  for(let i=0; i<14; i++){
+
+    let s = document.createElement("div");
+    s.className = "sparkle";
+
+    s.style.left = e.pageX + "px";
+    s.style.top = e.pageY + "px";
+
+    let angle = Math.random() * 2 * Math.PI;
+    let distance = Math.random() * 140 + 40;
+
+    let x = Math.cos(angle) * distance + "px";
+    let y = Math.sin(angle) * distance + "px";
+
+    s.style.setProperty("--x", x);
+    s.style.setProperty("--y", y);
+
+    document.body.appendChild(s);
+
+    setTimeout(()=> s.remove(), 1000);
+  }
+});
+
+let ticking = false;
+
+function updateParallax(){
+
+  const scrollY = window.scrollY;
+
+  document.querySelectorAll("[data-speed]").forEach(el=>{
+
+    const speed = parseFloat(el.dataset.speed);
+    const rect = el.getBoundingClientRect();
+    const offset = rect.top + window.scrollY;
+
+    const y = (scrollY - offset) * speed;
+
+    el.style.transform = `translate3d(0, ${y}px, 0)`;
+  });
+
+  ticking = false;
+}
+
+window.addEventListener("scroll", ()=>{
+  if(!ticking){
+    requestAnimationFrame(updateParallax);
+    ticking = true;
+  }
+});
+
+// 🔥 PROFILE TILT EFFECT (MOTION)
+const card = document.querySelector(".profile-card");
+
+document.addEventListener("mousemove", (e)=>{
+  if(!card) return;
+
+  const rect = card.getBoundingClientRect();
+  const x = e.clientX - rect.left - rect.width/2;
+  const y = e.clientY - rect.top - rect.height/2;
+
+  const rotateX = (-y / 20);
+  const rotateY = (x / 20);
+
+  card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+});
+
+document.addEventListener("mouseleave", ()=>{
+  if(card) card.style.transform = "rotateX(0) rotateY(0)";
+});
+
+function createProfileParticles(){
+  const container = document.querySelector(".profile-particles");
+
+  if(!container) return;
+
+  for(let i=0;i<20;i++){
+    let p = document.createElement("span");
+
+    p.style.left = Math.random()*100 + "%";
+    p.style.animationDuration = (Math.random()*5+3)+"s";
+
+    container.appendChild(p);
+  }
+}
+
+// call when profile opens
+function openProfile(){
+  document.getElementById("profileModal").style.display = "flex";
+  createProfileParticles();
+}
+
+function showAuthMsg(text, type="success"){
+  const msg = document.getElementById("authMsg");
+  if(!msg) return;
+
+  msg.innerText = text;
+  msg.className = "auth-msg show " + type;
+
+  setTimeout(()=>{
+    msg.classList.remove("show");
+  }, 2500);
+}
+
+function setLoading(state){
+  const btn = document.querySelector("#authScreen button");
+
+  if(state){
+    btn.innerText = "Processing...";
+    btn.disabled = true;
+  }else{
+    btn.innerText = isLogin ? "Login" : "Register";
+    btn.disabled = false;
+  }
+}
+
+function toggleRobotMenu(){
+  document.getElementById("robotMenu").classList.toggle("show");
+}
+window.toggleRobotMenu = toggleRobotMenu;
+
+function toggleAI(){
+  document.getElementById("aiPanel").classList.toggle("show");
+}
+window.toggleAI = toggleAI;
+
+function aiSuggest(){
+  const suggestions = [
+    "You should apply for IT Jobs 💼",
+    "Best colleges: SRM, VIT 🎓",
+    "High demand skill: Java + React ⚡",
+    "Top companies hiring now 🚀"
+  ];
+
+  alert("🤖 AI Suggestion:\n\n" +
+    suggestions[Math.floor(Math.random()*suggestions.length)]
+  );
+}
+window.aiSuggest = aiSuggest;
+
+function startVoice(){
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if(!SpeechRecognition){
+    alert("Voice not supported in this browser");
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.start();
+
+  recognition.onresult = (e)=>{
+    let text = e.results[0][0].transcript.toLowerCase();
+
+    if(text.includes("job")) goToSection('jobs');
+    else if(text.includes("college")) goToSection('colleges');
+    else if(text.includes("apply")) openForm('job');
+    else alert("🤖 AI: I heard - " + text);
+  };
+}
+
+window.startVoice = startVoice;
+
+setTimeout(()=>{
+  const msg = document.createElement("div");
+  msg.innerText = "🤖 Need help? Click AI Robot!";
+  msg.style = `
+    position:fixed;
+    bottom:120px;
+    right:30px;
+    background:#1E90FF;
+    color:white;
+    padding:10px 15px;
+    border-radius:10px;
+    z-index:9999;
+    box-shadow:0 0 20px #1E90FF;
+  `;
+
+  document.body.appendChild(msg);
+
+  setTimeout(()=> msg.remove(), 5000);
+}, 4000);
+
+document.getElementById("robot").addEventListener("mousemove", (e)=>{
+  const robot = document.getElementById("robot");
+  const rect = robot.getBoundingClientRect();
+
+  const x = e.clientX - rect.left - rect.width/2;
+  const y = e.clientY - rect.top - rect.height/2;
+
+  robot.style.transform = `rotate(${x/10}deg) scale(1.05)`;
+});
+
+document.getElementById("robot").addEventListener("mouseleave", ()=>{
+  document.getElementById("robot").style.transform = "rotate(0) scale(1)";
+});
+
+let robot = document.getElementById("robot");
+
+let isDragging = false;
+let offsetX = 0;
+let offsetY = 0;
+
+/* 🖱️ MOUSE DOWN */
+robot.addEventListener("mousedown", (e)=>{
+  isDragging = true;
+
+  offsetX = e.clientX - robot.getBoundingClientRect().left;
+  offsetY = e.clientY - robot.getBoundingClientRect().top;
+
+  robot.style.transition = "none";
+});
+
+/* 🖱️ MOVE */
+document.addEventListener("mousemove", (e)=>{
+  if(!isDragging) return;
+
+  let x = e.clientX - offsetX;
+  let y = e.clientY - offsetY;
+
+  // boundary fix
+  x = Math.max(0, Math.min(window.innerWidth - 90, x));
+  y = Math.max(0, Math.min(window.innerHeight - 90, y));
+
+  robot.style.left = x + "px";
+  robot.style.top = y + "px";
+  robot.style.bottom = "auto";
+  robot.style.right = "auto";
+});
+
+/* 🖱️ RELEASE */
+document.addEventListener("mouseup", ()=>{
+  isDragging = false;
+  robot.style.transition = "0.2s";
+});
+
+robot.addEventListener("touchstart", (e)=>{
+  isDragging = true;
+
+  let touch = e.touches[0];
+
+  offsetX = touch.clientX - robot.getBoundingClientRect().left;
+  offsetY = touch.clientY - robot.getBoundingClientRect().top;
+});
+
+document.addEventListener("touchmove", (e)=>{
+  if(!isDragging) return;
+
+  let touch = e.touches[0];
+
+  let x = touch.clientX - offsetX;
+  let y = touch.clientY - offsetY;
+
+  x = Math.max(0, Math.min(window.innerWidth - 90, x));
+  y = Math.max(0, Math.min(window.innerHeight - 90, y));
+
+  robot.style.left = x + "px";
+  robot.style.top = y + "px";
+  robot.style.bottom = "auto";
+  robot.style.right = "auto";
+});
+
+document.addEventListener("touchend", ()=>{
+  isDragging = false;
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+
+  const topbar = document.querySelector(".topbar");
+
+  window.addEventListener("scroll", ()=>{
+    if(topbar && window.scrollY > 50){
+      topbar.classList.add("scrolled");
+    } else if(topbar){
+      topbar.classList.remove("scrolled");
+    }
+  });
+
+});
+
+// smooth section highlight (pro UX)
+window.addEventListener("scroll", () => {
+  document.querySelectorAll(".section").forEach(sec => {
+    let top = window.scrollY;
+    let offset = sec.offsetTop - 200;
+    let height = sec.offsetHeight;
+
+    if(top >= offset && top < offset + height){
+      sec.classList.add("active");
+    } else {
+      sec.classList.remove("active");
+    }
+  });
+});
+
+document.querySelectorAll("[data-speed]").forEach(el => {
+
+  // ❌ TOPBAR SKIP
+  if(el.classList.contains("topbar")) return;
+
+  let speed = el.dataset.speed;
+
+  window.addEventListener("scroll", () => {
+    let y = window.scrollY * speed;
+    el.style.transform = `translateY(${y}px)`;
+  });
+
+});
+
+
+
+
+
+
+
+// 🔥 MAKE ALL BUTTON FUNCTIONS GLOBAL
+
+window.enterGuest = enterGuest;
+
+
+
+
+// 🔥 MAKE ALL BUTTON FUNCTIONS GLOBAL (FULL FIX)
+
+window.goToSection = goToSection;
+window.openForm = openForm;
+window.closeForm = closeForm;
+window.submitForm = submitForm;
+window.openProfile = openProfile;
+window.closeProfile = closeProfile;
+window.logout = logout;
+
+
+window.googleLogin = googleLogin;
+
+
+
+window.scrollToSection = scrollToSection;
+window.toggleMenu = toggleMenu;
+window.toggleProfile = toggleProfile;
+
+
+
+window.addEventListener("DOMContentLoaded", () => {
+document.getElementById("authTitle").innerText = "Login";
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js")
+    .then(() => console.log("PWA Ready ✅"))
+    .catch(err => console.log("PWA Error ❌", err));
+}
+</script>
+
+
+<div class="cursor-light"></div>
+
+</body>
+</html>
