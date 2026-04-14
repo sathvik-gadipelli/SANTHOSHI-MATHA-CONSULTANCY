@@ -8,6 +8,7 @@ const urlsToCache = [
   BASE + "manifest.json",
   BASE + "icon-192.png",
   BASE + "icon-512.png"
+  
 ];
 
 self.addEventListener("install", event => {
@@ -24,10 +25,12 @@ self.addEventListener("activate", event => {
     )
   );
   self.clients.claim();
+  
 });
 
 self.addEventListener("fetch", event => {
   event.respondWith(
     caches.match(event.request).then(res => res || fetch(event.request))
   );
+  
 });
