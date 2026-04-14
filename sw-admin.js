@@ -1,3 +1,4 @@
+
 const CACHE_NAME = "admin-cache-v1";
 
 const urlsToCache = [
@@ -24,11 +25,15 @@ self.addEventListener("activate", event => {
       )
     )
   );
+  
   self.clients.claim();
+  
 });
 
 self.addEventListener("fetch", event => {
   event.respondWith(
     caches.match(event.request).then(res => res || fetch(event.request))
+    
   );
+  
 });
