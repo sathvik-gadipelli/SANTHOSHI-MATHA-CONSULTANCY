@@ -631,6 +631,12 @@ window.logout = async () => {
 };
 
 
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./sw-admin.js")
+    .then(() => console.log("Admin SW Registered"))
+    .catch(err => console.log(err));
+}
 </script>
 
 </body>
