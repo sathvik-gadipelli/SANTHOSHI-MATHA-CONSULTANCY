@@ -3526,7 +3526,9 @@ window.addEventListener("scroll", () => {
     } else {
       sec.classList.remove("active");
     }
+  
   });
+
 });
 
 document.querySelectorAll("[data-speed]").forEach(el => {
@@ -3542,13 +3544,8 @@ document.querySelectorAll("[data-speed]").forEach(el => {
   });
 
 });
-
-// 🔥 MAKE ALL BUTTON FUNCTIONS GLOBAL
-
+  
 window.enterGuest = enterGuest;
-
-
-
 
 // 🔥 MAKE ALL BUTTON FUNCTIONS GLOBAL (FULL FIX)
 
@@ -3572,16 +3569,13 @@ document.getElementById("authTitle").innerText = "Login";
 
 });
 
-
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js")
     .then(reg => console.log("SW active:", reg.scope))
     .catch(err => console.log("SW error:", err));
 }
 
-
 </script>
-
 
 <div class="cursor-light"></div>
 
