@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Santhoshi Matha Consultancy</title>
 
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#1E90FF">
 
 <style>
@@ -3597,8 +3597,8 @@ document.getElementById("authTitle").innerText = "Login";
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js")
-    .then(() => console.log("Service Worker Registered"))
-    .catch(err => console.log("SW Error:", err));
+    .then(reg => console.log("SW active:", reg.scope))
+    .catch(err => console.log("SW error:", err));
 }
 
 
