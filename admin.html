@@ -334,14 +334,10 @@ function showDashboard() {
 
 /* AUTO LOGIN CHECK */
 
-let authHandled = false;
 
 onAuthStateChanged(auth, async (user) => {
 
   hideSplashOnce();
-
-  if(authHandled) return;   // 🔥 prevent loop
-  authHandled = true;
 
   if (!user) {
     showLogin();
@@ -349,18 +345,15 @@ onAuthStateChanged(auth, async (user) => {
   }
 
   try {
-    const snap = await getDoc(doc(db, "users", user.uid));
+    console.log("UID:", user.uid);
 
-    if (!snap.exists()) {
-      await signOut(auth);
-      showLogin();
-      return;
-    }
+    const adminRef = doc(db, "admins", user.uid);
+    const adminSnap = await getDoc(adminRef);
 
-    const data = snap.data();
+    console.log("Admin exists:", adminSnap.exists());
 
-    if (data.role !== "admin") {
-      alert("Access Denied ❌ (Admin only)");
+    if (!adminSnap.exists()) {
+      alert("Access Denied ❌ (Not Admin)");
       await signOut(auth);
       showLogin();
       return;
@@ -614,9 +607,27 @@ function updateNotiUI(){
     .join("");
 }
 
+
 window.clearNotifications = () => {
   notifications = [];
   updateNotiUI();
+};
+
+
+window.logout = async () => {
+  try {
+    await signOut(auth);
+    
+    alert("Logged out successfully ✅");
+
+    // UI reset
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("login").style.display = "flex";
+
+  } catch (error) {
+    console.error(error);
+    alert("Logout failed ❌");
+  }
 };
 
 
