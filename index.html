@@ -14,8 +14,9 @@ body{
   background:#0b0f1a; /* 🔥 deep dark */
   font-family:'Segoe UI';
   color:#e6e6e6; /* soft white */
-  }
   
+}
+
 /* SECTION CLEAN */
 .section{
   min-height:100vh;
@@ -171,6 +172,7 @@ body{
     inset 0 0 15px rgba(255,255,255,0.1);
 }
 
+
 /* TOP BAR */
 /* 🔥 PREMIUM GLASSMORPHISM TOPBAR */
 .topbar{
@@ -277,6 +279,8 @@ button{
 }
 
 /* 🔥 ABOUT FULL UPGRADE */
+
+
 
 /* 🔥 HOVER EFFECT */
 .about-slider:hover{
@@ -3523,9 +3527,7 @@ window.addEventListener("scroll", () => {
     } else {
       sec.classList.remove("active");
     }
-  
   });
-
 });
 
 document.querySelectorAll("[data-speed]").forEach(el => {
@@ -3541,8 +3543,19 @@ document.querySelectorAll("[data-speed]").forEach(el => {
   });
 
 });
-  
+
+
+
+
+
+
+
+// 🔥 MAKE ALL BUTTON FUNCTIONS GLOBAL
+
 window.enterGuest = enterGuest;
+
+
+
 
 // 🔥 MAKE ALL BUTTON FUNCTIONS GLOBAL (FULL FIX)
 
@@ -3557,22 +3570,40 @@ window.logout = logout;
 
 window.googleLogin = googleLogin;
 
+
+
 window.scrollToSection = scrollToSection;
 window.toggleMenu = toggleMenu;
 window.toggleProfile = toggleProfile;
+
+
 
 window.addEventListener("DOMContentLoaded", () => {
 document.getElementById("authTitle").innerText = "Login";
 
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js")
-    .then(reg => console.log("SW OK:", reg.scope))
-    .catch(err => console.log("SW FAIL:", err));
+    .then(reg => console.log("SW active:", reg.scope))
+    .catch(err => console.log("SW error:", err));
 }
 
+
 </script>
+
 
 <div class="cursor-light"></div>
 
