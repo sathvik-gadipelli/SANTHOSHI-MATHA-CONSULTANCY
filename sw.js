@@ -1,3 +1,4 @@
+
 const CACHE_NAME = "smc-v5";
 
 const BASE = "/SANTHOSHI-MATHA-CONSULTANCY/";
@@ -9,7 +10,7 @@ const urlsToCache = [
   BASE + "icon-192.png",
   BASE + "icon-512.png"
   
-];
+] ;
 
 self.addEventListener("install", event => {
   event.waitUntil(
