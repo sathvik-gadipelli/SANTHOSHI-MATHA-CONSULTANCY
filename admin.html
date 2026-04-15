@@ -13,11 +13,12 @@
 body{
   margin:0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg,#0f172a,#020617);
+  background: radial-gradient(circle at top,#0f172a,#020617);
   color:#fff;
+  overflow-x:hidden;
 }
 
-/* SPLASH */
+/* SPLASH ANIMATION */
 #splash{
   position:fixed;
   width:100%;
@@ -25,38 +26,27 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#000;
+  background:#020617;
   z-index:9999;
-  font-size:32px;
+  font-size:36px;
+  font-weight:bold;
   letter-spacing:2px;
-  opacity:1;
-  transition:0.5s ease;
-}
-@keyframes fade{
-  from{opacity:0.6}
-  to{opacity:1}
+  animation: glow 1.5s infinite alternate;
 }
 
-/* LOGIN */
-#login{
-  display:none;
-  height:100vh;
-  justify-content:center;
-  align-items:center;
+@keyframes glow{
+  from{opacity:0.5;}
+  to{opacity:1;}
 }
 
+/* GLASS */
 .glass{
   background:rgba(255,255,255,0.08);
   backdrop-filter:blur(25px);
   padding:40px;
   border-radius:20px;
-  box-shadow:0 0 30px rgba(0,0,0,0.5);
+  box-shadow:0 0 40px rgba(0,0,0,0.6);
   text-align:center;
-}
-
-/* DASHBOARD */
-#dashboard{
-  display:none;
 }
 
 /* SIDEBAR */
@@ -64,25 +54,26 @@ body{
   position:fixed;
   left:0;
   top:0;
-  width:240px;
+  width:250px;
   height:100%;
-  background:rgba(255,255,255,0.06);
-  backdrop-filter:blur(20px);
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(25px);
   border-right:1px solid rgba(255,255,255,0.1);
   padding:20px;
 }
 
 .sidebar h3{
   margin-bottom:20px;
+  text-align:center;
 }
 
 .sidebar button{
   width:100%;
   margin:10px 0;
-  padding:10px;
+  padding:12px;
   border:none;
-  border-radius:10px;
-  background:rgba(255,255,255,0.1);
+  border-radius:12px;
+  background:rgba(255,255,255,0.08);
   color:#fff;
   cursor:pointer;
   transition:0.3s;
@@ -90,68 +81,169 @@ body{
 
 .sidebar button:hover{
   background:#2563eb;
+  transform:scale(1.05);
 }
 
 /* MAIN */
 .main{
-  margin-left:260px;
-  padding:25px;
+  margin-left:270px;
+  padding:100px 25px 25px; /* top space for header */
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
 }
 
 /* CARDS */
 .card{
   background:rgba(255,255,255,0.08);
   padding:20px;
-  margin:10px;
-  border-radius:18px;
-  cursor:pointer;
-  backdrop-filter:blur(15px);
+  margin:12px;
+  border-radius:20px;
+  backdrop-filter:blur(20px);
   transition:0.3s;
-  box-shadow:0 10px 20px rgba(0,0,0,0.3);
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
 
 .card:hover{
-  transform:translateY(-5px) scale(1.02);
+  transform:translateY(-6px) scale(1.03);
+  box-shadow:0 15px 40px rgba(0,0,0,0.7);
 }
 
-/* MODAL */
-#userModal{
-  display:none;
-  position:fixed;
-  width:100%;
-  height:100%;
-  top:0;
-  background:rgba(0,0,0,0.8);
-  justify-content:center;
-  align-items:center;
-}
-
-#userDetails{
-  max-width:400px;
-  width:90%;
-}
-
-/* NOTIFICATION PANEL */
+/* NOTIFICATION PANEL UPGRADE */
 #notiPanel{
   position:fixed;
   top:0;
-  right:-350px;
-  width:320px;
+  right:-400px;
+  width:350px;
   height:100vh;
-  background:rgba(15,23,42,0.95);
-  backdrop-filter:blur(20px);
+  background:rgba(15,23,42,0.98);
+  backdrop-filter:blur(30px);
   padding:20px;
-  transition:0.35s ease;
+  transition:0.4s ease;
   z-index:999;
   overflow:auto;
-  box-shadow:-5px 0 20px rgba(0,0,0,0.5);
+  box-shadow:-10px 0 30px rgba(0,0,0,0.7);
 }
 
 #notiPanel.active{
   right:0;
 }
 
-/* overlay */
+/* NOTIFICATION ITEMS */
+.noti-item{
+  background:rgba(255,255,255,0.08);
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:10px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn{
+  from{transform:translateX(50px); opacity:0;}
+  to{transform:translateX(0); opacity:1;}
+}
+
+/* BADGE */
+#notiCount{
+  background:red;
+  padding:3px 8px;
+  border-radius:50%;
+}
+
+
+.topbar{
+  position:fixed;
+  left:250px;
+  right:0;
+  top:0;
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+  backdrop-filter:blur(20px);
+  background:rgba(255,255,255,0.05);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  z-index:100;
+}
+
+/* LEFT */
+.top-left h2{
+  font-size:20px;
+  font-weight:600;
+}
+
+/* CENTER SEARCH */
+.search-box{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,0.08);
+  padding:8px 14px;
+  border-radius:12px;
+  transition:0.3s;
+}
+
+.search-box input{
+  border:none;
+  outline:none;
+  background:transparent;
+  color:white;
+  width:220px;
+}
+
+.search-box:hover{
+  box-shadow:0 0 10px #2563eb;
+}
+
+/* RIGHT */
+.top-right{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+/* ICON BUTTON */
+.icon-btn{
+  position:relative;
+  background:rgba(255,255,255,0.08);
+  border:none;
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.3s;
+  color:white;
+}
+
+.icon-btn:hover{
+  background:#2563eb;
+  transform:scale(1.1);
+}
+
+/* NOTIFICATION BADGE */
+.icon-btn span{
+  position:absolute;
+  top:-5px;
+  right:-5px;
+  background:red;
+  font-size:10px;
+  padding:2px 6px;
+  border-radius:50%;
+}
+
+/* PROFILE */
+.profile{
+  background:linear-gradient(135deg,#2563eb,#9333ea);
+  padding:8px 12px;
+  border-radius:20px;
+  font-size:14px;
+}
+
+
+/* OVERLAY */
 #overlay{
   position:fixed;
   width:100%;
@@ -163,6 +255,162 @@ body{
   z-index:998;
 }
 
+
+#login{
+  display:none;
+  height:100vh;
+  justify-content:center;
+  align-items:center;
+}
+
+.noti-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+#notiList{
+  padding-bottom:80px; /* space for button */
+}
+
+/* FLOAT BUTTON */
+#clearBtn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#ef4444;
+  border:none;
+  padding:12px 18px;
+  border-radius:12px;
+  color:white;
+  cursor:pointer;
+  box-shadow:0 5px 20px rgba(0,0,0,0.6);
+  z-index:1000;
+  transition:0.3s;
+}
+
+#clearBtn:hover{
+  transform:scale(1.1);
+}
+
+/* USER CARD UI */
+.user-card{
+  background:rgba(255,255,255,0.07);
+  backdrop-filter:blur(20px);
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  cursor:pointer;
+  transition:0.4s;
+  position:relative;
+  overflow:hidden;
+}
+
+.user-card:hover{
+  transform:translateY(-8px) scale(1.04);
+  box-shadow:0 20px 50px rgba(0,0,0,0.7);
+}
+
+/* AVATAR */
+.avatar{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#2563eb,#9333ea);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  margin:auto;
+  margin-bottom:10px;
+}
+
+/* STATUS */
+.status{
+  margin-top:10px;
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+.status.active{
+  background:#16a34a;
+}
+
+.status.blocked{
+  background:#ef4444;
+}
+
+.btn{
+  padding:10px 15px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:rgba(255,255,255,0.1);
+  color:white;
+  transition:0.3s;
+}
+
+.btn:hover{
+  transform:scale(1.08);
+}
+
+.btn.blue{ background:#2563eb; }
+.btn.red{ background:#ef4444; }
+.btn.orange{ background:#f59e0b; }
+
+/* USER MODAL FIX */
+#userModal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100vh;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:2000;
+}
+
+/* DARK BACKGROUND */
+#userModal::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(5px);
+}
+
+/* MODAL BOX */
+#userDetails{
+  position:relative;
+  max-width:400px;
+  width:90%;
+  animation: popup 0.3s ease;
+}
+
+@keyframes popup{
+  from{transform:scale(0.7); opacity:0;}
+  to{transform:scale(1); opacity:1;}
+}
+
+#userDetails{
+  max-height:80vh;
+  overflow-y:auto;
+}
+
+body.light{
+  background:#f1f5f9;
+  color:#111;
+}
+
+body.light .card,
+body.light .sidebar{
+  background:rgba(0,0,0,0.05);
+  color:#111;
+}
 </style>
 </head>
 
@@ -199,34 +447,60 @@ body{
   <button onclick="loadStats()">Dashboard</button>
   <button onclick="loadUsers()">Users</button>
   <button onclick="loadApps()">Applications</button>
+  <button onclick="exportUsers()">📥 Export Users</button>
   <button onclick="logout()">Logout</button>
 </div>
+
+
+<div class="topbar">
+
+  <div class="top-left">
+    <h2>🚀 Admin Panel</h2>
+  </div>
+
+  <div class="top-center">
+    <div class="search-box">
+      🔍
+      <input placeholder="Search users, apps..."
+        oninput="globalSearch(this.value)">
+    </div>
+  </div>
+
+  <div class="top-right">
+
+    <button class="icon-btn" onclick="openNotifications()">
+      🔔 <span id="notiCount">0</span>
+    </button>
+
+    <button class="icon-btn" onclick="toggleTheme()">🌙</button>
+
+    <div class="profile" id="profileBox">
+      <span id="profileName">Admin</span>
+    </div>
+
+  </div>
+
+</div>
+
 
 <div class="main" id="mainContent"></div>
 
 </div>
 
 <div id="notiPanel">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-    <h3 style="margin:0;">🔔 Notifications</h3>
 
-    <!-- BACK BUTTON -->
-    <button onclick="openNotifications()"
-      style="
-        background:#ef4444;
-        border:none;
-        color:white;
-        padding:6px 10px;
-        border-radius:8px;
-        cursor:pointer;
-      ">
-      ✖ Back
-    </button>
+  <!-- HEADER -->
+  <div class="noti-header">
+    <h3>🔔 Notifications</h3>
+    <button onclick="openNotifications()">✖</button>
   </div>
 
+  <!-- LIST -->
   <div id="notiList"></div>
-  <br>
-  <button onclick="clearNotifications()">Clear All</button>
+
+  <!-- FLOAT BUTTON -->
+  <button id="clearBtn" onclick="clearNotifications()">Clear All</button>
+
 </div>
 
 <!-- USER MODAL -->
@@ -371,45 +645,108 @@ onAuthStateChanged(auth, async (user) => {
 window.loadStats = async ()=>{
   let users = await getDocs(collection(db,"users"));
   let apps = await getDocs(collection(db,"applications"));
+  let blockedUsers = 0;
+
+users.forEach(doc=>{
+  if(doc.data().blocked) blockedUsers++;
+});
 
   document.getElementById("mainContent").innerHTML = `
-  <h2>Dashboard</h2>
-  <div class="card">👥 Users: ${users.size}</div>
-  <div class="card">📄 Applications: ${apps.size}</div>
+  <h2 style="font-size:28px;">📊 Dashboard Overview</h2>
 
-  <canvas id="chart" height="100"></canvas>
+  <div style="display:flex; gap:20px; flex-wrap:wrap;">
+  
+  <div class="card" style="flex:1;">
+    👥 Users <h1>${users.size}</h1>
+  </div>
+
+  <div class="card" style="flex:1;">
+    🚫 Blocked <h1>${blockedUsers}</h1>
+  </div>
+
+  <div class="card" style="flex:1;">
+    📄 Applications <h1>${apps.size}</h1>
+  </div>
+
+</div>
+
+  <br>
+
+  <canvas id="barChart"></canvas>
+  <br>
+  <canvas id="pieChart"></canvas>
 `;
 
-const ctx = document.getElementById('chart');
-
-new Chart(ctx, {
+new Chart(document.getElementById("barChart"), {
   type: 'bar',
   data: {
     labels: ['Users', 'Applications'],
     datasets: [{
-      label: 'Stats',
+      label: 'Platform Data',
       data: [users.size, apps.size]
     }]
   }
 });
 
+new Chart(document.getElementById("pieChart"), {
+  type: 'pie',
+  data: {
+    labels: ['Users', 'Applications'],
+    datasets: [{
+      data: [users.size, apps.size]
+    }]
+  }
+});
 };
 
 /* USERS */
 window.loadUsers = ()=>{
-  let html = "<h2>Users (Live)</h2>";
-
   onSnapshot(collection(db,"users"), (snapshot)=>{
-    html = "<h2>Users (Live)</h2>";
+    let html = `
+<h2 style="margin-bottom:20px;">👥 Users</h2>
+
+<input placeholder="Search Users..." 
+oninput="searchUsers(this.value)"
+style="padding:10px; width:250px; border-radius:10px; border:none; margin-bottom:10px;">
+
+<br>
+
+<select onchange="filterUsers(this.value)" 
+style="padding:10px; border-radius:10px; margin-bottom:20px;">
+  <option value="all">All Users</option>
+  <option value="active">Active Users</option>
+  <option value="blocked">Blocked Users</option>
+</select>
+
+<div style="
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:20px;
+">
+`;
 
     snapshot.forEach(docu=>{
       let d = docu.data();
+      d.uid = docu.id; // 🔥 ADD THIS
 
       html += `
-      <div class="card" onclick='openUser(${JSON.stringify(d)})'>
-        ${d.name} - ${d.email}
+      <div class="user-card" onclick='openUser(${JSON.stringify(d)})'>
+        
+        <div class="avatar">
+          ${(d.name || d.email || "U")[0].toUpperCase()}
+        </div>
+
+        <h3>${d.name || d.email?.split("@")[0] || "User"}</h3>
+        <p>${d.email}</p>
+
+        <div class="status ${d.blocked ? "blocked":"active"}">
+          ${d.blocked ? "Blocked ❌":"Active ✅"}
+        </div>
+
       </div>`;
     });
+
+    html += `</div>`;
 
     document.getElementById("mainContent").innerHTML = html;
   });
@@ -421,18 +758,63 @@ window.openUser = (data)=>{
   let box = document.getElementById("userDetails");
 
   box.innerHTML = `
-    <h3>${data.name}</h3>
-    <p>Email: ${data.email}</p>
-    <p>Mobile: ${data.mobile}</p>
+  <div style="text-align:center">
 
-    <button onclick='downloadUser("${data.email}")'>Download</button>
-    <button onclick='blockUser("${data.uid}")'>Block</button>
-    <button onclick='deleteUser("${data.uid}")'>Delete</button>
-    <button onclick='closeModal()'>Close</button>
+    <div style="
+      width:80px;
+      height:80px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#2563eb,#9333ea);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      margin:auto;
+      margin-bottom:15px;
+    ">
+      ${data.name ? data.name[0].toUpperCase() : "U"}
+    </div>
+
+    <h2>${data.name || data.email?.split("@")[0] || "User"}</h2>
+    <p style="opacity:0.7">${data.email}</p>
+
+    <div style="
+      margin-top:15px;
+      background:rgba(255,255,255,0.05);
+      padding:15px;
+      border-radius:15px;
+      text-align:left;
+    ">
+      📱 <b>Mobile:</b> ${data.mobile || "N/A"} <br><br>
+      🆔 <b>UID:</b> ${data.uid || "N/A"}
+    </div>
+
+    <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+
+      <button onclick='downloadUser("${data.email}")' class="btn blue">⬇ Download</button>
+
+      <button onclick='blockUser("${data.uid}")' class="btn orange">
+  ${data.blocked ? "✅ Unblock" : "🚫 Block"}
+</button>
+
+      <button onclick='deleteUser("${data.uid}")' class="btn red">🗑 Delete</button>
+
+    </div>
+
+    <br>
+    <button onclick='closeModal()' class="btn">Close</button>
+
+  </div>
   `;
 
   modal.style.display="flex";
 };
+
+document.getElementById("userModal").addEventListener("click",(e)=>{
+  if(e.target === document.getElementById("userModal")){
+    closeModal();
+  }
+});
 
 window.closeModal = ()=>{
   document.getElementById("userModal").style.display="none";
@@ -441,68 +823,147 @@ window.closeModal = ()=>{
 /* DOWNLOAD */
 window.downloadUser = async (email)=>{
 
-  let snap = await getDocs(collection(db,"applications"));
+  // 🔥 GET USER DIRECTLY (BEST METHOD)
+  let userQuery = query(collection(db,"users"), where("email","==",email));
+  let userSnap = await getDocs(userQuery);
+
+  let userData = null;
+
+  userSnap.forEach(doc=>{
+    userData = doc.data();
+  });
+
+  // 🔥 GET APPLICATIONS
+  let appQuery = query(collection(db,"applications"), where("email","==",email));
+  let appSnap = await getDocs(appQuery);
+
+  let applications = [];
+
+  appSnap.forEach(doc=>{
+    applications.push(doc.data());
+  });
+
+  // 🔥 BACKUP CHECK (userEmail field)
+  if(applications.length === 0){
+    let altQuery = query(collection(db,"applications"), where("userEmail","==",email));
+    let altSnap = await getDocs(altQuery);
+
+    altSnap.forEach(doc=>{
+      applications.push(doc.data());
+    });
+  }
+
+  // 🔥 FINAL NAME FIX (VERY IMPORTANT)
+  let userName =
+    userData?.name ||
+    applications[0]?.name ||
+    email.split("@")[0];
+
+  let mobile =
+    userData?.mobile ||
+    applications[0]?.mobile ||
+    "N/A";
+
+  let status =
+    userData?.blocked ? "Blocked ❌" : "Active ✅";
+
+  let line = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
 
   let content = `
-==============================
-   USER APPLICATION REPORT
-==============================
+${line}
+        🚀 USER FULL REPORT
+${line}
 
-User Email: ${email}
-Generated On: ${new Date().toLocaleString()}
+👤 Name        : ${userName}
+📧 Email       : ${email}
+📱 Mobile      : ${mobile}
+🚦 Status      : ${status}
 
-----------------------------------------
+📅 Generated   : ${new Date().toLocaleString()}
+
+${line}
+📊 SUMMARY
+${line}
+
+Total Applications : ${applications.length}
+
+${line}
+📄 APPLICATION DETAILS
+${line}
 `;
 
-  snap.forEach(docu=>{
-    let d = docu.data();
+  if(applications.length === 0){
+    content += `No Applications ❌\n${line}`;
+  }
 
-    // ✅ FIX: correct field matching
-    if(d.userEmail === email || d.email === email){
+  applications.forEach((d,i)=>{
+    content += `
 
-      content += `
-📌 Application Type: ${d.type || "N/A"}
-👤 Name: ${d.name || "N/A"}
-📧 Email: ${d.email || d.userEmail || "N/A"}
-📱 Mobile: ${d.mobile || "N/A"}
+🔹 APPLICATION ${i+1}
+${line}
 
-🎓 Qualification: ${d.qualification || "N/A"}
-📅 Year of Passing: ${d.yop || "N/A"}
-💼 Experience: ${d.experience || "N/A"}
-🏢 Preferred Company: ${d.company || "N/A"}
-📍 Current Location: ${d.location || "N/A"}
-📌 Job Location: ${d.jobLocation || "N/A"}
+📌 Type          : ${d.type || "N/A"}
+📊 Status        : ${d.status || "Pending"}
 
-🏫 College: ${d.college || "N/A"}
-📊 Percentage: ${d.percentage || "N/A"}
-🎂 DOB: ${d.dob || "N/A"}
+👤 Name          : ${d.name || userName}
+📧 Email         : ${d.email || d.userEmail || "N/A"}
+📱 Mobile        : ${d.mobile || mobile}
 
-📝 Message: ${d.message || "N/A"}
+🎓 Qualification : ${d.qualification || "N/A"}
+📅 Year          : ${d.yop || "N/A"}
+💼 Experience    : ${d.experience || "N/A"}
 
-----------------------------------------
+🏢 Company       : ${d.company || "N/A"}
+📍 Location      : ${d.location || "N/A"}
+📌 Job Location  : ${d.jobLocation || "N/A"}
 
+🏫 College       : ${d.college || "N/A"}
+📊 Percentage    : ${d.percentage || "N/A"}
+🎂 DOB           : ${d.dob || "N/A"}
+
+📝 Message:
+${(d.message || "N/A").replace(/</g,"").replace(/>/g,"")}
+
+${line}
 `;
-    }
   });
 
-  let blob = new Blob([content],{type:"text/plain"});
+  // 🔥 DOWNLOAD FILE WITH USER NAME (FIXED)
+  let blob = new Blob([content],{type:"text/plain;charset=utf-8"});
   let a = document.createElement("a");
+
   a.href = URL.createObjectURL(blob);
-  a.download = `${email}_applications.txt`;
+
+  // ✅ FILE NAME PERFECT
+  a.download = `${userName.replace(/\s+/g,"_")}_Report.txt`;
+
   a.click();
 };
-
 /* BLOCK */
 window.blockUser = async (uid)=>{
-  await updateDoc(doc(db,"users",uid),{
-    blocked:true
+
+  let userRef = doc(db,"users",uid);
+  let snap = await getDoc(userRef);
+
+  if(!snap.exists()) return;
+
+  let current = snap.data().blocked;
+
+  await updateDoc(userRef,{
+    blocked: !current   // 🔥 TOGGLE
   });
-  alert("Blocked ✅");
+
+  alert(!current ? "User Blocked 🚫" : "User Unblocked ✅");
 };
 
 /* DELETE */
 window.deleteUser = async (uid)=>{
-  await deleteDoc(doc(db,"users",uid));
+  if(auth.currentUser.uid === uid){
+  alert("You can't delete yourself ❌");
+  return;
+}
+
+await deleteDoc(doc(db,"users",uid));
   alert("Deleted ✅");
   loadUsers();
 };
@@ -511,21 +972,90 @@ window.deleteUser = async (uid)=>{
 window.loadApps = async ()=>{
   let snap = await getDocs(collection(db,"applications"));
 
-  let html = "<h2>Applications</h2>";
+  let html = `
+  <h2>📄 Applications</h2>
+
+  <input placeholder="Search..." oninput="searchApps(this.value)" 
+  style="padding:10px; width:250px; border-radius:10px; border:none; margin-bottom:20px;">
+  
+  <div id="appsContainer" style="
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+    gap:20px;
+  ">
+  `;
+
+  snap.forEach(doc=>{
+    let d = doc.data();
+    d.id = doc.id;
+
+    html += renderAppCard(d);
+  });
+
+  html += "</div>";
+
+  document.getElementById("mainContent").innerHTML = html;
+};
+
+function renderAppCard(d){
+  return `
+  <div class="card">
+    <h3>${d.name || "User"}</h3>
+    <p>${d.email || d.userEmail}</p>
+
+    <p>📌 ${d.type}</p>
+
+    <div style="margin-top:10px;">
+      <span style="background:#f59e0b;padding:5px 10px;border-radius:10px;">
+        ${d.status || "Pending"}
+      </span>
+    </div>
+
+    <br>
+
+    <button class="btn blue" onclick="updateStatus('${d.id}','Approved')">Approve</button>
+    <button class="btn red" onclick="updateStatus('${d.id}','Rejected')">Reject</button>
+  </div>
+  `;
+}
+
+window.updateStatus = async (id, status)=>{
+  await updateDoc(doc(db,"applications",id),{
+    status: status
+  });
+
+  showToast("Updated to " + status);
+  loadApps();
+};
+
+window.searchApps = async (text)=>{
+  let snap = await getDocs(collection(db,"applications"));
+
+  let container = document.getElementById("appsContainer");
+  container.innerHTML = "";
 
   snap.forEach(doc=>{
     let d = doc.data();
 
-    html += `
-<div class="card">
-  ${d.type} - ${d.user}
-  <br><br>
-  <button onclick="downloadUser('${d.email || d.userEmail}')">⬇ Download</button>
-</div>`;
+    if(
+      d.name?.toLowerCase().includes(text.toLowerCase()) ||
+      d.email?.toLowerCase().includes(text.toLowerCase())
+    ){
+      container.innerHTML += renderAppCard({...d, id:doc.id});
+    }
   });
-
-  document.getElementById("mainContent").innerHTML = html;
 };
+
+window.searchUsers = (text)=>{
+  let cards = document.querySelectorAll(".user-card");
+
+  cards.forEach(card=>{
+    let name = card.innerText.toLowerCase();
+
+    card.style.display = name.includes(text.toLowerCase()) ? "block" : "none";
+  });
+};
+
 
 /* 🔥 LIVE USERS */
 onSnapshot(collection(db,"users"), (snapshot)=>{
@@ -535,10 +1065,12 @@ onSnapshot(collection(db,"users"), (snapshot)=>{
 
       const d = change.doc.data();
 
-      const msg = `🆕 New User: ${d.name || "Unknown"} (${d.mobile || "No Mobile"})`;
+      const msg = `🆕 ${d.name || "User"} joined at ${new Date().toLocaleTimeString()}`;
 
       notifications.unshift(msg);
-      updateNotiUI();
+updateNotiUI();
+playSound();
+showToast(msg);
 
       // auto open only if panel is closed
       if(!notiOpen){
@@ -557,10 +1089,12 @@ onSnapshot(collection(db,"applications"), (snapshot)=>{
 
       const d = change.doc.data();
 
-      const msg = `📄 New Application: ${d.email || d.userEmail || "Unknown"}`;
+      const msg = `📄 Application from ${d.email || d.userEmail} at ${new Date().toLocaleTimeString()}`;
 
       notifications.unshift(msg);
-      updateNotiUI();
+updateNotiUI();
+playSound();
+showToast(msg);
 
       if(!notiOpen){
         openNotifications();
@@ -601,31 +1135,212 @@ function updateNotiUI(){
   countEl.innerText = notifications.length;
 
   listEl.innerHTML = notifications
-    .slice(0, 20)
-    .map(n => `<div class="card">${n}</div>`)
+    .slice(0, 30)
+    .map(n => `<div class="noti-item">${n}</div>`)
     .join("");
 }
+
+window.globalSearch = async (text) => {
+
+  let usersSnap = await getDocs(collection(db,"users"));
+  let appsSnap = await getDocs(collection(db,"applications"));
+
+  let html = `<h2>🔍 Search Results</h2>`;
+
+  usersSnap.forEach(doc=>{
+    let d = doc.data();
+    if(d.name?.toLowerCase().includes(text.toLowerCase()) || d.email?.toLowerCase().includes(text.toLowerCase())){
+      html += `<div class="card">👤 ${d.name || "User"} - ${d.email}</div>`;
+    }
+  });
+
+  appsSnap.forEach(doc=>{
+    let d = doc.data();
+    if(d.name?.toLowerCase().includes(text.toLowerCase()) || d.email?.toLowerCase().includes(text.toLowerCase())){
+      html += `<div class="card">📄 ${d.name} - ${d.type}</div>`;
+    }
+  });
+
+  document.getElementById("mainContent").innerHTML = html;
+};
+
+window.filterUsers = (type)=>{
+  let cards = document.querySelectorAll(".user-card");
+
+  cards.forEach(card=>{
+    let text = card.innerText;
+
+    if(type === "all") card.style.display="block";
+    else if(type === "active" && text.includes("Active")) card.style.display="block";
+    else if(type === "blocked" && text.includes("Blocked")) card.style.display="block";
+    else card.style.display="none";
+  });
+};
+
+window.exportUsers = async ()=>{
+
+  let usersSnap = await getDocs(collection(db,"users"));
+  let appsSnap = await getDocs(collection(db,"applications"));
+
+  let line = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+
+  let content = `
+${line}
+        🚀 COMPLETE PLATFORM REPORT
+${line}
+
+📅 Generated : ${new Date().toLocaleString()}
+
+👥 Total Users : ${usersSnap.size}
+
+${line}
+`;
+
+  let userIndex = 0;
+
+  usersSnap.forEach(userDoc => {
+
+    userIndex++;
+
+    let user = userDoc.data();
+    let uid = userDoc.id;
+
+    let userApps = [];
+
+    appsSnap.forEach(appDoc => {
+      let app = appDoc.data();
+
+      if(app.userEmail === user.email || app.email === user.email){
+        userApps.push(app);
+      }
+    });
+
+    // ✅🔥 NAME FIX (IMPORTANT)
+    let userName =
+      user.name ||
+      userApps[0]?.name ||
+      (user.email ? user.email.split("@")[0] : "User");
+
+    let mobile =
+      user.mobile ||
+      userApps[0]?.mobile ||
+      "N/A";
+
+    content += `
+
+${line}
+👤 USER ${userIndex}
+${line}
+
+🆔 UID        : ${uid}
+👤 Name       : ${userName}
+📧 Email      : ${user.email || "N/A"}
+📱 Mobile     : ${mobile}
+🚦 Status     : ${user.blocked ? "Blocked ❌" : "Active ✅"}
+
+📊 Applications Count : ${userApps.length}
+
+${line}
+📄 APPLICATIONS
+${line}
+`;
+
+    if(userApps.length === 0){
+      content += `No Applications ❌\n`;
+    }
+
+    userApps.forEach((app,i)=>{
+
+      content += `
+
+🔹 APP ${i+1}
+
+📌 Type          : ${app.type || "N/A"}
+📊 Status        : ${app.status || "Pending"}
+
+👤 Name          : ${app.name || userName}
+📧 Email         : ${app.email || app.userEmail || "N/A"}
+📱 Mobile        : ${app.mobile || mobile}
+
+🎓 Qualification : ${app.qualification || "N/A"}
+📅 Year          : ${app.yop || "N/A"}
+💼 Experience    : ${app.experience || "N/A"}
+
+🏢 Company       : ${app.company || "N/A"}
+📍 Location      : ${app.location || "N/A"}
+
+📝 Message:
+${(app.message || "N/A").replace(/</g,"").replace(/>/g,"")}
+
+${line}
+`;
+    });
+
+  });
+
+  let blob = new Blob([content], {type:"text/plain;charset=utf-8"});
+  let a = document.createElement("a");
+
+  a.href = URL.createObjectURL(blob);
+
+  // ✅ OPTIONAL: file name better
+  a.download = `Full_Report_${new Date().getTime()}.txt`;
+
+  a.click();
+};
+
 
 window.clearNotifications = () => {
   notifications = [];
   updateNotiUI();
 };
 
+
+
+window.toggleTheme = () => {
+  document.body.classList.toggle("light");
+};
+
+
 window.logout = async () => {
   try {
     await signOut(auth);
-    
-    alert("Logged out successfully ✅");
 
-    // UI reset
-    document.getElementById("dashboard").style.display = "none";
-    document.getElementById("login").style.display = "flex";
+    // 🔥 IMPORTANT: full reset
+    location.reload();
 
   } catch (error) {
     console.error(error);
     alert("Logout failed ❌");
   }
 };
+
+
+
+function playSound(){
+  const audio = new Audio("https://notificationsounds.com/storage/sounds/file-sounds-1150-pristine.mp3");
+  audio.play();
+}
+
+function showToast(msg){
+  const toast = document.createElement("div");
+  toast.innerText = msg;
+
+  toast.style.position = "fixed";
+  toast.style.bottom = "20px";
+  toast.style.right = "20px";
+  toast.style.background = "#2563eb";
+  toast.style.padding = "12px 18px";
+  toast.style.borderRadius = "10px";
+  toast.style.boxShadow = "0 5px 20px rgba(0,0,0,0.5)";
+  toast.style.zIndex = "9999";
+
+  document.body.appendChild(toast);
+
+  setTimeout(()=> toast.remove(), 3000);
+}
+
+
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw-admin.js")
@@ -636,4 +1351,3 @@ if ("serviceWorker" in navigator) {
 
 </body>
 </html>
-
