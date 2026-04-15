@@ -14,7 +14,8 @@ body{
   background:#0b0f1a; /* 🔥 deep dark */
   font-family:'Segoe UI';
   color:#e6e6e6; /* soft white */
-  }
+  
+}
 
 /* SECTION CLEAN */
 .section{
@@ -35,6 +36,7 @@ body{
   opacity:1;
   transform:translateY(0) scale(1);
 }
+
 
 .section .glass,
 .about-info,
@@ -250,9 +252,12 @@ button{
   cursor:pointer;
 }
 
+
 .section .glass{
   padding:30px;
 }
+
+
 
 .brand{
   display:flex;
@@ -274,6 +279,8 @@ button{
 }
 
 /* 🔥 ABOUT FULL UPGRADE */
+
+
 
 /* 🔥 HOVER EFFECT */
 .about-slider:hover{
@@ -2552,6 +2559,7 @@ style="background:#4285F4;color:white;padding:12px;border:none;border-radius:8px
     <p onclick="openForm('job')">⚡ Quick Apply</p>
     <p onclick="startVoice()">🎤 Talk to AI</p>
     <p onclick="aiSuggest()">🧠 Suggest Me</p>
+</button>
   </div>
 
 </div>
@@ -3369,26 +3377,55 @@ function aiSuggest(){
 window.aiSuggest = aiSuggest;
 
 function startVoice(){
+
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
   if(!SpeechRecognition){
-    alert("Voice not supported in this browser");
-    return;
+    return; // silent fail (no popup)
   }
 
   const recognition = new SpeechRecognition();
+  recognition.lang = "en-IN";
+  recognition.continuous = false;
+
   recognition.start();
 
   recognition.onresult = (e)=>{
+
     let text = e.results[0][0].transcript.toLowerCase();
 
-    if(text.includes("job")) goToSection('jobs');
-    else if(text.includes("college")) goToSection('colleges');
-    else if(text.includes("apply")) openForm('job');
-    else alert("🤖 AI: I heard - " + text);
+    // 🧠 SILENT NAVIGATION (NO ALERTS)
+    if(text.includes("job") || text.includes("career")){
+      goToSection("jobs");
+    }
+
+    else if(text.includes("college") || text.includes("admission")){
+      goToSection("colleges");
+    }
+
+    else if(text.includes("company") || text.includes("mnc")){
+      goToSection("companies");
+    }
+
+    else if(text.includes("payroll") || text.includes("salary")){
+      goToSection("payroll");
+    }
+
+    else if(text.includes("about")){
+      goToSection("about");
+    }
+
+    else if(text.includes("contact") || text.includes("help")){
+      goToSection("contact");
+    }
+
+    else if(text.includes("home")){
+      goToSection("hero");
+    }
+
+    // ❌ NO POPUP ANYWHERE
   };
 }
-
 window.startVoice = startVoice;
 
 setTimeout(()=>{
