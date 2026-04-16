@@ -274,21 +274,7 @@ body{
   padding-bottom:80px; /* space for button */
 }
 
-/* FLOAT BUTTON */
-#clearBtn{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#ef4444;
-  border:none;
-  padding:12px 18px;
-  border-radius:12px;
-  color:white;
-  cursor:pointer;
-  box-shadow:0 5px 20px rgba(0,0,0,0.6);
-  z-index:1000;
-  transition:0.3s;
-}
+
 
 #clearBtn:hover{
   transform:scale(1.1);
@@ -443,7 +429,7 @@ body.light .sidebar{
 
 <div class="sidebar">
   <h3>Menu</h3>
-  <button onclick="openNotifications()">🔔 Notifications (<span id="notiCount">0</span>)</button>
+  <button onclick="openNotifications()">🔔 Notifications (<span id="notiCountSidebar">0</span>)</button>
   <button onclick="loadStats()">Dashboard</button>
   <button onclick="loadUsers()">Users</button>
   <button onclick="loadApps()">Applications</button>
@@ -469,7 +455,7 @@ body.light .sidebar{
   <div class="top-right">
 
     <button class="icon-btn" onclick="openNotifications()">
-      🔔 <span id="notiCount">0</span>
+      🔔 <span id="notiCountTop">0</span>
     </button>
 
     <button class="icon-btn" onclick="toggleTheme()">🌙</button>
@@ -491,15 +477,24 @@ body.light .sidebar{
 
   <!-- HEADER -->
   <div class="noti-header">
-    <h3>🔔 Notifications</h3>
+  <h3>🔔 Notifications</h3>
+
+  <div style="display:flex; gap:10px;">
+    <button onclick="clearNotifications()" style="
+      background:#ef4444;
+      border:none;
+      padding:6px 10px;
+      border-radius:8px;
+      color:white;
+      cursor:pointer;
+    ">Clear</button>
+
     <button onclick="openNotifications()">✖</button>
   </div>
+</div>
 
   <!-- LIST -->
   <div id="notiList"></div>
-
-  <!-- FLOAT BUTTON -->
-  <button id="clearBtn" onclick="clearNotifications()">Clear All</button>
 
 </div>
 
@@ -552,13 +547,11 @@ const db = getFirestore(app);
 
 const provider = new GoogleAuthProvider();
 
-/* ✅ IMPORTANT: ADMIN EMAIL */
-const ADMIN_EMAIL = "roshangadipelli@gmail.com";
 
 let isFirstLoadUsers = true;
 let isFirstLoadApps = true;
 
-let notifications = [];
+let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
 let notiOpen = false;
 
 let splashDone = false;
@@ -622,16 +615,14 @@ onAuthStateChanged(auth, async (user) => {
     console.log("UID:", user.uid);
 
     const adminRef = doc(db, "admins", user.uid);
-    const adminSnap = await getDoc(adminRef);
+const adminSnap = await getDoc(adminRef);
 
-    console.log("Admin exists:", adminSnap.exists());
-
-    if (!adminSnap.exists()) {
-      alert("Access Denied ❌ (Not Admin)");
-      await signOut(auth);
-      showLogin();
-      return;
-    }
+if (!adminSnap.exists()) {
+  alert("Access Denied ❌ (Not Admin)");
+  await signOut(auth);
+  showLogin();
+  return;
+}
 
     showDashboard();
 
@@ -702,6 +693,11 @@ new Chart(document.getElementById("pieChart"), {
 /* USERS */
 window.loadUsers = ()=>{
   onSnapshot(collection(db,"users"), (snapshot)=>{
+
+  if(isFirstLoadUsers){
+    isFirstLoadUsers = false;
+    return;
+  }
     let html = `
 <h2 style="margin-bottom:20px;">👥 Users</h2>
 
@@ -929,7 +925,9 @@ ${line}
   });
 
   // 🔥 DOWNLOAD FILE WITH USER NAME (FIXED)
-  let blob = new Blob([content],{type:"text/plain;charset=utf-8"});
+  let blob = new Blob(["\uFEFF" + content], {
+  type: "text/plain;charset=utf-8"
+});
   let a = document.createElement("a");
 
   a.href = URL.createObjectURL(blob);
@@ -1084,6 +1082,11 @@ showToast(msg);
 /* 🔥 LIVE APPLICATIONS */
 onSnapshot(collection(db,"applications"), (snapshot)=>{
 
+  if(isFirstLoadApps){
+    isFirstLoadApps = false;
+    return;
+  }
+
   snapshot.docChanges().forEach(change=>{
     if(change.type === "added"){
 
@@ -1138,7 +1141,12 @@ function updateNotiUI(){
     .slice(0, 30)
     .map(n => `<div class="noti-item">${n}</div>`)
     .join("");
+
+  // 🔥 SAVE PERMANENT
+  localStorage.setItem("notifications", JSON.stringify(notifications));
 }
+
+updateNotiUI();
 
 window.globalSearch = async (text) => {
 
@@ -1278,7 +1286,9 @@ ${line}
 
   });
 
-  let blob = new Blob([content], {type:"text/plain;charset=utf-8"});
+  let blob = new Blob(["\uFEFF" + content], {
+  type:"text/plain;charset=utf-8"
+});
   let a = document.createElement("a");
 
   a.href = URL.createObjectURL(blob);
@@ -1292,6 +1302,10 @@ ${line}
 
 window.clearNotifications = () => {
   notifications = [];
+
+  // 🔥 LOCAL STORAGE CLEAR
+  localStorage.removeItem("notifications");
+
   updateNotiUI();
 };
 
@@ -1340,12 +1354,13 @@ function showToast(msg){
   setTimeout(()=> toast.remove(), 3000);
 }
 
+
+
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw-admin.js")
     .then(() => console.log("Admin SW Registered ✅"))
     .catch(err => console.log(err));
 }
-  
 </script>
 
 </body>
