@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="author" content="Developed by Roshan Tech Hub">
+
+
 <title>Santhoshi Matha Consultancy</title>
 
 <link rel="manifest" href="./manifest.json">
@@ -2005,8 +2009,8 @@ button, .nav-menu span, .profile-btn{
     <h2>Login / Register</h2>
 
 <button onclick="googleLogin()" 
-style="background:black;color:black;padding:12px;border:none;border-radius:8px;width:100%;">
-  🔵 Continue with Google
+style="background:#000000;color:white;padding:12px;border:none;border-radius:8px;width:100%;">
+    🔵  Continue with Google
 </button>
 
   </div>
@@ -2559,7 +2563,6 @@ style="background:black;color:black;padding:12px;border:none;border-radius:8px;w
     <p onclick="openForm('job')">⚡ Quick Apply</p>
     <p onclick="startVoice()">🎤 Talk to AI</p>
     <p onclick="aiSuggest()">🧠 Suggest Me</p>
-</button>
   </div>
 
 </div>
@@ -2568,7 +2571,7 @@ style="background:black;color:black;padding:12px;border:none;border-radius:8px;w
 
 
 <script type="module">
-
+ 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
 import {
@@ -2603,6 +2606,8 @@ const firebaseConfig = {
   appId: "1:1046832274742:web:2b6aad013799564420e797",
   measurementId: "G-PSCZPPBB5C"
 };
+
+console.log("%c Developed by RTH ⚡", "color:green;font-size:14px;");
 
 
 // INIT
@@ -2856,12 +2861,24 @@ function openForm(type){
 
   if(!currentUser){
     alert("Please login to apply ❌");
-    showAuth();
+
+    if(typeof showAuth === "function"){
+      showAuth();
+    }
+
     return;
   }
 
   const overlay = document.getElementById("formOverlay");
   const box = document.getElementById("formBox");
+  const title = document.getElementById("formTitle");
+  const fields = document.getElementById("formFields");
+
+  // safety check
+  if(!overlay || !box || !title || !fields){
+    console.error("Form elements missing in HTML");
+    return;
+  }
 
   overlay.style.display = "flex";
   box.style.transform = "scale(0.8)";
@@ -2873,54 +2890,61 @@ function openForm(type){
   let html = "";
 
   if(type === "job"){
-    document.getElementById("formTitle").innerText = "Job Application";
+    title.innerText = "Job Application";
 
     html = `
-    <input placeholder="Full Name">
-    <input placeholder="Mobile Number">
-    <input placeholder="Email">
-    <input placeholder="Qualification">
-    <input placeholder="Year of Passing">
-    <input placeholder="Experience (Fresher/Exp)">
-    <input placeholder="Preferred Company">
-    <input placeholder="Current Location">
-    <input placeholder="Required Job Location">
+    <input id="name" placeholder="Full Name">
+    <input id="mobile" placeholder="Mobile Number">
+    <input id="email" placeholder="Email">
+    <input id="qualification" placeholder="Qualification">
+    <input id="year" placeholder="Year of Passing">
+    <input id="experience" placeholder="Experience (Fresher/Exp)">
+    <input id="company" placeholder="Preferred Company">
+    <input id="location" placeholder="Current Location">
+    <input id="jobLocation" placeholder="Required Job Location">
     `;
   }
 
   else if(type === "college"){
-    document.getElementById("formTitle").innerText = "College Application";
+    title.innerText = "College Application";
 
     html = `
-    <input placeholder="Name">
-    <input placeholder="Father Name">
-    <input placeholder="Mobile">
-    <input placeholder="Email">
-    <input placeholder="Inter/School Name">
-    <input placeholder="Percentage">
-    <input placeholder="Year of Passing">
-    <input placeholder="Preferred College">
-    <input placeholder="Address">
-    <input placeholder="DOB">
+    <input id="name" placeholder="Name">
+    <input id="father" placeholder="Father Name">
+    <input id="mobile" placeholder="Mobile">
+    <input id="email" placeholder="Email">
+    <input id="school" placeholder="Inter/School Name">
+    <input id="percentage" placeholder="Percentage">
+    <input id="year" placeholder="Year of Passing">
+    <input id="college" placeholder="Preferred College">
+    <input id="address" placeholder="Address">
+    <input id="dob" placeholder="DOB">
     `;
   }
 
   else if(type === "contact"){
-    document.getElementById("formTitle").innerText = "Contact Form";
+    title.innerText = "Contact Form";
 
     html = `
-    <input placeholder="Full Name">
-    <input placeholder="Mobile Number">
-    <input placeholder="Email Address">
-    <input placeholder="Subject">
-    <textarea placeholder="Explain your requirement"></textarea>
-    <input placeholder="Preferred Contact Time">
-    <input placeholder="City / Location">
+    <input id="name" placeholder="Full Name">
+    <input id="mobile" placeholder="Mobile Number">
+    <input id="email" placeholder="Email Address">
+    <input id="subject" placeholder="Subject">
+    <textarea id="message" placeholder="Explain your requirement"></textarea>
+    <input id="time" placeholder="Preferred Contact Time">
+    <input id="city" placeholder="City / Location">
     `;
   }
 
-  document.getElementById("formFields").innerHTML = html;
+  else{
+    title.innerText = "Form";
+    html = `<p>Invalid form type</p>`;
+  }
+
+  fields.innerHTML = html;
 }
+
+window.openForm = openForm;
 
 function closeForm(){
   document.getElementById("formOverlay").style.display = "none";
@@ -3347,7 +3371,7 @@ function setLoading(state){
     btn.innerText = "Processing...";
     btn.disabled = true;
   }else{
-    btn.innerText = isLogin ? "Login" : "Register";
+    btn.innerText = isRegister ? "Register" : "Login";
     btn.disabled = false;
   }
 }
@@ -3636,6 +3660,14 @@ if ("serviceWorker" in navigator) {
 
 
 <div class="cursor-light"></div>
+
+
+
+<!-- ✅ ADD HERE -->
+<span style="opacity:0;font-size:1px;">RTH</span>
+
+
+
 
 </body>
 </html>
