@@ -1,5 +1,4 @@
-
-const CACHE_NAME = "smc-v6";
+const CACHE_NAME = "smc-v6"; // 🔥 version change (v5 → v6)
 
 const BASE = "/SANTHOSHI-MATHA-CONSULTANCY/";
 
@@ -9,31 +8,47 @@ const urlsToCache = [
   BASE + "manifest.json",
   BASE + "icon-192.png",
   BASE + "icon-512.png"
-  
 ];
 
-self.addEventListener("install", (event) => {
+// INSTALL
+self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
-    
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
-  
-  self.skipWaiting();
-  
+  self.skipWaiting(); // activate immediately
 });
 
-self.addEventListener("activate", (event) => {
+// ACTIVATE
+self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.map((k) => k !== CACHE_NAME ? caches.delete(k) : null))
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.map(k => {
+          if (k !== CACHE_NAME) {
+            return caches.delete(k); // delete old cache
+          }
+        })
+      )
     )
   );
   self.clients.claim();
 });
 
-self.addEventListener("fetch", (event) => {
+// FETCH (🔥 UPDATED LOGIC)
+self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request).then((res) => res || fetch(event.request))
+    fetch(event.request)
+      .then(response => {
+        // update cache with latest version
+        const responseClone = response.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseClone);
+        });
+        return response; // return fresh response
+      })
+      .catch(() => {
+        // fallback to cache if offline
+        return caches.match(event.request);
+      })
   );
-  
 });
