@@ -13,7 +13,6 @@
 <meta name="theme-color" content="#1E90FF">
 
 <style>
-  
 body{
   margin:0;
   background:#0b0f1a; /* 🔥 deep dark */
@@ -79,6 +78,8 @@ body{
   align-items:center;
   flex-direction:column;
   overflow:hidden;
+
+  /* ✅ fallback image */
   }
 
 #splashVideo{
@@ -2100,7 +2101,7 @@ style="background:#000000;color:white;padding:12px;border:none;border-radius:8px
 
     <!-- LEFT SLIDER -->
     <div>
-      <div class="about-slider" data-speed="0.15">
+      <div class="about-slider">
         <div class="about-track">
           <img src="abtbg.png">
           <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df">
@@ -2109,16 +2110,10 @@ style="background:#000000;color:white;padding:12px;border:none;border-radius:8px
         </div>
       </div>
 
-      <div class="dots">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-      </div>
     </div>
 
     <!-- RIGHT INFO -->
-    <div class="about-info" data-speed="0.25">
+    <div class="about-info">
       <h2>About Us
         <hr>
       </h2>
@@ -2184,12 +2179,6 @@ style="background:#000000;color:white;padding:12px;border:none;border-radius:8px
         </div>
       </div>
 
-      <div class="dots" id="jobDots">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-      </div>
     </div>
 
     <!-- RIGHT INFO -->
