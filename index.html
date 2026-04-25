@@ -3638,7 +3638,28 @@ document.getElementById("authTitle").innerText = "Login";
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js")
-    .then(() => console.log("User SW Registered ✅"))
+    .then(reg => {
+      console.log("User SW Registered ✅");
+
+      // 🔥 detect new update
+      reg.onupdatefound = () => {
+        const newWorker = reg.installing;
+
+        newWorker.onstatechange = () => {
+          if (newWorker.state === "installed") {
+            if (navigator.serviceWorker.controller) {
+
+              console.log("New update available 🚀");
+
+              // 🔥 AUTO REFRESH
+              window.location.reload();
+
+            }
+          }
+        };
+      };
+
+    })
     .catch(err => console.log("SW Error ❌", err));
 }
 
