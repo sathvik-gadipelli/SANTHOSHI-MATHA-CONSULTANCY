@@ -3434,7 +3434,6 @@ function startVoice(){
       goToSection("hero");
     }
 
-    // ❌ NO POPUP ANYWHERE
   };
 }
 window.startVoice = startVoice;
@@ -3595,9 +3594,6 @@ document.querySelectorAll("[data-speed]").forEach(el => {
 
 window.enterGuest = enterGuest;
 
-
-
-
 // 🔥 MAKE ALL BUTTON FUNCTIONS GLOBAL (FULL FIX)
 
 window.goToSection = goToSection;
@@ -3663,13 +3659,9 @@ if ("serviceWorker" in navigator) {
     .catch(err => console.log("SW Error ❌", err));
 }
 
-
 </script>
 
-
 <div class="cursor-light"></div>
-
-
 
 <!-- ✅ ADD HERE -->
 <span style="opacity:0;font-size:1px;">RTH</span>
