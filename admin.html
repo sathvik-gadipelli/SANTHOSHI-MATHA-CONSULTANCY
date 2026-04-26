@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <title>Admin Panel</title>
 
+<meta name="author" content="Developed by Roshan Tech Hub">
+
+
 <link rel="manifest" href="manifest-admin.json">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -541,6 +544,11 @@ const firebaseConfig = {
   measurementId: "G-PSCZPPBB5C"
 };
 
+
+console.log("%c Developed by RTH ⚡", "color:green;font-size:14px;");
+
+
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -998,6 +1006,7 @@ window.loadApps = async ()=>{
 function renderAppCard(d){
   return `
   <div class="card">
+
     <h3>${d.name || "User"}</h3>
     <p>${d.email || d.userEmail}</p>
 
@@ -1011,11 +1020,107 @@ function renderAppCard(d){
 
     <br>
 
-    <button class="btn blue" onclick="updateStatus('${d.id}','Approved')">Approve</button>
-    <button class="btn red" onclick="updateStatus('${d.id}','Rejected')">Reject</button>
+    <!-- 🔥 ACTION BUTTONS -->
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+
+      <button class="btn blue" onclick="updateStatus('${d.id}','Approved')">
+        ✅ Approve
+      </button>
+
+      <button class="btn red" onclick="updateStatus('${d.id}','Rejected')">
+        ❌ Reject
+      </button>
+
+      <!-- 🔥 NEW -->
+      <button class="btn orange" onclick='downloadApplication(${JSON.stringify(d)})'>
+        ⬇ Download
+      </button>
+
+      <!-- 🔥 NEW -->
+      <button class="btn" onclick='viewApplication(${JSON.stringify(d)})'>
+        👁 View
+      </button>
+
+      <!-- 🔥 NEW -->
+      <button class="btn red" onclick="deleteApplication('${d.id}')">
+        🗑 Delete
+      </button>
+
+    </div>
+
   </div>
   `;
 }
+
+window.downloadApplication = (data)=>{
+
+  let content = `
+📄 APPLICATION FORM
+
+👤 Name: ${data.name || "N/A"}
+📧 Email: ${data.email || data.userEmail || "N/A"}
+📱 Mobile: ${data.mobile || "N/A"}
+
+📌 Type: ${data.type || "N/A"}
+📊 Status: ${data.status || "Pending"}
+
+🎓 Qualification: ${data.qualification || "N/A"}
+📅 Year: ${data.yop || "N/A"}
+💼 Experience: ${data.experience || "N/A"}
+
+🏢 Company: ${data.company || "N/A"}
+📍 Location: ${data.location || "N/A"}
+
+📝 Message:
+${data.message || "N/A"}
+
+📅 Generated: ${new Date().toLocaleString()}
+`;
+
+  let blob = new Blob([content], {type:"text/plain"});
+  let a = document.createElement("a");
+
+  a.href = URL.createObjectURL(blob);
+  a.download = `${(data.name || "Application")}_Form.txt`;
+
+  a.click();
+};
+
+window.viewApplication = (data)=>{
+
+  let modal = document.getElementById("userModal");
+  let box = document.getElementById("userDetails");
+
+  box.innerHTML = `
+    <h2>📄 Application Details</h2>
+
+    <p><b>Name:</b> ${data.name}</p>
+    <p><b>Email:</b> ${data.email || data.userEmail}</p>
+    <p><b>Mobile:</b> ${data.mobile}</p>
+
+    <p><b>Type:</b> ${data.type}</p>
+    <p><b>Status:</b> ${data.status || "Pending"}</p>
+
+    <p><b>Qualification:</b> ${data.qualification}</p>
+    <p><b>Experience:</b> ${data.experience}</p>
+
+    <p><b>Message:</b> ${data.message}</p>
+
+    <br>
+    <button onclick="closeModal()" class="btn">Close</button>
+  `;
+
+  modal.style.display = "flex";
+};
+
+window.deleteApplication = async (id)=>{
+  if(!confirm("Delete this application?")) return;
+
+  await deleteDoc(doc(db,"applications",id));
+
+  showToast("Application Deleted 🗑");
+  loadApps();
+};
 
 window.updateStatus = async (id, status)=>{
   await updateDoc(doc(db,"applications",id),{
@@ -1362,6 +1467,10 @@ if ("serviceWorker" in navigator) {
     .catch(err => console.log(err));
 }
 </script>
+
+
+<span style="opacity:0;font-size:1px;">RTH</span>
+
 
 </body>
 </html>
