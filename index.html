@@ -1976,6 +1976,59 @@ button, .nav-menu span, .profile-btn{
 .topbar{
   transform: translateX(-50%) !important;
 }
+
+/* 🔥 ALL INPUTS SAME SIZE */
+#formFields input,
+#formFields textarea,
+#formFields select {
+  width: 100%;
+  max-width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* 🔥 SELECT MOBILE FIX */
+#formFields select {
+  appearance: none;
+  background: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 🔥 FORM BOX FIX */
+#formBox {
+  width: 90%;
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* 🔥 FORM FIELDS SAFE WIDTH */
+#formFields {
+  width: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+
+  #formBox {
+    width: 95%;
+    padding: 15px;
+  }
+
+  #formFields input,
+  #formFields textarea,
+  #formFields select {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+}
 </style>
 </head>
 
@@ -2223,7 +2276,7 @@ style="background:#000000;color:white;padding:12px;border:none;border-radius:8px
           <img src="Nikhil-Colleges/vit.png">
         </div>
       </div>
-
+      
 
     </div>
 
@@ -2888,21 +2941,28 @@ function openForm(type){
   }
 
   else if(type === "college"){
-    title.innerText = "College Application";
+  title.innerText = "College Application";
 
-    html = `
-    <input id="name" placeholder="Name">
-    <input id="father" placeholder="Father Name">
-    <input id="mobile" placeholder="Mobile">
-    <input id="email" placeholder="Email">
-    <input id="school" placeholder="Inter/School Name">
-    <input id="percentage" placeholder="Percentage">
-    <input id="year" placeholder="Year of Passing">
-    <input id="college" placeholder="Preferred College">
-    <input id="address" placeholder="Address">
-    <input id="dob" placeholder="DOB">
-    `;
-  }
+  html = `
+  <input id="name" placeholder="Name">
+  <input id="father" placeholder="Father Name">
+  <input id="mobile" placeholder="Mobile">
+  <input id="email" placeholder="Email">
+  <input id="school" placeholder="Inter/School Name">
+  <input id="percentage" placeholder="Percentage %">
+  <input id="year" placeholder="Year of Passing">
+
+  <!-- ✅ SIMPLE DROPDOWN -->
+  <select id="college" class="formInput">
+    <option value="">Select Preferred College Type</option>
+    <option value="Top Universities">🎓 Top Universities</option>
+    <option value="Top State Colleges">🏫 Top State Colleges</option>
+  </select>
+
+  <input id="address" placeholder="Address">
+  <input id="dob" placeholder="DOB">
+  `;
+}
 
   else if(type === "contact"){
     title.innerText = "Contact Form";
@@ -3429,6 +3489,7 @@ function startVoice(){
       goToSection("hero");
     }
 
+    // ❌ NO POPUP ANYWHERE
   };
 }
 window.startVoice = startVoice;
@@ -3579,6 +3640,39 @@ document.querySelectorAll("[data-speed]").forEach(el => {
 
 });
 
+function toggleCollegeMenu(){
+  const menu = document.getElementById("collegeMenu");
+
+  if(!menu) return;
+
+  if(menu.style.display === "block"){
+    menu.style.display = "none";
+  } else {
+    menu.style.display = "block";
+  }
+}
+
+function selectCollege(value){
+  const input = document.getElementById("college");
+  const menu = document.getElementById("collegeMenu");
+
+  if(input) input.value = value;
+  if(menu) menu.style.display = "none";
+}
+
+document.addEventListener("click", function(e){
+  const input = document.getElementById("college");
+  const menu = document.getElementById("collegeMenu");
+
+  if(input && menu){
+    if(!input.contains(e.target) && !menu.contains(e.target)){
+      menu.style.display = "none";
+    }
+  }
+});
+
+
+
 
 
 
@@ -3588,6 +3682,9 @@ document.querySelectorAll("[data-speed]").forEach(el => {
 // 🔥 MAKE ALL BUTTON FUNCTIONS GLOBAL
 
 window.enterGuest = enterGuest;
+
+
+
 
 // 🔥 MAKE ALL BUTTON FUNCTIONS GLOBAL (FULL FIX)
 
@@ -3629,34 +3726,17 @@ document.getElementById("authTitle").innerText = "Login";
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js")
-    .then(reg => {
-      console.log("User SW Registered ✅");
-
-      // 🔥 detect new update
-      reg.onupdatefound = () => {
-        const newWorker = reg.installing;
-
-        newWorker.onstatechange = () => {
-          if (newWorker.state === "installed") {
-            if (navigator.serviceWorker.controller) {
-
-              console.log("New update available 🚀");
-
-              // 🔥 AUTO REFRESH
-              window.location.reload();
-
-            }
-          }
-        };
-      };
-
-    })
+    .then(() => console.log("User SW Registered ✅"))
     .catch(err => console.log("SW Error ❌", err));
 }
 
+
 </script>
 
+
 <div class="cursor-light"></div>
+
+
 
 <!-- ✅ ADD HERE -->
 <span style="opacity:0;font-size:1px;">RTH</span>
