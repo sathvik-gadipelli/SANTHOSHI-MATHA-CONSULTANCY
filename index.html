@@ -2095,6 +2095,1064 @@ button{font-family:inherit}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
+
+/* =========================================================
+   NON-HOME UI/UX + MOBILE RESPONSIVE REFINEMENT
+   Visual layer only. Existing JS, Firebase, forms, auth,
+   profile, AI and navigation flows remain untouched.
+   Home/hero visual system is intentionally preserved.
+   ========================================================= */
+
+:root{
+  --ui-bg:#050914;
+  --ui-panel:#0a1120;
+  --ui-panel-2:#0d1728;
+  --ui-border:rgba(255,255,255,.09);
+  --ui-border-strong:rgba(39,215,255,.22);
+  --ui-text:#f4f7fb;
+  --ui-muted:#8796aa;
+  --ui-accent:#27d7ff;
+  --ui-blue:#398cff;
+  --ui-radius:18px;
+}
+
+/* GLOBAL SAFETY */
+html,body{
+  max-width:100%;
+  overflow-x:hidden;
+}
+img,video{
+  max-width:100%;
+}
+button,input,textarea,select{
+  font-family:inherit;
+}
+button{
+  min-height:44px;
+}
+
+/* Do not alter the existing home/hero composition. */
+.hero-sec .hero-command,
+.hero-sec .hero-copy,
+.hero-sec .hero-system,
+.hero-sec .hero-paths,
+.hero-sec .hero-actions{
+  /* preserve existing home layout */
+}
+
+/* ===== NON-HOME SECTION SYSTEM ===== */
+#about,
+#jobs,
+#colleges,
+#payroll,
+#companies,
+#why,
+#contact{
+  isolation:isolate;
+}
+
+#about .about-container,
+#jobs .about-container,
+#colleges .about-container,
+#payroll .about-container{
+  width:min(1180px,100%);
+  display:grid;
+  grid-template-columns:minmax(320px, .92fr) minmax(340px,1.08fr);
+  gap:clamp(34px,6vw,86px);
+  align-items:center;
+  margin:auto;
+}
+
+#about .about-container > *,
+#jobs .about-container > *,
+#colleges .about-container > *,
+#payroll .about-container > *{
+  min-width:0;
+}
+
+/* Section visual hierarchy */
+#about:not(.hero-sec),
+#jobs,
+#colleges,
+#payroll,
+#companies,
+#why,
+#contact{
+  background:
+    radial-gradient(circle at 10% 10%,rgba(39,215,255,.045),transparent 28%),
+    radial-gradient(circle at 90% 90%,rgba(128,103,255,.045),transparent 30%),
+    #050914 !important;
+}
+
+#about .about-info,
+#jobs .about-info,
+#colleges .about-info,
+#payroll .about-info{
+  width:100%;
+  max-width:620px;
+  padding:clamp(6px,1vw,12px) 0;
+}
+
+#about .about-info h2,
+#jobs .about-info h2,
+#colleges .about-info h2,
+#payroll .about-info h2{
+  font-size:clamp(36px,4.5vw,58px);
+  line-height:1;
+  letter-spacing:-2.2px;
+  margin:0 0 18px;
+}
+
+#about .about-info h3,
+#jobs .about-info h3,
+#colleges .about-info h3,
+#payroll .about-info h3{
+  color:#eef4fb;
+  font-size:clamp(17px,1.8vw,21px);
+  line-height:1.55;
+  margin:0 0 14px;
+}
+
+#about .about-info p,
+#jobs .about-info p,
+#colleges .about-info p,
+#payroll .about-info p{
+  color:var(--ui-muted);
+  font-size:14px;
+  line-height:1.9;
+  max-width:600px;
+  margin:0 0 22px;
+}
+
+/* Section eyebrow */
+#about .about-info h2::before,
+#jobs .about-info h2::before,
+#colleges .about-info h2::before,
+#payroll .about-info h2::before{
+  content:"SERVICE";
+  display:block;
+  width:max-content;
+  color:var(--ui-accent);
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:2.4px;
+  margin-bottom:13px;
+}
+
+/* Remove the old decorative HR from the About title only */
+#about .about-info h2 hr{
+  border:0;
+  margin:0;
+}
+
+/* Better feature list */
+#about .about-info ul,
+#jobs .about-info ul,
+#colleges .about-info ul,
+#payroll .about-info ul{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  padding:0;
+  margin:0 0 22px;
+  list-style:none;
+}
+
+#about .about-info li,
+#jobs .about-info li,
+#colleges .about-info li,
+#payroll .about-info li{
+  min-height:48px;
+  display:flex;
+  align-items:center;
+  padding:11px 13px;
+  margin:0;
+  border:1px solid var(--ui-border);
+  border-radius:11px;
+  background:rgba(255,255,255,.025);
+  color:#cbd5e1;
+  font-size:12px;
+  line-height:1.45;
+}
+
+#about .about-info li:hover,
+#jobs .about-info li:hover,
+#colleges .about-info li:hover,
+#payroll .about-info li:hover{
+  color:#fff;
+  background:rgba(39,215,255,.055);
+  border-color:var(--ui-border-strong);
+  transform:translateY(-2px);
+}
+
+/* New detail blocks */
+.section-detail-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin:20px 0 22px;
+}
+.detail-item{
+  min-height:112px;
+  padding:14px;
+  border:1px solid var(--ui-border);
+  border-radius:13px;
+  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.015));
+}
+.detail-item b{
+  display:block;
+  color:var(--ui-accent);
+  font-size:9px;
+  letter-spacing:1.5px;
+  margin-bottom:12px;
+}
+.detail-item span{
+  display:block;
+  color:#f4f7fb;
+  font-size:11px;
+  font-weight:700;
+  line-height:1.35;
+}
+.detail-item small{
+  display:block;
+  color:#718096;
+  font-size:9px;
+  line-height:1.55;
+  margin-top:7px;
+}
+
+/* Media panels */
+#about .about-slider,
+#jobs .about-slider,
+#colleges .about-slider,
+#payroll .about-slider{
+  width:100%;
+  height:clamp(300px,34vw,420px);
+  border-radius:20px;
+  border:1px solid var(--ui-border);
+  background:#080f1d;
+  box-shadow:0 25px 80px rgba(0,0,0,.42);
+  overflow:hidden;
+  position:relative;
+}
+#about .about-slider::before,
+#jobs .about-slider::before,
+#colleges .about-slider::before,
+#payroll .about-slider::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:3;
+  border:1px solid rgba(39,215,255,.08);
+  border-radius:inherit;
+}
+#about .about-track,
+#jobs .about-track,
+#colleges .about-track,
+#payroll .about-track{
+  height:100%;
+}
+#about .about-track img,
+#jobs .about-track img,
+#colleges .about-track img,
+#payroll .about-track img{
+  height:100%;
+}
+
+/* About bottom statement */
+#about .about-container > h3{
+  grid-column:1/-1;
+  width:min(900px,100%);
+  margin:0 auto;
+  padding:20px 22px;
+  border:1px solid var(--ui-border);
+  border-radius:14px;
+  background:rgba(255,255,255,.025);
+  color:#aebcd0;
+  font-size:13px;
+  line-height:1.7;
+  text-align:center;
+}
+
+/* Section headings */
+#companies > div,
+#why > .unique-container,
+#contact{
+  width:min(1180px,100%);
+  margin-left:auto;
+  margin-right:auto;
+}
+#companies > div > h2,
+#companies > div > .section-intro{
+  max-width:760px;
+}
+#companies > div > h2{
+  font-size:clamp(34px,4vw,52px);
+  letter-spacing:-1.8px;
+  margin-top:0;
+}
+.section-intro{
+  color:var(--ui-muted);
+  font-size:14px;
+  line-height:1.8;
+}
+
+/* Company cards */
+#companies .track-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+#companies .track-card{
+  width:100%;
+  height:310px;
+  border-radius:17px;
+  border:1px solid var(--ui-border);
+  background:#080f1d;
+}
+#companies .job-style{
+  height:240px;
+}
+#companies .track-overlay,
+#companies .job-overlay{
+  padding:18px;
+}
+#companies .track-overlay h3,
+#companies .job-overlay h3{
+  font-size:13px;
+  letter-spacing:.4px;
+  margin:0 0 6px;
+}
+#companies .track-overlay p{
+  font-size:10px;
+  line-height:1.7;
+}
+
+/* Why section */
+#why .unique-container{
+  padding:0;
+}
+#why .section-heading{
+  max-width:720px;
+  margin-bottom:36px;
+}
+.section-kicker{
+  display:block;
+  color:var(--ui-accent);
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:2.4px;
+  margin-bottom:12px;
+}
+#why .unique-title{
+  margin:0 0 14px;
+  font-size:clamp(38px,5vw,64px);
+}
+.section-heading > p{
+  color:var(--ui-muted);
+  line-height:1.8;
+  font-size:14px;
+  margin:0;
+}
+#why .auto-scroll{
+  padding:8px 0;
+}
+#why .scroll-track{
+  gap:10px;
+}
+#why .u-card{
+  min-width:210px;
+  min-height:90px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.3px;
+}
+#why .testimonials{
+  margin-top:34px;
+  border:1px solid var(--ui-border);
+  border-radius:16px;
+  background:rgba(255,255,255,.02);
+}
+#why .t-card{
+  padding:24px 16px;
+  font-size:13px;
+  color:#cbd5e1;
+}
+
+/* Contact */
+#contact{
+  box-sizing:border-box;
+  align-items:center;
+}
+#contact .contact-heading{
+  width:100%;
+  max-width:1100px;
+  text-align:left;
+}
+#contact .contact-heading h2{
+  margin:0 0 12px;
+  font-size:clamp(38px,5vw,60px);
+  letter-spacing:-2px;
+}
+#contact .contact-heading p{
+  color:var(--ui-muted);
+  line-height:1.8;
+}
+#contact .contact-container{
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  align-items:stretch;
+}
+#contact .contact-info,
+#contact .contact-form{
+  width:100%;
+  max-width:none;
+  min-width:0;
+  padding:26px;
+  border:1px solid var(--ui-border);
+  border-radius:17px;
+  background:#080f1d;
+  box-shadow:0 22px 65px rgba(0,0,0,.28);
+}
+#contact .contact-info h3{
+  font-size:15px;
+  margin:0 0 16px;
+}
+#contact .contact-info p{
+  color:#9aa8ba;
+  font-size:12px;
+  line-height:1.7;
+}
+#contact .socials{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid var(--ui-border);
+}
+#contact .socials a{
+  display:inline-block;
+  margin:6px 6px 0 0;
+  color:var(--ui-accent);
+  font-size:11px;
+}
+#contact .contact-form input,
+#contact .contact-form textarea{
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  margin:0 0 10px;
+  padding:12px 13px;
+  border-radius:10px;
+  border:1px solid var(--ui-border);
+  background:#050b16;
+  color:#fff;
+  font-size:12px;
+}
+#contact .contact-form textarea{
+  min-height:120px;
+}
+#contact .footer-bottom{
+  width:100%;
+  margin-top:26px;
+  padding:18px 0 0;
+}
+
+/* Forms / profile / auth — better mobile UX without changing flow */
+#formOverlay{
+  padding:16px;
+}
+#formBox{
+  width:min(520px,100%);
+  max-height:calc(100dvh - 32px);
+  padding:24px;
+  border-radius:18px;
+  overflow-y:auto;
+}
+#formTitle{
+  font-size:22px;
+}
+#formFields input,
+#formFields textarea,
+#formFields select{
+  min-height:46px;
+  box-sizing:border-box;
+}
+#formFields textarea{
+  min-height:110px;
+}
+#formBox > button{
+  width:100%;
+  margin-top:8px;
+}
+.profile-modal{
+  padding:16px;
+  box-sizing:border-box;
+}
+.profile-card{
+  width:min(460px,100%);
+  max-height:calc(100dvh - 32px);
+  box-sizing:border-box;
+  border:1px solid var(--ui-border);
+  border-radius:18px;
+  overflow-y:auto;
+}
+.profile-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.profile-actions button{
+  margin:0;
+}
+
+/* AI floating control stays functional, but is safely positioned on phones. */
+#robot{
+  z-index:9997;
+}
+
+/* IMPORTANT: permanently remove the bottom nav if old HTML/CSS remains. */
+.mobile-bottom-nav{
+  display:none !important;
+}
+
+/* ===== TABLET ===== */
+@media (max-width: 900px){
+  #about .about-container,
+  #jobs .about-container,
+  #colleges .about-container,
+  #payroll .about-container{
+    grid-template-columns:1fr;
+    gap:34px;
+  }
+  #about .about-info,
+  #jobs .about-info,
+  #colleges .about-info,
+  #payroll .about-info{
+    max-width:none;
+  }
+  #companies .track-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  #contact .contact-container{
+    grid-template-columns:1fr;
+  }
+}
+
+/* ===== PHONE ===== */
+@media (max-width: 768px){
+  body{
+    min-width:0;
+    font-size:14px;
+  }
+
+  /* Keep top navigation as the only navigation. */
+  .topbar{
+    width:calc(100% - 20px);
+    max-width:none;
+    left:50%;
+    box-sizing:border-box;
+    padding:9px 10px;
+  }
+  .topbar.scrolled{
+    width:calc(100% - 20px);
+  }
+  .brand{
+    min-width:0;
+    flex:1;
+  }
+  #navLogo{
+    width:34px;
+    height:34px;
+    flex:0 0 34px;
+  }
+  .brand > div{
+    min-width:0;
+  }
+  .brand b{
+    display:block;
+    max-width:145px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .brand span{
+    display:block;
+    max-width:145px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .hamburger{
+    flex:0 0 auto;
+    padding:7px 9px;
+  }
+  .nav-menu{
+    top:58px;
+    right:0;
+    width:min(250px,calc(100vw - 28px));
+    box-sizing:border-box;
+    padding:9px;
+    gap:4px;
+    border:1px solid var(--ui-border);
+    border-radius:14px;
+    background:rgba(4,8,17,.97);
+    box-shadow:0 20px 55px rgba(0,0,0,.55);
+  }
+  .nav-menu span{
+    width:100%;
+    box-sizing:border-box;
+    min-height:42px;
+    display:flex;
+    align-items:center;
+    padding:10px 12px;
+    font-size:12px;
+  }
+  .profile{
+    width:100%;
+  }
+  .profile-btn{
+    width:100%;
+    min-height:42px;
+  }
+  .profile-menu{
+    position:static;
+    width:100%;
+    box-sizing:border-box;
+    margin-top:4px;
+  }
+
+  /* Non-home sections: compact, readable and thumb-friendly. */
+  #about,
+  #jobs,
+  #colleges,
+  #payroll,
+  #companies,
+  #why,
+  #contact{
+    min-height:auto;
+    padding:100px 15px 70px;
+  }
+
+  #about .about-container,
+  #jobs .about-container,
+  #colleges .about-container,
+  #payroll .about-container{
+    width:100%;
+    gap:25px;
+  }
+
+  #about .about-slider,
+  #jobs .about-slider,
+  #colleges .about-slider,
+  #payroll .about-slider{
+    height:clamp(210px,58vw,300px);
+    border-radius:15px;
+  }
+
+  #about .about-info h2,
+  #jobs .about-info h2,
+  #colleges .about-info h2,
+  #payroll .about-info h2{
+    font-size:clamp(31px,10vw,43px);
+    letter-spacing:-1.5px;
+    margin-bottom:15px;
+  }
+
+  #about .about-info h3,
+  #jobs .about-info h3,
+  #colleges .about-info h3,
+  #payroll .about-info h3{
+    font-size:16px;
+  }
+
+  #about .about-info p,
+  #jobs .about-info p,
+  #colleges .about-info p,
+  #payroll .about-info p{
+    font-size:13px;
+    line-height:1.8;
+  }
+
+  #about .about-info ul,
+  #jobs .about-info ul,
+  #colleges .about-info ul,
+  #payroll .about-info ul{
+    grid-template-columns:1fr;
+    gap:7px;
+  }
+
+  #about .about-info li,
+  #jobs .about-info li,
+  #colleges .about-info li,
+  #payroll .about-info li{
+    min-height:44px;
+    font-size:11px;
+  }
+
+  .section-detail-grid{
+    grid-template-columns:1fr;
+    gap:7px;
+    margin:17px 0;
+  }
+  .detail-item{
+    min-height:0;
+    padding:13px;
+    display:grid;
+    grid-template-columns:28px 1fr;
+    column-gap:9px;
+    align-items:center;
+  }
+  .detail-item b{
+    grid-row:1 / span 2;
+    margin:0;
+    align-self:start;
+    padding-top:2px;
+  }
+  .detail-item span{
+    font-size:11px;
+  }
+  .detail-item small{
+    margin-top:3px;
+    font-size:9px;
+  }
+
+  #about .about-container > h3{
+    padding:15px;
+    font-size:11px;
+  }
+
+  #companies > div > h2{
+    font-size:34px;
+  }
+  #companies .track-grid{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  #companies .track-card{
+    height:235px;
+  }
+  #companies .job-style{
+    height:190px;
+  }
+
+  #why .unique-title{
+    font-size:38px;
+  }
+  #why .u-card{
+    min-width:175px;
+    min-height:75px;
+    font-size:10px;
+  }
+  #why .testimonials{
+    margin-top:24px;
+  }
+  #why .t-card{
+    font-size:11px;
+    padding:20px 12px;
+  }
+
+  #contact .contact-heading h2{
+    font-size:40px;
+  }
+  #contact .contact-info,
+  #contact .contact-form{
+    padding:18px;
+    border-radius:14px;
+  }
+
+  #formOverlay{
+    padding:10px;
+    align-items:flex-end;
+  }
+  #formBox{
+    width:100%;
+    max-height:calc(100dvh - 20px);
+    padding:18px;
+    border-radius:18px 18px 12px 12px;
+  }
+  #formTitle{
+    font-size:20px;
+  }
+
+  .profile-modal{
+    align-items:flex-end;
+    padding:10px;
+  }
+  .profile-card{
+    width:100%;
+    max-height:calc(100dvh - 20px);
+    padding:18px;
+    border-radius:18px 18px 12px 12px;
+  }
+  .profile-actions{
+    grid-template-columns:1fr;
+  }
+
+  #robot{
+    width:68px;
+    height:68px;
+    right:14px;
+    bottom:14px;
+  }
+  .robot-face{
+    width:54px;
+    height:54px;
+    top:7px;
+    left:7px;
+    border-radius:15px;
+  }
+  .robot-tag{
+    top:-5px;
+    right:-5px;
+  }
+  #aiPanel{
+    right:0;
+    bottom:82px;
+    width:min(220px,calc(100vw - 30px));
+  }
+
+  /* Avoid hover-only interactions on touch screens. */
+  @media (hover:none){
+    button:hover,
+    .track-card:hover,
+    .glass:hover,
+    .about-info li:hover{
+      transform:none !important;
+    }
+  }
+}
+
+/* Small phones */
+@media (max-width: 420px){
+  #about,
+  #jobs,
+  #colleges,
+  #payroll,
+  #companies,
+  #why,
+  #contact{
+    padding-left:12px;
+    padding-right:12px;
+  }
+  .topbar{
+    width:calc(100% - 14px);
+  }
+  .topbar.scrolled{
+    width:calc(100% - 14px);
+  }
+  .brand b{
+    font-size:11px;
+  }
+  .brand span{
+    font-size:8px !important;
+  }
+  #navLogo{
+    width:32px;
+    height:32px;
+    flex-basis:32px;
+  }
+  .hamburger{
+    font-size:20px;
+  }
+  #about .about-slider,
+  #jobs .about-slider,
+  #colleges .about-slider,
+  #payroll .about-slider{
+    height:205px;
+  }
+  #companies .track-card{
+    height:215px;
+  }
+  #companies .job-style{
+    height:175px;
+  }
+  #robot{
+    width:62px;
+    height:62px;
+  }
+}
+
+/* Respect device safe areas */
+@supports (padding: max(0px)){
+  #contact{
+    padding-bottom:max(70px,env(safe-area-inset-bottom));
+  }
+  .topbar{
+    top:max(10px,env(safe-area-inset-top));
+  }
+}
+
+
+/* =========================================================
+   PROFESSIONAL CONTACT US UI — UI ONLY
+   Existing forms, handlers, Firebase flow and navigation
+   are intentionally untouched.
+   ========================================================= */
+.contact-us-professional {
+  position: relative;
+  overflow: hidden;
+  padding: 88px 6vw 90px;
+}
+
+.contact-us-professional::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  right: -180px;
+  top: -160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(80,120,255,.16), transparent 68%);
+  pointer-events: none;
+}
+
+.contact-professional-header {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+
+.contact-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 13px;
+  border: 1px solid rgba(120,150,255,.28);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  color: #8ea8ff;
+  background: rgba(90,120,255,.08);
+}
+
+.contact-professional-header h2 {
+  margin: 14px 0 10px;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.05;
+  font-weight: 850;
+  letter-spacing: -.8px;
+}
+
+.contact-professional-header p {
+  max-width: 650px;
+  margin: 0 auto;
+  color: rgba(255,255,255,.66);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.contact-professional-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+  gap: 28px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.contact-professional-grid > * {
+  min-width: 0;
+}
+
+.contact-professional-grid form,
+.contact-professional-grid .contact-form,
+.contact-professional-grid .contact-card,
+.contact-professional-grid .contact-info,
+.contact-professional-grid .contact-details {
+  border-radius: 22px;
+}
+
+.contact-professional-grid input,
+.contact-professional-grid textarea,
+.contact-professional-grid select {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.contact-professional-grid textarea {
+  min-height: 145px;
+  resize: vertical;
+}
+
+.contact-professional-grid button {
+  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+
+.contact-professional-grid button:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .contact-us-professional {
+    padding: 72px 5vw 74px;
+  }
+
+  .contact-professional-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-us-professional {
+    padding: 58px 18px 62px;
+  }
+
+  .contact-professional-header {
+    margin-bottom: 28px;
+  }
+
+  .contact-professional-header p {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .contact-professional-grid {
+    gap: 16px;
+  }
+
+  .contact-professional-grid form,
+  .contact-professional-grid .contact-form,
+  .contact-professional-grid .contact-card,
+  .contact-professional-grid .contact-info,
+  .contact-professional-grid .contact-details {
+    border-radius: 18px;
+  }
+
+  .contact-professional-grid input,
+  .contact-professional-grid textarea,
+  .contact-professional-grid select {
+    font-size: 16px; /* avoids iOS zoom */
+  }
+}
+
+@media (max-width: 420px) {
+  .contact-us-professional {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .contact-professional-header h2 {
+    font-size: 31px;
+  }
+
+  .contact-eyebrow {
+    font-size: 10px;
+    letter-spacing: 1.4px;
+  }
+}
+
 </style>
 </head>
 
@@ -2133,15 +3191,6 @@ style="background:#000000;color:white;padding:12px;border:none;border-radius:8px
 
   </div>
 </div>
-
-<div class="mobile-bottom-nav">
-  <button onclick="goToSection('hero')"><span>⌂</span>Home</button>
-  <button onclick="goToSection('jobs')"><span>◫</span>Jobs</button>
-  <button class="mobile-ai" onclick="toggleAI()"><span>✦</span>AI</button>
-  <button onclick="goToSection('colleges')"><span>⌘</span>Study</button>
-  <button onclick="openProfile()"><span>○</span>Profile</button>
-</div>
-
 <div id="progressBar"></div>
 
 
@@ -2329,9 +3378,15 @@ style="background:#000000;color:white;padding:12px;border:none;border-radius:8px
         <li>✔ Freshers & Experienced</li>
       </ul>
 
-      <p>Apply for top companies and kickstart your career.</p>
+      <p>Apply for relevant IT and Non-IT opportunities with guidance from profile preparation through application support.</p>
 
-      <button onclick="openForm('job')">Apply Now</button>
+      <div class="section-detail-grid">
+        <div class="detail-item"><b>01</b><span>Profile Guidance</span><small>Understand suitable roles and hiring requirements.</small></div>
+        <div class="detail-item"><b>02</b><span>Opportunity Matching</span><small>Explore openings based on qualification and experience.</small></div>
+        <div class="detail-item"><b>03</b><span>Application Support</span><small>Submit your details through a guided application flow.</small></div>
+      </div>
+
+      <button onclick="openForm('job')" aria-label="Apply for a job">Apply Now <span class="button-arrow">↗</span></button>
 
     </div>
 
@@ -2411,9 +3466,15 @@ style="background:#000000;color:white;padding:12px;border:none;border-radius:8px
     <div class="about-info">
       <h2>Payroll</h2>
 
-      <p>Coming soon advanced payroll services.</p>
+      <p>Payroll services are being prepared as a dedicated business-support offering for organizations that want a more organized workforce administration process.</p>
 
-      <button>Apply Now</button> <!-- NO FORM -->
+      <div class="section-detail-grid">
+        <div class="detail-item"><b>01</b><span>Payroll Processing</span><small>Planned support for recurring payroll operations.</small></div>
+        <div class="detail-item"><b>02</b><span>Workforce Records</span><small>Structured employee and payroll information management.</small></div>
+        <div class="detail-item"><b>03</b><span>HR Support</span><small>Designed to complement recruitment and staffing services.</small></div>
+      </div>
+
+      <button>Coming Soon <span class="button-arrow">→</span></button> <!-- NO FORM -->
     </div>
 
   </div>
@@ -2498,7 +3559,11 @@ style="background:#000000;color:white;padding:12px;border:none;border-radius:8px
 
   <div class="unique-container">
 
-    <h1 class="unique-title">Why Choose Us</h1>
+    <div class="section-heading">
+      <span class="section-kicker">OUR APPROACH</span>
+      <h1 class="unique-title">Why Choose Us</h1>
+      <p>Built around clear guidance, responsive support and a practical connection between people, education and workforce opportunities.</p>
+    </div>
 
     <!-- AUTO MOVING CARDS -->
     <div class="auto-scroll">
@@ -2737,7 +3802,7 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 
-const ADMIN_EMAIL = ""; // Set your real admin email only if you use email-based role assignment.
+const ADMIN_EMAIL = "sathvikgadipelli@gmail.com"; // Set your real admin email only if you use email-based role assignment.
 
 
 
