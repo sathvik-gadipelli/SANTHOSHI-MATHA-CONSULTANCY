@@ -2029,6 +2029,72 @@ button, .nav-menu span, .profile-btn{
   }
 
 }
+
+/* =========================================================
+   SANthoshi Matha — UNIQUE COMMAND UI
+   Visual layer only: existing functionality remains intact.
+========================================================= */
+:root{
+  --electric:#27d7ff;
+  --blue:#398cff;
+  --violet:#8067ff;
+  --ink:#050914;
+  --line:rgba(255,255,255,.11);
+  --soft:rgba(255,255,255,.62);
+}
+*{box-sizing:border-box}
+html{background:var(--ink)}
+body{background:var(--ink);letter-spacing:.01em}
+button{font-family:inherit}
+
+/* remove old section-heavy glass language */
+.section{position:relative;min-height:100vh;padding:110px clamp(18px,5vw,80px);background:#050914;overflow:hidden}
+.section::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 20%,rgba(39,215,255,.07),transparent 28%),radial-gradient(circle at 85% 80%,rgba(128,103,255,.06),transparent 28%)}
+.section.active{border-left:0}
+.section>*, .section .about-container, .section .unique-container{position:relative;z-index:2}
+
+/* TOP COMMAND BAR */
+.topbar{width:min(1180px,94%);padding:11px 14px 11px 18px;background:rgba(5,9,20,.82);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 60px rgba(0,0,0,.35);backdrop-filter:blur(22px)}
+.topbar.scrolled{width:min(1080px,92%);background:rgba(5,9,20,.94);box-shadow:0 18px 70px rgba(0,0,0,.55),0 0 35px rgba(39,215,255,.08)}
+.brand{gap:11px}.brand b{font-size:14px;letter-spacing:.3px}.brand span{color:#91a1b8!important}
+#navLogo{width:38px;height:38px;border:1px solid rgba(39,215,255,.45);box-shadow:0 0 24px rgba(39,215,255,.22)}
+.nav-menu{gap:5px}.nav-menu span{padding:9px 10px;border-radius:9px;color:#9ba9bd;font-size:12px}.nav-menu span::after{display:none}.nav-menu span:hover,.nav-menu span.active{color:#fff;background:rgba(39,215,255,.08);text-shadow:none}
+.profile-btn{width:auto;margin:0;padding:9px 13px;background:#fff;color:#06101d;font-size:12px;font-weight:700;border-radius:10px;box-shadow:none}.profile-btn:hover{box-shadow:0 0 22px rgba(39,215,255,.25);transform:none}
+
+/* HERO */
+.hero-sec{background:#050914 url('futurebg.webp') center/cover no-repeat;background-attachment:fixed;align-items:center;text-align:left;padding-top:125px}
+.hero-sec::before{background:linear-gradient(90deg,rgba(3,7,16,.96) 0%,rgba(3,7,16,.80) 45%,rgba(3,7,16,.58) 100%)}
+.hero-sec::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:70px 70px;mask-image:linear-gradient(to bottom,black,transparent 85%);pointer-events:none}
+.hero-command{width:min(1220px,100%);min-height:680px;display:grid;grid-template-columns:1.02fr .98fr;align-items:center;gap:30px;position:relative}
+.hero-copy{max-width:680px}.hero-eyebrow{display:flex;align-items:center;gap:9px;color:#8ea0b7;font-size:10px;font-weight:800;letter-spacing:2.4px;margin-bottom:22px}.hero-eyebrow span{width:7px;height:7px;border-radius:50%;background:var(--electric);box-shadow:0 0 16px var(--electric)}
+.hero-kicker{font-size:10px;color:#5d718b;letter-spacing:2px;margin-bottom:12px;text-transform:uppercase}.hero-copy h1{font-size:clamp(44px,5.4vw,82px);line-height:.98;letter-spacing:-3.8px;margin:0 0 24px;font-weight:800}.hero-copy h1 em{font-style:normal;color:#aab8ca}.hero-copy h1 strong{background:linear-gradient(90deg,#fff,var(--electric));-webkit-background-clip:text;background-clip:text;color:transparent}.hero-lead{max-width:600px;font-size:16px;line-height:1.8;color:#8d9db2;margin-bottom:28px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.hero-actions button{width:auto;margin:0;border-radius:11px;padding:13px 18px;font-size:12px}.hero-primary{background:#fff;color:#07101c}.hero-primary span{margin-left:12px}.hero-secondary{background:rgba(255,255,255,.045);border:1px solid var(--line);color:#d9e2ef}
+.hero-paths{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:42px;max-width:660px}.hero-paths button{margin:0;width:100%;min-height:74px;padding:12px;background:rgba(8,14,27,.62);border:1px solid rgba(255,255,255,.09);border-radius:12px;display:grid;grid-template-columns:30px 1fr 18px;align-items:center;text-align:left;gap:7px;color:#fff}.hero-paths button:hover{transform:translateY(-3px);background:rgba(39,215,255,.07);border-color:rgba(39,215,255,.35);box-shadow:none}.path-no{color:var(--electric);font-size:10px}.hero-paths b{display:block;font-size:10px;letter-spacing:1px}.hero-paths small{display:block;color:#718096;font-size:9px;margin-top:5px}.hero-paths i{font-style:normal;color:#6c7c91}
+.hero-system{height:590px;position:relative;display:flex;align-items:center;justify-content:center}.system-grid{position:absolute;width:78%;height:78%;background-image:linear-gradient(rgba(39,215,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(39,215,255,.07) 1px,transparent 1px);background-size:32px 32px;mask-image:radial-gradient(circle,black,transparent 70%);transform:perspective(500px) rotateX(60deg);opacity:.7}.system-orbit{position:absolute;border:1px solid rgba(39,215,255,.22);border-radius:50%;animation:spinOrbit 18s linear infinite}.orbit-a{width:420px;height:420px;transform:rotate(65deg) scaleY(.55)}.orbit-b{width:310px;height:310px;transform:rotate(-25deg) scaleY(.55);animation-direction:reverse;border-color:rgba(128,103,255,.3)}@keyframes spinOrbit{to{transform:rotate(425deg) scaleY(.55)}}
+.system-core{width:150px;height:150px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(39,215,255,.17),rgba(7,14,27,.95) 62%);border:1px solid rgba(39,215,255,.45);box-shadow:0 0 70px rgba(39,215,255,.18),inset 0 0 40px rgba(128,103,255,.12)}.system-core img{width:82px;height:82px;border-radius:50%;object-fit:cover;opacity:.9}.system-core span{position:absolute;bottom:-25px;font-size:8px;letter-spacing:3px;color:#6e8199}.core-ring{position:absolute;inset:-13px;border:1px dashed rgba(39,215,255,.35);border-radius:50%;animation:coreSpin 8s linear infinite}@keyframes coreSpin{to{transform:rotate(360deg)}}
+.system-label{position:absolute;min-width:105px;padding:10px 12px;background:rgba(4,9,19,.78);border:1px solid var(--line);border-radius:10px;backdrop-filter:blur(12px);box-shadow:0 12px 35px rgba(0,0,0,.25)}.system-label b{display:block;font-size:15px;color:#fff}.system-label span{display:block;font-size:8px;color:#64758a;letter-spacing:1.2px;margin-top:4px}.label-top{top:30px;left:50%;transform:translateX(-50%);text-align:center}.label-top span{color:#58dcae}.label-top i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#58dcae;box-shadow:0 0 8px #58dcae}.label-left{left:2%;top:47%}.label-right{right:2%;top:36%}.label-bottom{right:10%;bottom:50px}.system-signal{position:absolute;bottom:105px;left:8%;display:flex;gap:4px;align-items:end}.system-signal span{display:block;width:3px;background:var(--electric);opacity:.65}.system-signal span:nth-child(1){height:8px}.system-signal span:nth-child(2){height:16px}.system-signal span:nth-child(3){height:25px}.system-signal span:nth-child(4){height:13px}.hero-bottomline{position:absolute;left:0;right:0;bottom:0;border-top:1px solid rgba(255,255,255,.09);display:flex;gap:36px;padding-top:16px;color:#53657b;font-size:9px;letter-spacing:2px}.hero-bottomline span{color:var(--electric);margin-right:8px}
+
+/* SECTION HEADINGS / CONTENT */
+.about-container{width:min(1160px,100%);gap:70px}.about-info{height:auto;width:min(500px,100%)}.about-info h2,.section h2{font-size:clamp(30px,4vw,52px);letter-spacing:-1.5px;margin-bottom:22px}.about-info h2 hr{border:0;border-top:1px solid var(--line);margin:15px 0}.about-info h3{font-size:18px;line-height:1.5}.about-info p{font-size:14px;line-height:1.9;color:#8d9db2}.about-info li{font-size:13px;border-left:0;border-bottom:1px solid rgba(255,255,255,.08);padding:12px 0;margin:0;color:#cbd5e1}.about-info li:hover{background:transparent;color:var(--electric);padding-left:6px}
+.about-slider{width:460px;height:330px;border:1px solid rgba(255,255,255,.1);background:#0a1120;border-radius:16px;box-shadow:0 25px 70px rgba(0,0,0,.4);padding:0}.about-slider:hover{transform:none;box-shadow:0 25px 70px rgba(0,0,0,.5)}
+#jobSlider .about-track img,#clgSlider .about-track img{object-fit:contain;background:#f7f8fa;padding:28px}.about-track img{background:#0b1220}
+.dots{display:none}
+.track-grid{gap:14px}.track-card{border:1px solid var(--line);background:#0a1120;border-radius:14px}.track-card:hover{box-shadow:0 20px 55px rgba(0,0,0,.5);border-color:rgba(39,215,255,.25)}.track-overlay{background:linear-gradient(180deg,rgba(2,6,14,.2),rgba(2,6,14,.94));opacity:1;justify-content:flex-end;align-items:flex-start;text-align:left;padding:20px}.track-overlay h3{font-size:13px}.track-overlay p{font-size:11px}.job-style img{filter:none;object-fit:contain;background:#f7f8fa;padding:25px}.job-overlay{background:linear-gradient(to top,rgba(2,6,14,.92),transparent);text-align:left}.job-overlay h3{font-size:13px}
+
+/* WHY / CONTACT */
+.unique-sec{background:#050914!important}.unique-title{text-align:left;font-size:clamp(34px,5vw,60px);letter-spacing:-2px}.u-card{min-width:230px;background:#0a1120;border:1px solid var(--line);border-radius:12px;padding:18px;font-size:12px}.u-card:hover{background:#0d1829;transform:translateY(-3px)}.cursor-text,#cursorGlow{display:none}.contact-container{max-width:1100px}.contact-info,.contact-form{width:100%;max-width:520px;background:#0a1120;border:1px solid var(--line);padding:28px;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.25)}.contact-info:hover,.contact-form:hover{transform:none}.contact-form input,.contact-form textarea{background:#070d19;border:1px solid rgba(255,255,255,.09)}.socials a{color:var(--electric)}
+
+/* MOBILE COMMAND NAV */
+.mobile-bottom-nav{display:none}
+
+@media(max-width:900px){
+  .nav-menu{display:none}.hamburger{display:block;padding:5px 10px}.hero-command{grid-template-columns:1fr;min-height:auto;padding:20px 0 70px}.hero-system{height:390px;order:-1}.system-orbit.orbit-a{width:280px;height:280px}.system-orbit.orbit-b{width:210px;height:210px}.system-core{width:105px;height:105px}.system-core img{width:60px;height:60px}.label-left{left:0}.label-right{right:0}.label-bottom{right:4%;bottom:10px}.label-top{top:0}.hero-copy h1{font-size:clamp(40px,12vw,62px);letter-spacing:-2.8px}.hero-paths{grid-template-columns:1fr;max-width:none}.hero-paths button{min-height:62px}.hero-bottomline{display:none}.about-slider{width:min(100%,460px);height:280px}.about-container{gap:35px}.contact-info,.contact-form{max-width:none}
+}
+@media(max-width:768px){
+  .section{padding:95px 16px 110px;min-height:auto}.hero-sec{padding-top:95px;min-height:100vh}.topbar{top:10px;width:94%;padding:9px 10px}.brand b{font-size:12px}.brand span{font-size:9px!important}.profile-btn{font-size:10px;padding:8px 10px}.hamburger{font-size:21px}.hero-lead{font-size:14px}.hero-actions{display:grid;grid-template-columns:1fr 1fr}.hero-actions button{width:100%;padding:12px 8px}.hero-system{height:330px}.system-label{transform:scale(.82)}.label-top{transform:translateX(-50%) scale(.82)}.system-signal{display:none}.about-info{text-align:left}.about-info h2,.section h2{font-size:34px}.about-info li{font-size:12px}.track-grid{flex-direction:column}.track-card,.job-style{width:100%!important}.testimonials{margin-top:25px}.mobile-bottom-nav{position:fixed;display:grid;grid-template-columns:repeat(5,1fr);left:10px;right:10px;bottom:10px;z-index:9998;padding:7px;background:rgba(4,8,17,.94);border:1px solid rgba(255,255,255,.1);border-radius:17px;backdrop-filter:blur(20px);box-shadow:0 15px 50px rgba(0,0,0,.55)}.mobile-bottom-nav button{width:100%;margin:0;padding:8px 2px;background:transparent!important;color:#718197;font-size:9px;border-radius:10px;box-shadow:none!important;display:flex;flex-direction:column;gap:4px;align-items:center}.mobile-bottom-nav button span{font-size:17px;line-height:1;color:#a8b6c9}.mobile-bottom-nav .mobile-ai{background:linear-gradient(135deg,#27d7ff,#8067ff)!important;color:#fff;transform:translateY(-10px);border:4px solid #050914;box-shadow:0 8px 25px rgba(39,215,255,.3)!important}.mobile-bottom-nav .mobile-ai span{color:#fff}.profile-card{width:92%;max-height:85vh;overflow:auto}.auth-card{width:90%!important}.hero-sec{background-attachment:scroll}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
 </style>
 </head>
 
@@ -2066,6 +2132,14 @@ style="background:#000000;color:white;padding:12px;border:none;border-radius:8px
 </button>
 
   </div>
+</div>
+
+<div class="mobile-bottom-nav">
+  <button onclick="goToSection('hero')"><span>⌂</span>Home</button>
+  <button onclick="goToSection('jobs')"><span>◫</span>Jobs</button>
+  <button class="mobile-ai" onclick="toggleAI()"><span>✦</span>AI</button>
+  <button onclick="goToSection('colleges')"><span>⌘</span>Study</button>
+  <button onclick="openProfile()"><span>○</span>Profile</button>
 </div>
 
 <div id="progressBar"></div>
@@ -2116,33 +2190,44 @@ style="background:#000000;color:white;padding:12px;border:none;border-radius:8px
 <!-- 🌟 HERO / WELCOME -->
 <div class="section hero-sec" id="hero" data-speed="0.05">
 
-  <div class="glass hero-box" data-speed="0.2">
+  <div class="hero-command" data-speed="0.12">
+    <div class="hero-copy">
+      <div class="hero-eyebrow"><span></span> CAREER • EDUCATION • WORKFORCE</div>
+      <div class="hero-kicker">SANthoshi Matha / 2026</div>
+      <h1>Move from <em>searching</em><br>to <strong>moving forward.</strong></h1>
+      <p class="hero-lead">A focused manpower and education partner connecting people, institutions and businesses through one guided journey.</p>
 
-    <h1>Welcome to Santhoshi Matha Man Power Consultancy</h1>
-    <hr style="color: #000;" >
-    <br>
-    <p>Your trusted partner for jobs, careers & education growth 🚀</p>
-
-    <!-- 🔥 CENTER COUNTERS -->
-    <div class="hero-stats">
-      <div class="hstat">
-        <h2 id="hcount1">200</h2>
-        <p>Placements</p>
+      <div class="hero-actions">
+        <button class="hero-primary" onclick="goToSection('jobs')">Explore Opportunities <span>↗</span></button>
+        <button class="hero-secondary" onclick="goToSection('about')">See How We Work</button>
       </div>
 
-      <div class="hstat">
-        <h2 id="hcount2">60+</h2>
-        <p>Companies</p>
-      </div>
-
-      <div class="hstat">
-        <h2 id="hcount3">120</h2>
-        <p>Colleges</p>
+      <div class="hero-paths">
+        <button onclick="goToSection('jobs')"><span class="path-no">01</span><span><b>CAREERS</b><small>Find the right role</small></span><i>↗</i></button>
+        <button onclick="goToSection('colleges')"><span class="path-no">02</span><span><b>EDUCATION</b><small>Navigate admissions</small></span><i>↗</i></button>
+        <button onclick="goToSection('companies')"><span class="path-no">03</span><span><b>BUSINESS</b><small>Build your workforce</small></span><i>↗</i></button>
       </div>
     </div>
 
-    <button class="exbut" onclick="scrollToSection()">Explore Our Services</button>
+    <div class="hero-system">
+      <div class="system-grid"></div>
+      <div class="system-orbit orbit-a"></div>
+      <div class="system-orbit orbit-b"></div>
+      <div class="system-core">
+        <div class="core-ring"></div>
+        <img src="nikhillogo.jpeg" alt="Santhoshi Matha">
+        <span>SM</span>
+      </div>
+      <div class="system-label label-top"><b>LIVE NETWORK</b><span><i></i> CONNECTED</span></div>
+      <div class="system-label label-left"><b>200+</b><span>PLACEMENTS</span></div>
+      <div class="system-label label-right"><b>60+</b><span>COMPANIES</span></div>
+      <div class="system-label label-bottom"><b>120+</b><span>COLLEGE NETWORK</span></div>
+      <div class="system-signal"><span></span><span></span><span></span><span></span></div>
+    </div>
 
+    <div class="hero-bottomline">
+      <div><span>01</span> TALENT</div><div><span>02</span> OPPORTUNITY</div><div><span>03</span> GROWTH</div>
+    </div>
   </div>
 
 </div>
@@ -2652,7 +2737,7 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 
-const ADMIN_EMAIL = "youradmin@gmail.com";
+const ADMIN_EMAIL = ""; // Set your real admin email only if you use email-based role assignment.
 
 
 
@@ -2699,7 +2784,7 @@ async function googleLogin(){
         email: user.email,
         mobile: mobile,
         photoURL: user.photoURL,
-        role: user.email === ADMIN_EMAIL ? "admin" : "user",
+        role: (ADMIN_EMAIL && user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()) ? "admin" : "user",
         createdAt: Date.now()
       });
     }
@@ -2745,13 +2830,7 @@ onAuthStateChanged(auth, async (user) => {
 
     currentUser = snap.data();
 
-    // 🔴 ONLY redirect if admin
-    if (currentUser.role === "admin") {
-      window.location.href = "admin.html";
-      return;
-    }
-
-    // ✅ USER FLOW
+    // Admin users stay on the homepage. Open admin.html manually when needed.
     document.getElementById("authScreen").style.display = "none";
     document.getElementById("dashboard").style.display = "block";
 
@@ -3054,7 +3133,7 @@ function autoSlider(container){
 
   const track = container.querySelector(".about-track");
   const slides = track.children;
-  const dots = container.querySelectorAll(".dot");
+  const dots = [];
 
   setInterval(()=>{
 
